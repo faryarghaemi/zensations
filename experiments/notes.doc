@@ -1,0 +1,3 @@
+Gestures are represented by the Gesture class and its subclasses, CircleGesture, KeyTapGesture, ScreenTapGesture, and SwipeGesture.
+
+Instead of tracking the change in position of individual fingers across several frames of data, you could use the scale factor computed between two frames to let the user change the size of an object.
