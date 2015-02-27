@@ -15,6 +15,67 @@ $(document).ready(function() {
       alert('Web Audio API is not supported in this browser');
   };
 
+  // ------------------------- Three.js Stuff -------------------------
+
+  var scene = new THREE.Scene();
+  var width = window.innerWidth * 0.03;
+  var height = window.innerHeight * 0.04;
+  var camera = new THREE.OrthographicCamera( 0, width, height / 2, height / - 2, 1, 10 );
+  scene.add( camera );
+
+  var renderer = new THREE.WebGLRenderer();
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  document.body.appendChild( renderer.domElement );
+
+  var geometry = new THREE.SphereGeometry( 1, 24, 24 );
+  var material = new THREE.MeshBasicMaterial( { color: 0xFF3456, wireframe: true } );
+
+  for ( var i = 8; i > 0; i -- ) {
+    var sphere = new THREE.Mesh( geometry, material );
+
+    var myPosition = (i + 1) * 3
+    sphere.position.x += myPosition;
+
+    var myScale = 1.1 * (i + 1);
+    sphere.scale.y *= myScale;
+
+    scene.add( sphere );
+  }
+
+  camera.position.z = 10;
+
+  var render = function () {
+    requestAnimationFrame( render );
+    var frequencies = []
+    if (frequencyAmplitudeArray) {
+      for (var i = 0; i < frequencyAmplitudeArray.length; i += 2) {
+        // There are 16 bins and we only want 8 so take average of every two bins
+        average = (frequencyAmplitudeArray[i] + frequencyAmplitudeArray[i + 1])/ 2;
+        frequencies[i/2] = average;
+      };
+    };
+    console.log(frequencies);
+
+    // index of frequencies array
+    var j = 0;
+
+    scene.traverse (function (object)
+    {
+        if (object instanceof THREE.Mesh)
+        {
+          object.rotation.y += 0.005;
+          object.scale.y = (j + 1) * (1 + frequencies[j]/512)
+          j++
+        }
+    });
+
+    renderer.render(scene, camera);
+  };
+
+  render();
+
+  // ------------------------- End three.js -------------------------
+
   // Creating an Audio object.
   var audio0 = new Audio();
   audio0.src = 'assets/feeling_good.mp3';
@@ -66,8 +127,6 @@ $(document).ready(function() {
     javascriptNode.onaudioprocess = function () {
       // Get the Time Domain data for this sample
       analyserNode.getByteFrequencyData(frequencyAmplitudeArray);
-      // Draw..
-      requestAnimFrame(drawFrequencyDomain);
     }
   });
 
@@ -78,23 +137,5 @@ $(document).ready(function() {
     clearCanvas();
   });
 
-  // Setting the canvas width & height.
-  var canvasWidth  = 512;
-  var canvasHeight = 256;
-
-  // Ninja'd code, not too sure on the inner workings, but this is what draws the data in the frequencyAmplitudeArray by iterating through each bin.
-  function drawFrequencyDomain() {
-    clearCanvas();
-    for (var i = 0; i < frequencyAmplitudeArray.length; i++) {
-      ctx.fillStyle = '#000000';
-      var y = canvasHeight - Math.round(frequencyAmplitudeArray[i]);
-      ctx.fillRect(i,0,1,y);
-    }
-  }
-
-  function clearCanvas() {
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-  }
 });
 
