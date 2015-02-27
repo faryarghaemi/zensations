@@ -11,4 +11,4 @@
 /log/*
 !/log/.keep
 /tmp
-/config/locales/database.yml
+/config/database.yml
