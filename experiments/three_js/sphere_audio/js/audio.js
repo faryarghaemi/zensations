@@ -1,3 +1,7 @@
+// Music playing?
+
+var music_playing = false;
+
 // Browser support hacks
 
 window.AudioContext = (function(){
@@ -19,7 +23,7 @@ $(document).ready(function() {
 
   var scene = new THREE.Scene();
   var width = window.innerWidth * 0.03;
-  var height = window.innerHeight * 0.04;
+  var height = window.innerHeight * 0.05;
   var camera = new THREE.OrthographicCamera( 0, width, height / 2, height / - 2, 1, 10 );
   scene.add( camera );
 
@@ -46,15 +50,10 @@ $(document).ready(function() {
 
   var render = function () {
     requestAnimationFrame( render );
-    var frequencies = []
-    if (frequencyAmplitudeArray) {
-      for (var i = 0; i < frequencyAmplitudeArray.length; i += 2) {
-        // There are 16 bins and we only want 8 so take average of every two bins
-        average = (frequencyAmplitudeArray[i] + frequencyAmplitudeArray[i + 1])/ 2;
-        frequencies[i/2] = average;
-      };
+
+    if (music_playing) {
+      console.log(frequencyAmplitudeArray);
     };
-    console.log(frequencies);
 
     // index of frequencies array
     var j = 0;
@@ -64,9 +63,11 @@ $(document).ready(function() {
         if (object instanceof THREE.Mesh)
         {
           object.rotation.y += 0.005;
-          object.scale.y = (j + 1) * (1 + frequencies[j]/512)
-          j++
-        }
+          if (music_playing) {
+            object.scale.y = (j + 1) * (1 + frequencyAmplitudeArray[j]/512)
+            j++
+          };
+        };
     });
 
     renderer.render(scene, camera);
@@ -122,6 +123,7 @@ $(document).ready(function() {
 
   // Play sound & visualise
   $("#start").on('click', function() {
+    music_playing = true;
     audio0.play();
     // An event listener which is called periodically for audio processing.
     javascriptNode.onaudioprocess = function () {
@@ -134,7 +136,7 @@ $(document).ready(function() {
   $("#stop").on('click', function() {
     audio0.pause();
     audio0.currentTime = 0;
-    clearCanvas();
+    music_playing = false;
   });
 
 });
