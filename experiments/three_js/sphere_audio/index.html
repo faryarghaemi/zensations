@@ -19,6 +19,7 @@
     </style>
     <script src="js/three.min.js"></script>
     <script src="js/jquery.js"></script>
+    <script src="js/pusher.js"></script>
     <script src="js/audio.js"></script>
   </head>
   <body>
@@ -49,6 +50,9 @@
 
       camera.position.z = 10;
 
+      // counter for trig
+      var i = 0;
+
       var render = function () {
         requestAnimationFrame( render );
 
@@ -60,6 +64,10 @@
             if (object instanceof THREE.Mesh)
             {
               object.rotation.y += 0.005;
+
+              var color = pusher.color('hsv', [Math.round(i), 70, 70]).hex6()
+              object.material.color.setHex( color );
+              i += 0.01;
               object.scale.y = (j + 1) * (1 + frequencyAmplitudeArray[j]/512);
               j++;
             };
