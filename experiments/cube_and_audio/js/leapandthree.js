@@ -1,79 +1,6 @@
-var cube;
-
-
-
-
 $(document).ready(function() {
 
-var canvasElement = $("canvas")
-
-
-var controller = new Leap.Controller();
-controller.on("frame", function(frame){
-    if(frame.pointables.length > 0)
-    {
-        canvasElement.width = canvasElement.width; //clear
-        
-        //Get a pointable and normalize the tip position
-        var pointable = frame.pointables[0];
-        var interactionBox = frame.interactionBox;
-        var normalizedPosition = interactionBox.normalizePoint(pointable.tipPosition, true);
-        
-        // Convert the normalized coordinates to span the canvas
-        var canvasX = canvasElement.width * normalizedPosition[0];
-        var canvasY = canvasElement.height * (1 - normalizedPosition[1]);
-        //we can ignore z for a 2D context
-        
-        // displayArea.strokeText("(" + canvasX.toFixed(1) + ", " + canvasY.toFixed(1) + ")", canvasX, canvasY);
-    }
-});
-controller.connect();
-var position = function(x,y,z) { 
-  // debugger;
-  // console.log("X: " + x + " Y: " + y + " Z: " + z);
-
-  cube.position.x = x + window.innerWidth; 
-
-  cube.position.y = ( y - window.innerHeight / 2)  ;
-  // cube.position.y = parseFloat(y  - window.innerHeight) + 500;
-
-  cube.position.z = parseFloat(z);   
-// debugger;
-  // console.log(x, y, z); 
-  
-} 
-
-  window.output = $('#output');
-  Leap.loop({
-      hand: function(hand) {
-        var screenPosition = hand.screenPosition(hand.palmPosition);
-        // debugger;
-        // console.log(hand.palmPosition);
-        var outputContent = "x: " + (screenPosition[0].toPrecision(4)) + 'px' +
-          "        <br/>y: " + (screenPosition[1].toPrecision(4)) + 'px' +
-          "        <br/>z: " + (screenPosition[2].toPrecision(4)) + 'px';
-
-        var el = document.elementFromPoint(
-          hand.screenPosition()[0],
-          hand.screenPosition()[1]
-        );
-        output.html(outputContent);
-
-        var x = (hand.palmPosition[0].toPrecision(4));
-        var y = (hand.palmPosition[1].toPrecision(4));
-        var z = hand.palmPosition[2].toPrecision(4);
-
-
-        position(x, y, z); 
-
-      }
-
-    })
-    .use('screenPosition', {
-      scale: 0.25
-
-    });
-
+  // cube info 
 
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -83,24 +10,28 @@ var position = function(x,y,z) {
   document.body.appendChild(renderer.domElement);
 
 
-  var geometry = new THREE.BoxGeometry(100, 100, 100, 2, 2, 2);
-  var material = new THREE.MeshBasicMaterial({
-    color: 0xff00ff
-  });
+  var geometry = new THREE.BoxGeometry(50, 50, 50, 2, 2, 2);
+
+
+  var material = new THREE.MeshBasicMaterial( {color: 0x8796FF});
   cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
 
-  camera.position.x = -1; 
-  camera.position.y = -1;
-  camera.position.z = 500; 
+  var newColor; 
+  var cubeColor = function(newColor) {
+    cube.material.color.setHex(newColor); 
+  }; 
 
+  camera.position.x = 0;
+  camera.position.y = 0;
+  camera.position.z = 500;
 
 
   var render = function() {
 
     requestAnimationFrame(render);
-    
-    cube.scale.y = (1 + frequencyAmplitudeArray[0]/512); 
+
+    cube.scale.y = (1 + frequencyAmplitudeArray[0] / 512);
 
     cube.rotation.x += 0.01;
     cube.rotation.y += 0.01;
@@ -109,5 +40,142 @@ var position = function(x,y,z) {
   };
 
   render();
+
+  // end cube info 
+
+
+  // initializing the canvas 
+  var canvasElement = $("canvas")
+
+
+  // initializing the controller 
+  var controller = new Leap.Controller();
+  controller.on("frame", function(frame) {
+    if (frame.pointables.length > 0) {
+      canvasElement.width = canvasElement.width; //clear
+
+      //Get a pointable and normalize the tip position
+      var pointable = frame.pointables[0];
+      // setting the interaction box so it doesn't go outside of frame (i think i still need to clamp)
+      var interactionBox = frame.interactionBox;
+      // normalizing
+      var normalizedPosition = interactionBox.normalizePoint(pointable.tipPosition, true);
+
+      // Convert the normalized coordinates to span the canvas
+      var canvasX = canvasElement.width * normalizedPosition[0];
+      var canvasY = canvasElement.height * (1 - normalizedPosition[1]);
+
+      // displayArea.strokeText("(" + canvasX.toFixed(1) + ", " + canvasY.toFixed(1) + ")", canvasX, canvasY);
+    }
+  });
+
+  // tells you with gestures you are using 
+  var controller = Leap.loop({
+    enableGestures: true
+  }, function(frame) {
+    if (frame.valid && frame.gestures.length > 0) {
+      frame.gestures.forEach(function(gesture) {
+        switch (gesture.type) {
+          case "circle":
+            // console.log("Circle Gesture");
+            break;
+          case "keyTap":
+            // console.log("Key Tap Gesture");
+            break;
+          case "screenTap":
+            // console.log("Screen Tap Gesture");
+            break;
+          case "swipe":
+            console.log("Swipe Gesture");
+            break;
+        }
+      });
+    }
+
+    // Display Gesture object data
+    if (frame.gestures.length > 0) {
+      for (var i = 0; i < frame.gestures.length; i++) {
+        var gesture = frame.gestures[i];
+        if (gesture.type === "swipe") {
+          //Classify swipe as either horizontal or vertical
+          var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
+          //Classify as right-left or up-down
+          if (isHorizontal) {
+            if (gesture.direction[0] > 0) {
+              var swipeDirection = "right";
+              var newColor = 0xF5F29C;
+              cubeColor(newColor);
+            } else {
+              var swipeDirection = "left";
+              var newColor = 0xF53B84;
+              cubeColor(newColor);
+            }
+          } else { //vertical
+            if (gesture.direction[1] > 0) {
+              var swipeDirection = "up";
+              var newColor = 0xBC87FF;
+              cubeColor(newColor);
+            } else {
+              var swipeDirection = "down";
+              var newColor = 0xF5B89C;
+              cubeColor(newColor);
+            }
+          }
+          console.log(swipeDirection)
+
+        }
+      }
+    }
+  });
+
+
+  controller.connect();
+  var position = function(x, y, z) {
+
+    cube.position.x = (x + window.innerWidth);
+
+    cube.position.y = (y - window.innerHeight / 2);
+
+    cube.position.z = parseFloat(z);
+
+    // if (cube.position.x > 70) { 
+    //   cube.position.x = 70; 
+    // } 
+
+    // if (cube.position.x < 0) { 
+    //   cube.position.x = 0; 
+    // } 
+
+
+
+  }
+
+  window.output = $('#output');
+  Leap.loop({
+      hand: function(hand) {
+        var screenPosition = hand.screenPosition(hand.palmPosition);
+        var outputContent = "x: " + (screenPosition[0].toPrecision(4)) + 'px' +
+          "        <br/>y: " + (screenPosition[1].toPrecision(4)) + 'px' +
+          "        <br/>z: " + (screenPosition[2].toPrecision(4)) + 'px';
+
+        output.html(outputContent);
+
+        var x = (hand.palmPosition[0].toPrecision(4));
+        var y = (hand.palmPosition[1].toPrecision(4));
+        var z = (hand.palmPosition[2].toPrecision(4));
+
+
+        position(x, y, z);
+
+      }
+
+    })
+    .use('screenPosition', {
+      scale: 200
+
+    });
+
+
+
 
 });

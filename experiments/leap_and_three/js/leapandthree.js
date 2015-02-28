@@ -8,6 +8,8 @@ $(document).ready(function() {
 var canvasElement = $("canvas")
 
 
+
+
 var controller = new Leap.Controller();
 controller.on("frame", function(frame){
     if(frame.pointables.length > 0)
