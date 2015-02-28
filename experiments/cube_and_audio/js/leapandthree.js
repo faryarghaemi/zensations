@@ -97,7 +97,10 @@ var position = function(x,y,z) {
 
 
   var render = function() {
+
     requestAnimationFrame(render);
+    
+    cube.scale.y = (1 + frequencyAmplitudeArray[0]/512); 
 
     cube.rotation.x += 0.01;
     cube.rotation.y += 0.01;
