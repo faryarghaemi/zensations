@@ -42,9 +42,8 @@
         var color = pusher.color('hsv', [Math.round(i), 70, 70]).hex6();
         var material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
         var cube = new THREE.Mesh( geometry, material );
-        i += 0.1;
-        console.log(i);
         cube.material.color.setHex( color );
+        i += 0.1;
 
         // Very bad hard coded mouse position
         cube.position.x = mousePosition.x / 100 - 6;
@@ -64,16 +63,20 @@
           if (object instanceof THREE.Mesh) {
             object.rotation.x += 0.005;
             object.rotation.y += 0.005;
-            if (rectCount > 10) {
-              scene.remove(object);
-              rectCount--;
-            };
           };
         });
 
+        // Delete the last element. Could not use scene.traverse to do this.
+        for ( var k =  0; k < scene.children.length ; k++ ) {
+            var obj = scene.children[ k ];
+            if ( obj instanceof THREE.Mesh && rectCount >= 20) {
+              scene.remove(obj);
+              break;
+            }
+        }
+
         scene.add( cube );
         rectCount++;
-        console.log(rectCount);
 
         renderer.render(scene, camera);
       };
