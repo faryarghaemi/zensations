@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Leap, Three, Audio</title>
+  <title>Recorder</title>
   <style>
   canvas {
     margin-left: auto;
@@ -25,52 +25,39 @@
   <script src="js/three.min.js"></script>
   <script src="js/jquery.js"></script>
   <script src="js/underscore.js"></script>
+  <script src="js/controls.js"></script>
   <script src="js/audio.js"></script>
   <script src="js/leapandthree.js"></script>
   <script src="https://js.leapmotion.com/leap-0.6.4.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="js/leap.screen-position.js"></script>
+  <script src="https://js.leapmotion.com/leap-plugins-0.1.6.js"></script>
+  <script src="js/leap.playback-0.2.1.min.js"></script>
+
 </head>
 
 <body>
   <p id="controls">
     <input type="button" id="start" value="Start"> &nbsp; &nbsp;
     <input type="button" id="stop" value="Stop">
-
+    <input type="button" id="record" value="Record">
+    <input type="button" id="playback" value="Playback">
   </p>
   <div id="output" class="output"></div>
   <div id="cursor"></div>
 
+
   <script>
-  // var scene = new THREE.Scene();
-  // var camera = new THREE.PerspectiveCamera( 25, window.innerWidth/window.innerHeight, 0.1, 1000 );
-
-  // var renderer = new THREE.WebGLRenderer();
-  // renderer.setSize( window.innerWidth, window.innerHeight );
-  // document.body.appendChild( renderer.domElement );
-
-
-  // var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-  // var material = new THREE.MeshBasicMaterial( { color: 0xff00ff } );
-  // var cube = new THREE.Mesh( geometry, material );
-  // scene.add( cube );
-
-
-  // camera.position.y = -1; 
-  // camera.position.x = 3;
-  // camera.position.z = 10;
-
-  // var render = function () {
-  //   requestAnimationFrame( render );
-
-  //   cube.rotation.x += 0.01;
-  //   cube.rotation.y += 0.01;
-
-  //   renderer.render(scene, camera);
-  // };
-
-  // render();
+  Leap.loop({})
+    .use('playback', {
+      recording: 'recordings/example.json.lz',
+      pauseOnHand: true,
+      loop: true
+    })
+    .use('screenPosition');
+  window.controller = Leap.loopController;
   </script>
+
 
 
 </body>
