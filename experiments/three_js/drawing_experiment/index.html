@@ -34,12 +34,17 @@
 
       camera.position.z = 10;
       var rectCount = 0;
+      var i = 0; //counter for hue
 
       var render = function () {
         requestAnimationFrame( render );
         var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        var material = new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff } );
+        var color = pusher.color('hsv', [Math.round(i), 70, 70]).hex6();
+        var material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
         var cube = new THREE.Mesh( geometry, material );
+        i += 0.1;
+        console.log(i);
+        cube.material.color.setHex( color );
 
         // Very bad hard coded mouse position
         cube.position.x = mousePosition.x / 100 - 6;
