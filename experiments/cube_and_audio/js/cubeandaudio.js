@@ -13,14 +13,16 @@ $(document).ready(function() {
   var geometry = new THREE.BoxGeometry(50, 50, 50, 2, 2, 2);
 
 
-  var material = new THREE.MeshBasicMaterial( {color: 0x8796FF});
+  var material = new THREE.MeshBasicMaterial({
+    color: 0x8796FF
+  });
   cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
 
-  var newColor; 
+  var newColor;
   var cubeColor = function(newColor) {
-    cube.material.color.setHex(newColor); 
-  }; 
+    cube.material.color.setHex(newColor);
+  };
 
   camera.position.x = 0;
   camera.position.y = 0;
@@ -61,10 +63,11 @@ $(document).ready(function() {
       // normalizing
       var normalizedPosition = interactionBox.normalizePoint(pointable.tipPosition, true);
 
-      // Convert the normalized coordinates to span the canvas
+      // Convert the normalized coordinates to span the canvas (math in docs)
       var canvasX = canvasElement.width * normalizedPosition[0];
       var canvasY = canvasElement.height * (1 - normalizedPosition[1]);
 
+      // don't know what the code below does 
       // displayArea.strokeText("(" + canvasX.toFixed(1) + ", " + canvasY.toFixed(1) + ")", canvasX, canvasY);
     }
   });
@@ -93,6 +96,7 @@ $(document).ready(function() {
     }
 
     // Display Gesture object data
+    // also changing the color with swipe direction 
     if (frame.gestures.length > 0) {
       for (var i = 0; i < frame.gestures.length; i++) {
         var gesture = frame.gestures[i];
@@ -122,13 +126,13 @@ $(document).ready(function() {
             }
           }
           console.log(swipeDirection)
-
         }
       }
     }
   });
 
 
+  // changing the cube position in relation to hand position 
   controller.connect();
   var position = function(x, y, z) {
 
@@ -137,16 +141,6 @@ $(document).ready(function() {
     cube.position.y = (y - window.innerHeight / 2);
 
     cube.position.z = parseFloat(z);
-
-    // if (cube.position.x > 70) { 
-    //   cube.position.x = 70; 
-    // } 
-
-    // if (cube.position.x < 0) { 
-    //   cube.position.x = 0; 
-    // } 
-
-
 
   }
 
@@ -163,7 +157,6 @@ $(document).ready(function() {
         var x = (hand.palmPosition[0].toPrecision(4));
         var y = (hand.palmPosition[1].toPrecision(4));
         var z = (hand.palmPosition[2].toPrecision(4));
-
 
         position(x, y, z);
 
