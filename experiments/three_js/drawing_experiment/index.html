@@ -32,23 +32,43 @@
       renderer.setSize( window.innerWidth, window.innerHeight );
       document.body.appendChild( renderer.domElement );
 
-      
-      var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-      var material = new THREE.MeshBasicMaterial( { color: 0xff00ff } );
-      var cube = new THREE.Mesh( geometry, material );
-      scene.add( cube );
-
       camera.position.z = 10;
+      var rectCount = 0;
 
       var render = function () {
         requestAnimationFrame( render );
+        var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+        var material = new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff } );
+        var cube = new THREE.Mesh( geometry, material );
 
         // Very bad hard coded mouse position
         cube.position.x = mousePosition.x / 100 - 6;
         cube.position.y = mousePosition.y * - 1 / 100 + 1;
 
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
+        cube.rotation.x = Math.random() * 2 * Math.PI;
+        cube.rotation.y = Math.random() * 2 * Math.PI;
+        cube.rotation.z = Math.random() * 2 * Math.PI;
+
+        cube.scale.x = Math.random() + 0.5;
+        cube.scale.y = Math.random() + 0.5;
+        cube.scale.z = Math.random() + 0.5;
+
+
+        scene.traverse (function (object)
+        {
+          if (object instanceof THREE.Mesh) {
+            object.rotation.x += 0.005;
+            object.rotation.y += 0.005;
+            if (rectCount > 10) {
+              scene.remove(object);
+              rectCount--;
+            };
+          };
+        });
+
+        scene.add( cube );
+        rectCount++;
+        console.log(rectCount);
 
         renderer.render(scene, camera);
       };
