@@ -1,0 +1,160 @@
+<html>
+
+<head>
+  <title>Paint and Leap</title>
+  <style>
+  canvas {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    background-color: black;
+    max-width: 1024px;
+    max-height: 512px;
+  }
+  #controls,
+  h1 {
+    text-align: center;
+  }
+  #start,
+  #stop {
+    font-size: 16pt;
+  }
+  </style>
+  <script src="js/three.min.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/pusher.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/mouse.js"></script>
+  <script src="js/underscore.js"></script>
+  <script src="js/paintandleap.js"></script>
+  <script src="https://js.leapmotion.com/leap-0.6.4.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="js/leap.screen-position.js"></script>
+</head>
+
+<body>
+  <div id="output"></div>
+  <script>
+        // initializing the canvas 
+    var canvasElement = $("canvas")
+
+
+    // initializing the controller 
+    var controller = new Leap.Controller();
+    controller.on("frame", function(frame) {
+      if (frame.pointables.length > 0) {
+        canvasElement.width = canvasElement.width; //clear
+
+        //Get a pointable and normalize the tip position
+        var pointable = frame.pointables[0];
+        // setting the interaction box so it doesn't go outside of frame (i think i still need to clamp)
+        var interactionBox = frame.interactionBox;
+        // normalizing
+        var normalizedPosition = interactionBox.normalizePoint(pointable.tipPosition, true);
+
+        // Convert the normalized coordinates to span the canvas (math in docs)
+        var canvasX = canvasElement.width * normalizedPosition[0];
+        var canvasY = canvasElement.height * (1 - normalizedPosition[1]);
+
+      }
+    });
+
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+
+    camera.position.x = 0;
+    camera.position.y = 0;
+    camera.position.z = 20;
+    var rectCount = 0;
+    var i = 0; //counter for hue
+
+    var render = function() {
+      requestAnimationFrame(render);
+      var geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5, 2, 2, 2);
+      var color = pusher.color('hsv', [Math.round(i), 70, 70]).hex6();
+      var material = new THREE.MeshBasicMaterial({
+        color: 0xFFFFFF
+      });
+      var cube = new THREE.Mesh(geometry, material);
+      cube.material.color.setHex(color);
+      i += 0.1;
+
+
+      // Very bad hard coded mouse position
+      controller.connect();
+
+      var position = function(x, y, z) {
+        cube.position.x = x + window.innerWidth;
+        cube.position.y = (y - window.innerHeight / 2);
+        cube.position.z = parseFloat(z);
+      };
+
+      window.output = $('#output');
+      Leap.loop({
+          hand: function(hand) {
+            var screenPosition = hand.screenPosition(hand.palmPosition);
+            var outputContent = "x: " + (screenPosition[0].toPrecision(4)) + 'px' +
+              "        <br/>y: " + (screenPosition[1].toPrecision(4)) + 'px' +
+              "        <br/>z: " + (screenPosition[2].toPrecision(4)) + 'px';
+
+            output.html(outputContent);
+
+            var x = (hand.palmPosition[0].toPrecision(4));
+            var y = (hand.palmPosition[1].toPrecision(4));
+            var z = (hand.palmPosition[2].toPrecision(4));
+
+            position(x, y, z);
+
+          }
+
+        })
+        .use('screenPosition', {
+          scale: 200
+
+        });
+
+      cube.rotation.x = Math.random() * 2 * Math.PI;
+      cube.rotation.y = Math.random() * 2 * Math.PI;
+      cube.rotation.z = Math.random() * 2 * Math.PI;
+
+      cube.scale.x = Math.random() + 0.5;
+      cube.scale.y = Math.random() + 0.5;
+      cube.scale.z = Math.random() + 0.5;
+
+
+      scene.traverse(function(object) {
+        if (object instanceof THREE.Mesh) {
+          object.rotation.x += 0.005;
+          object.rotation.y += 0.005;
+        };
+      });
+
+      // Delete the last element. Could not use scene.traverse to do this.
+      for (var k = 0; k < scene.children.length; k++) {
+        var obj = scene.children[k];
+        if (obj instanceof THREE.Mesh && rectCount >= 20) {
+          scene.remove(obj);
+          break;
+        }
+      }
+
+      scene.add(cube);
+      rectCount++;
+
+      renderer.render(scene, camera);
+    
+    };
+  </script>
+  <p id="controls">
+    <input type="button" id="start" value="Start"> &nbsp; &nbsp;
+    <input type="button" id="stop" value="Stop">
+  </p>
+</body>
+
+</html>

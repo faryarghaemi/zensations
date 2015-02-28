@@ -31,17 +31,14 @@ controller.on("frame", function(frame){
 });
 controller.connect();
 var position = function(x,y,z) { 
-  // debugger;
-  // console.log("X: " + x + " Y: " + y + " Z: " + z);
+
 
   cube.position.x = x + window.innerWidth; 
 
   cube.position.y = ( y - window.innerHeight / 2)  ;
-  // cube.position.y = parseFloat(y  - window.innerHeight) + 500;
 
   cube.position.z = parseFloat(z);   
-// debugger;
-  // console.log(x, y, z); 
+
   
 } 
 
@@ -49,8 +46,7 @@ var position = function(x,y,z) {
   Leap.loop({
       hand: function(hand) {
         var screenPosition = hand.screenPosition(hand.palmPosition);
-        // debugger;
-        // console.log(hand.palmPosition);
+   
         var outputContent = "x: " + (screenPosition[0].toPrecision(4)) + 'px' +
           "        <br/>y: " + (screenPosition[1].toPrecision(4)) + 'px' +
           "        <br/>z: " + (screenPosition[2].toPrecision(4)) + 'px';
