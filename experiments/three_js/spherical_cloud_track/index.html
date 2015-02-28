@@ -1,0 +1,84 @@
+<html>
+  <head>
+    <title>Multiple Spheres</title>
+    <style>
+      canvas {
+          margin-left: auto;
+          margin-right: auto;
+          display: block;
+          background-color: black;
+          max-width: 1024px;
+          max-height: 512px;
+      }
+      #controls, h1 {
+        text-align: center;
+      }
+      #start, #stop {
+        font-size: 16pt;
+      }
+    </style>
+    <script src="js/three.min.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/pusher.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/mouse.js"></script>
+  </head>
+  <body>
+    <script>
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera( 25, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      document.body.appendChild( renderer.domElement );
+
+      camera.position.z = 10;
+      var ballCount = 0; //counter for spheres
+      var i = 0; //counter for hue
+
+      var render = function () {
+        requestAnimationFrame( render );
+        var geometry = new THREE.SphereGeometry( 0.2, 32, 32 );
+        var color = pusher.color('hsv', [Math.round(i), 70, 70]).hex6();
+        var material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
+        var sphere = new THREE.Mesh( geometry, material );
+        // Setting colour twice - ineffecient but couldn't get pusher output
+        // to work with MeshBasicMaterial
+        sphere.material.color.setHex( color );
+        i += 0.1;
+
+        // Very bad hard coded mouse position
+        sphere.position.x = mousePosition.x / 100 - 6;
+        sphere.position.y = mousePosition.y * - 1 / 100 + 1;
+
+        scene.traverse (function (object)
+        {
+          if (object instanceof THREE.Mesh) {
+            // Do something
+          };
+        });
+
+        // Delete the last element. Could not use scene.traverse to do this
+        // as it didn't like the object being deleted
+        for ( var k =  0; k < scene.children.length ; k++ ) {
+            var obj = scene.children[ k ];
+            if ( obj instanceof THREE.Mesh && ballCount >= 32) {
+              scene.remove(obj);
+              break;
+            }
+        }
+
+        scene.add( sphere );
+        ballCount++;
+
+        renderer.render(scene, camera);
+      };
+
+    </script>
+    <p id="controls">
+      <input type="button" id="start" value="Start">
+      &nbsp; &nbsp;
+      <input type="button" id="stop" value="Stop">
+    </p>
+  </body>
+</html>
