@@ -50,13 +50,20 @@
         // Very bad hard coded mouse position
         Cube.position.x = mousePosition.x / 100 - 6;
         Cube.position.y = mousePosition.y * - 1 / 100 + 1;
+        Cube.position.z = 2;
 
         scene.traverse (function (object)
         {
           if (object instanceof THREE.Mesh) {
-            object.scale.x *= 0.9;
-            object.scale.y *= 0.9;
-            object.scale.z *= 0.9;
+            // object.scale.x *= 0.98;
+            // object.scale.y *= 0.98;
+            // object.scale.z *= 0.98;
+
+            object.position.z -= 0.1;
+
+            object.rotation.x += 0.1;
+            object.rotation.y += 0.1;
+            object.rotation.z += 0.1;
           };
         });
 
@@ -64,7 +71,7 @@
         // as it didn't like the object being deleted
         for ( var k =  0; k < scene.children.length ; k++ ) {
             var obj = scene.children[ k ];
-            if ( obj instanceof THREE.Mesh && ballCount >= 32) {
+            if ( obj instanceof THREE.Mesh && ballCount >= 2000) {
               scene.remove(obj);
               break;
             }
