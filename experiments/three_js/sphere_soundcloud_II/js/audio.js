@@ -2,6 +2,9 @@
 
 var music_playing = false;
 
+// Define form URL
+var formUrl = 'https://soundcloud.com/actuallygrimes/d-r-o-m-e-whoknoidontno';
+
 // Browser support hacks
 
 window.AudioContext = (function(){
@@ -12,7 +15,13 @@ window.AudioContext = (function(){
 
 $(document).ready(function() {
 
-  // URL for streaming soundcloud
+  // Handle the form submit event to load the new URL
+  form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      formUrl = document.getElementById('input').value;
+      searchSoundCloud(formUrl).then(createAudio);
+      // Add error checking for empty/dudd form(URL)
+  });
 
   // The AudioContext is the primary 'container' for all your audio node objects.
   try {
@@ -30,7 +39,7 @@ $(document).ready(function() {
     })
   };
 
-  searchSoundCloud('https://soundcloud.com/actuallygrimes/d-r-o-m-e-whoknoidontno').then(function(result) {
+  var createAudio = function(result) {
     var streamUrl = result.stream_url;
   // Creating an Audio object.
 
@@ -60,7 +69,6 @@ $(document).ready(function() {
     // Creates a ScriptProcessorNode used for direct audio processing.
     var javascriptNode = audioContext.createScriptProcessor(sampleSize, 1, 1);
 
-
     // Connecting the nodes
       /// AnalyserNode needs to be connected to both the destination (speakers)!
       /// Javascript node needs to be connected from the analyserNode and to the
@@ -69,7 +77,6 @@ $(document).ready(function() {
     analyserNode.connect(javascriptNode);
     analyserNode.connect(audioContext.destination);
     javascriptNode.connect(audioContext.destination);
-
 
     // Uint8Array = Unsigned Integer 8bit byte Array
     // Values between 0-255 will be pushed into this array
@@ -102,7 +109,7 @@ $(document).ready(function() {
       audio0.currentTime = 0;
       music_playing = false;
     });
-  }); 
+  }; 
 
 });
 
