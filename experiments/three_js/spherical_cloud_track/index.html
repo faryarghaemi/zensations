@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Multiple Spheres</title>
+    <title>Multiple Cubes</title>
     <style>
       canvas {
           margin-left: auto;
@@ -38,23 +38,25 @@
 
       var render = function () {
         requestAnimationFrame( render );
-        var geometry = new THREE.SphereGeometry( 0.2, 32, 32 );
+        var geometry = new THREE.BoxGeometry( 0.5, 0.5, 0.5 );
         var color = pusher.color('hsv', [Math.round(i), 70, 70]).hex6();
         var material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
-        var sphere = new THREE.Mesh( geometry, material );
+        var Cube = new THREE.Mesh( geometry, material );
         // Setting colour twice - ineffecient but couldn't get pusher output
         // to work with MeshBasicMaterial
-        sphere.material.color.setHex( color );
+        Cube.material.color.setHex( color );
         i += 0.1;
 
         // Very bad hard coded mouse position
-        sphere.position.x = mousePosition.x / 100 - 6;
-        sphere.position.y = mousePosition.y * - 1 / 100 + 1;
+        Cube.position.x = mousePosition.x / 100 - 6;
+        Cube.position.y = mousePosition.y * - 1 / 100 + 1;
 
         scene.traverse (function (object)
         {
           if (object instanceof THREE.Mesh) {
-            // Do something
+            object.scale.x *= 0.9;
+            object.scale.y *= 0.9;
+            object.scale.z *= 0.9;
           };
         });
 
@@ -68,7 +70,7 @@
             }
         }
 
-        scene.add( sphere );
+        scene.add( Cube );
         ballCount++;
 
         renderer.render(scene, camera);
