@@ -38,8 +38,12 @@
       var j = 0; //counter for freq channel
 
       var render = function () {
-        requestAnimationFrame( render );
-        var radius   = 4,
+        // Throttle frame rate
+        setTimeout( function() {
+          requestAnimationFrame( render );
+        }, 1000 / 30 );
+
+        var radius   = 2,
         segments = 64,
         material = new THREE.LineBasicMaterial( { color: 0x0000ff } ),
         geometry = new THREE.CircleGeometry( radius, segments );
@@ -63,20 +67,26 @@
         {
           if (object instanceof THREE.Line) {
 
+            //Cycle through colours
             object.position.z -= 0.05;
             var delta = frequencyAmplitudeArray[5];
             var hsl = object.material.color.getHSL();
             object.material.color.setHSL(hsl.h,delta/255 * 0.8, hsl.l);
 
-            var scaleFactor = frequencyAmplitudeArray[j % 15]/25500 + 0.994;
-            object.scale.x *= scaleFactor;
-            object.scale.y *= scaleFactor;
-            j++;
+            // Pulse to the music
+            if (object.position.z < 0.5) {
+              var scaleFactor = frequencyAmplitudeArray[j % 15]/25500 + 0.995;
+              object.scale.x *= scaleFactor;
+              object.scale.y *= scaleFactor;
+              j++;
+            }
 
+            // Rotate rings
             circle.rotation.x += 0.1;
             circle.rotation.y += 0.01;
 
-            object.material.color.offsetHSL(0,-0.001, -0.003);
+            // Make objects in the distance darker
+            object.material.color.offsetHSL(0,-0.001, -0.001);
 
           };
         });
@@ -85,8 +95,9 @@
         // as it didn't like the object being deleted
         for ( var k =  0; k < scene.children.length ; k++ ) {
             var obj = scene.children[ k ];
-            if ( obj instanceof THREE.Mesh && ballCount >= 70) {
+            if ( obj instanceof THREE.Mesh && ballCount >= 100) {
               scene.remove(obj);
+              ballCount--;
               break;
             }
         }
