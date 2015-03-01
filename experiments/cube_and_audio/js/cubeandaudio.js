@@ -45,6 +45,80 @@ $(document).ready(function() {
 
   // end cube info 
 
+  // info for number of fingers and hands 
+
+  function concatData(id, data) {
+    return id + ": " + data + "<br>";
+  }
+
+  function getFingerName(fingerType) {
+    switch (fingerType) {
+      case 0:
+        return 'Thumb';
+        break;
+
+      case 1:
+        return 'Index';
+        break;
+
+      case 2:
+        return 'Middle';
+        break;
+
+      case 3:
+        return 'Ring';
+        break;
+
+      case 4:
+        return 'Pinky';
+        break;
+    }
+  }
+
+  function concatJointPosition(id, position) {
+    return id + ": " + position[0] + ", " + position[1] + ", " + position[2] + "<br>";
+  }
+
+
+  var output_two = document.getElementById('output_two');
+  var frameString = "",
+    handString = "",
+    fingerString = "";
+  var hand, finger;
+
+  // Leap.loop uses browser's requestAnimationFrame
+  var options = {
+    enableGestures: true
+  };
+
+  // Main Leap Loop
+  Leap.loop(options, function(frame) {
+    frameString = concatData("frame_id", frame.id);
+    frameString += concatData("num_hands", frame.hands.length);
+    frameString += concatData("num_fingers", frame.fingers.length);
+    frameString += "<br>";
+
+    // Showcase some new V2 features
+    for (var i = 0, len = frame.hands.length; i < len; i++) {
+      hand = frame.hands[i];
+      handString = concatData("hand_type", hand.type);
+      handString += concatData("confidence", hand.confidence);
+      handString += concatData("pinch_strength", hand.pinchStrength);
+      handString += concatData("grab_strength", hand.grabStrength);
+
+      handString += '<br>';
+
+      frameString += handString;
+      frameString += fingerString;
+    }
+
+    output_two.innerHTML = frameString;
+
+  });
+
+// end of info for number of fingers and hands 
+
+
 
   // initializing the canvas 
   var canvasElement = $("canvas")
