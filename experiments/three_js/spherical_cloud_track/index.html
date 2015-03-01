@@ -35,6 +35,7 @@
       camera.position.z = 10;
       var ballCount = 0; //counter for spheres
       var i = 0; //counter for hue
+      var j = 0; //counter for freq channel
 
       var render = function () {
         requestAnimationFrame( render );
@@ -62,10 +63,15 @@
         {
           if (object instanceof THREE.Line) {
 
-            object.position.z -= 0.1;
+            object.position.z -= 0.05;
             var delta = frequencyAmplitudeArray[5];
             var hsl = object.material.color.getHSL();
             object.material.color.setHSL(hsl.h,delta/255 * 0.8, hsl.l);
+
+            var scaleFactor = frequencyAmplitudeArray[j % 15]/25500 + 0.994;
+            object.scale.x *= scaleFactor;
+            object.scale.y *= scaleFactor;
+            j++;
 
             circle.rotation.x += 0.1;
             circle.rotation.y += 0.01;
@@ -85,8 +91,12 @@
             }
         }
 
-        scene.add( circle );
-        ballCount++;
+        if (frequencyAmplitudeArray[5]) {
+          scene.add( circle );
+          ballCount++;
+        };
+
+        console.log(scene.children.length);
 
         renderer.render(scene, camera);
       };
