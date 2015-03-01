@@ -63,11 +63,14 @@
           if (object instanceof THREE.Line) {
 
             object.position.z -= 0.1;
+            var delta = frequencyAmplitudeArray[5];
+            var hsl = object.material.color.getHSL();
+            object.material.color.setHSL(hsl.h,delta/255 * 0.8, hsl.l);
 
             circle.rotation.x += 0.1;
             circle.rotation.y += 0.01;
 
-            object.material.color.offsetHSL(0,-0.001, -0.001);
+            object.material.color.offsetHSL(0,-0.001, -0.003);
 
           };
         });

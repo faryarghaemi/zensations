@@ -32,9 +32,10 @@ $(document).ready(function() {
   // Initalising the Analyser Node object.
   var analyserNode = audioContext.createAnalyser();
   // Setting the bin count (number of data bands).
-  analyserNode.fftSize = 32; // Must be ** 2, and min 32.
+  analyserNode.fftSize = 64; // Must be ** 2, and min 32.
+  analyserNode.frequencyBinCount = 64;
   //
-  analyserNode.smoothingTimeConstant = 0.0; //
+  analyserNode.smoothingTimeConstant = 0.8; //
   // number of samples to collect before analyzing data.
   sampleSize = 1024
 
