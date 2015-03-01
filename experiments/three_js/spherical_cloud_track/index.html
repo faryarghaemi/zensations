@@ -43,6 +43,7 @@
           requestAnimationFrame( render );
         }, 1000 / 30 );
 
+        // Define circle
         var radius   = 2,
         segments = 64,
         material = new THREE.LineBasicMaterial( { color: 0x0000ff } ),
@@ -52,7 +53,7 @@
         // to work with MeshBasicMaterial
         circle = new THREE.Line( geometry, material )
 
-        // Setting colour twice - ineffecient but couldn't get pusher output
+        // Setting colour twice - Ineffient
         // You can do this directly without pusher - see setHSL in three.js
         var color = pusher.color('hsv', [Math.round(i), 70, 100]).hex6();
         circle.material.color.setHex( color );
@@ -74,10 +75,12 @@
             object.material.color.setHSL(hsl.h,delta/255 * 0.8, hsl.l);
 
             // Pulse to the music
+            // Dealing with small numbers because circles are very sensitive
+            // to changes in size
             if (object.position.z < 0.5) {
-              var scaleFactor = frequencyAmplitudeArray[j % 15]/25500 + 0.995;
-              object.scale.x *= scaleFactor;
-              object.scale.y *= scaleFactor;
+              var scaleFactor = frequencyAmplitudeArray[j % 15]/25500;
+              object.scale.x *= scaleFactor + 0.997;
+              object.scale.y *= scaleFactor + 0.995;
               j++;
             }
 
@@ -91,17 +94,7 @@
           };
         });
 
-        // Delete the last element. Could not use scene.traverse to do this
-        // as it didn't like the object being deleted
-        for ( var k =  0; k < scene.children.length ; k++ ) {
-            var obj = scene.children[ k ];
-            if ( obj instanceof THREE.Mesh && ballCount >= 100) {
-              scene.remove(obj);
-              ballCount--;
-              break;
-            }
-        }
-
+        // Don't add a new circle if music is not playing
         if (frequencyAmplitudeArray[5]) {
           scene.add( circle );
           ballCount++;
