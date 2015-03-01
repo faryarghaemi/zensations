@@ -111,7 +111,6 @@ $(document).ready(function() {
       audio0.currentTime = 0;
       music_playing = false;
     });
-  }; 
-
+  };
+  
 });
-
