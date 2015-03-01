@@ -253,11 +253,13 @@ $(document).ready(function() {
   controller.connect();
   var position = function(x, y, z) {
 
-    cube.position.x = (x + window.innerWidth);
 
-    cube.position.y = (y - window.innerHeight / 2);
+    cube.position.x = parseFloat(x);
+
+    cube.position.y = parseFloat(y) - window.innerHeight / 2;
 
     cube.position.z = parseFloat(z);
+    
 
   }
 
@@ -273,8 +275,9 @@ $(document).ready(function() {
 
           // outputRight.html(outputContentRight);
 
+
         } else if (hand.type === "left") {
-          // debugger
+         
           var screenPositionLeft = hand.screenPosition(hand.palmPosition);
           // var outputContentLeft = "xLeft: " + (screenPositionLeft[0].toPrecision(4)) + 'px' +
           //   "        yLeft: " + (screenPositionLeft[1].toPrecision(4)) + 'px' +
@@ -282,41 +285,36 @@ $(document).ready(function() {
 
           // outputLeft.html(outputContentLeft);
 
+
         }
-          
-        // debugger
-        if (hand.type === "right") {
-          // debugger
-          var xRight = parseFloat(hand.palmPosition[0].toPrecision(4));
-          var yRight = parseFloat(hand.palmPosition[1].toPrecision(4));
-          var zRight = parseFloat(hand.palmPosition[2].toPrecision(4));
-        } else if (hand.type === "left") {
-          // debugger  
 
-          var xLeft = parseFloat(hand.palmPosition[0].toPrecision(4));
-          var yLeft = parseFloat(hand.palmPosition[1].toPrecision(4));
-          var zLeft = parseFloat(hand.palmPosition[2].toPrecision(4));
-        }
-         
 
-        if (hand.type === "right" && hand.type === "left") {
-          debugger
+        var handType = function() {
+          Leap.loop(options, function(frame) {
+            if (frame.hands.length === 2) {
+              var x = ((parseFloat(frame.hands[0].palmPosition[0].toPrecision(4))) + (parseFloat(frame.hands[1].palmPosition[0].toPrecision(4))) / 2);
+              var y = ((parseFloat(frame.hands[0].palmPosition[1].toPrecision(4))) + (parseFloat(frame.hands[1].palmPosition[1].toPrecision(4))) / 2);
 
-          var x = parseFloat(( xRight + xLeft ) / 2 ); 
-          var y = parseFloat(( yRight + yLeft ) / 2 ); 
-          var z = parseFloat(( zRight + zLeft ) / 2 ); 
+              var z = ((parseFloat(frame.hands[0].palmPosition[2].toPrecision(4))) + (parseFloat(frame.hands[1].palmPosition[2].toPrecision(4))) / 2);
 
-          position(x, y, z);
+              position(x, y, z);
 
-        } else if (hand.type === "right" || hand.type === "left") {
-          debugger
+            } else if (frame.hands.length === 1) {
 
-          var x = parseFloat(hand.palmPosition[0].toPrecision(4));
-          var y = parseFloat(hand.palmPosition[1].toPrecision(4));
-          var z = parseFloat(hand.palmPosition[2].toPrecision(4));
+              var x = (hand.palmPosition[0].toPrecision(4));
+              var y = (hand.palmPosition[1].toPrecision(4));
+              var z = (hand.palmPosition[2].toPrecision(4));
 
-          position(x, y, z);
-        }
+              position(x, y, z);
+            }
+
+
+
+          });
+
+        };
+
+        handType();
 
       }
 
@@ -326,17 +324,10 @@ $(document).ready(function() {
 
     });
 
-  // frameId = frame.id;
-  // frameHandsLength = frame.hands.length;
-  // frameFingersLength = frame.fingers.length;
-  // handString = concatData("hand_type", hand.type);
-  // handString += concatData("confidence", hand.confidence);
-  // handString += concatData("pinch_strength", hand.pinchStrength);
-  // handString += concatData("grab_strength", hand.grabStrength);
 
 
   // initializing the canvas 
-  var canvasElement = $("canvas"); 
+  var canvasElement = $("canvas");
 
 
 

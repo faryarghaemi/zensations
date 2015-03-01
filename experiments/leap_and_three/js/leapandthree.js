@@ -5,48 +5,47 @@ var cube;
 
 $(document).ready(function() {
 
-var canvasElement = $("canvas")
+  var canvasElement = $("canvas")
 
 
 
 
-var controller = new Leap.Controller();
-controller.on("frame", function(frame){
-    if(frame.pointables.length > 0)
-    {
-        canvasElement.width = canvasElement.width; //clear
-        
-        //Get a pointable and normalize the tip position
-        var pointable = frame.pointables[0];
-        var interactionBox = frame.interactionBox;
-        var normalizedPosition = interactionBox.normalizePoint(pointable.tipPosition, true);
-        
-        // Convert the normalized coordinates to span the canvas
-        var canvasX = canvasElement.width * normalizedPosition[0];
-        var canvasY = canvasElement.height * (1 - normalizedPosition[1]);
-        //we can ignore z for a 2D context
-        
-        // displayArea.strokeText("(" + canvasX.toFixed(1) + ", " + canvasY.toFixed(1) + ")", canvasX, canvasY);
+  var controller = new Leap.Controller();
+  controller.on("frame", function(frame) {
+    if (frame.pointables.length > 0) {
+      canvasElement.width = canvasElement.width; //clear
+
+      //Get a pointable and normalize the tip position
+      var pointable = frame.pointables[0];
+      var interactionBox = frame.interactionBox;
+      var normalizedPosition = interactionBox.normalizePoint(pointable.tipPosition, true);
+
+      // Convert the normalized coordinates to span the canvas
+      var canvasX = canvasElement.width * normalizedPosition[0];
+      var canvasY = canvasElement.height * (1 - normalizedPosition[1]);
+      //we can ignore z for a 2D context
+
+      // displayArea.strokeText("(" + canvasX.toFixed(1) + ", " + canvasY.toFixed(1) + ")", canvasX, canvasY);
     }
-});
-controller.connect();
-var position = function(x,y,z) { 
+  });
+  controller.connect();
+  var position = function(x, y, z) {
 
 
-  cube.position.x = x + window.innerWidth; 
+    cube.position.x = parseFloat(x);
 
-  cube.position.y = ( y - window.innerHeight / 2)  ;
+    cube.position.y = parseFloat(y) - window.innerHeight / 2;
 
-  cube.position.z = parseFloat(z);   
+    cube.position.z = parseFloat(z);
+    // debugger
 
-  
-} 
+  }
 
   window.output = $('#output');
   Leap.loop({
       hand: function(hand) {
         var screenPosition = hand.screenPosition(hand.palmPosition);
-   
+
         var outputContent = "x: " + (screenPosition[0].toPrecision(4)) + 'px' +
           "        <br/>y: " + (screenPosition[1].toPrecision(4)) + 'px' +
           "        <br/>z: " + (screenPosition[2].toPrecision(4)) + 'px';
@@ -62,7 +61,7 @@ var position = function(x,y,z) {
         var z = hand.palmPosition[2].toPrecision(4);
 
 
-        position(x, y, z); 
+        position(x, y, z);
 
       }
 
@@ -88,9 +87,9 @@ var position = function(x,y,z) {
   cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
 
-  camera.position.x = -1; 
+  camera.position.x = -1;
   camera.position.y = -1;
-  camera.position.z = 500; 
+  camera.position.z = 500;
 
 
 
