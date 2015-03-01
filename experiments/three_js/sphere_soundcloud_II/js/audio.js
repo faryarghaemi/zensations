@@ -2,9 +2,6 @@
 
 var music_playing = false;
 
-// Define form URL
-var formUrl = 'https://soundcloud.com/actuallygrimes/d-r-o-m-e-whoknoidontno';
-
 // Browser support hacks
 
 window.AudioContext = (function(){
@@ -14,6 +11,9 @@ window.AudioContext = (function(){
 })();
 
 $(document).ready(function() {
+
+  // Define default formUrl
+  var formUrl = 'https://soundcloud.com/actuallygrimes/d-r-o-m-e-whoknoidontno';
 
   // Handle the form submit event to load the new URL
   form.addEventListener('submit', function(e) {
@@ -40,9 +40,11 @@ $(document).ready(function() {
   };
 
   var createAudio = function(result) {
+    
+    // Define sreamUrl
     var streamUrl = result.stream_url;
-  // Creating an Audio object.
-
+    
+    // Creating an Audio object.
     var audio0 = new Audio(),
         source,
         // `stream_url` you'd get from 
