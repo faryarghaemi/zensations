@@ -9,20 +9,56 @@ $(document).ready(function() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-
   var geometry = new THREE.BoxGeometry(50, 50, 50, 2, 2, 2);
 
+  // each cube side gets another color
+  var cubeMaterials = [
+    new THREE.MeshBasicMaterial({
+      color: 0x33AA55,
+      transparent: true,
+      opacity: 0.8
+    }),
+    new THREE.MeshBasicMaterial({
+      color: 0x55CC00,
+      transparent: true,
+      opacity: 0.8
+    }),
+    new THREE.MeshBasicMaterial({
+      color: 0x669999,
+      transparent: true,
+      opacity: 0.8
+    }),
+    new THREE.MeshBasicMaterial({
+      color: 0x801515,
+      transparent: true,
+      opacity: 0.8
+    }),
+    new THREE.MeshBasicMaterial({
+      color: 0xD49A6A,
+      transparent: true,
+      opacity: 0.8
+    }),
+    new THREE.MeshBasicMaterial({
+      color: 0x55AA55,
+      transparent: true,
+      opacity: 0.8
+    }),
+  ];
 
-  var material = new THREE.MeshBasicMaterial({
-    color: 0x8796FF
-  });
-  cube = new THREE.Mesh(geometry, material);
+  var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
+  // var cube = new THREE.Mesh(geometry, cubeMaterial);
+
+  // var material = new THREE.MeshBasicMaterial({
+  //   color: 0x8796FF
+  // });
+
+  cube = new THREE.Mesh(geometry, cubeMaterial);
   scene.add(cube);
 
-  var newColor;
-  var cubeColor = function(newColor) {
-    cube.material.color.setHex(newColor);
-  };
+  // var newColor;
+  // var cubeColor = function(newColor) {
+  //   cube.material.color.setHex(newColor);
+  // };
 
   camera.position.x = 0;
   camera.position.y = 0;
@@ -92,36 +128,43 @@ $(document).ready(function() {
   };
 
   // Main Leap Loop
-  Leap.loop(options, function(frame) {
-    frameString = concatData("frame_id", frame.id);
-    frameString += concatData("num_hands", frame.hands.length);
-    frameString += concatData("num_fingers", frame.fingers.length);
-    frameString += "<br>";
+  var handNumber = function() {
+    Leap.loop(options, function(frame) {
+      frameId = frame.id;
+      frameHandsLength = frame.hands.length;
+      frameFingersLength = frame.fingers.length;
 
-    // Showcase some new V2 features
-    for (var i = 0, len = frame.hands.length; i < len; i++) {
-      hand = frame.hands[i];
-      handString = concatData("hand_type", hand.type);
-      handString += concatData("confidence", hand.confidence);
-      handString += concatData("pinch_strength", hand.pinchStrength);
-      handString += concatData("grab_strength", hand.grabStrength);
+      frameString = concatData("frame_id", frameId);
+      frameString += concatData("num_hands", frameHandsLength);
+      frameString += concatData("num_fingers", frameFingersLength);
+      frameString += "<br>";
 
-      handString += '<br>';
+      // Showcase some new V2 features
+      for (var i = 0, len = frame.hands.length; i < len; i++) {
+        hand = frame.hands[i];
+        handString = concatData("hand_type", hand.type);
+        handString += concatData("confidence", hand.confidence);
+        handString += concatData("pinch_strength", hand.pinchStrength);
+        handString += concatData("grab_strength", hand.grabStrength);
 
-      frameString += handString;
-      frameString += fingerString;
-    }
+        handString += '<br>';
 
-    output_two.innerHTML = frameString;
+        frameString += handString;
+        frameString += fingerString;
+      }
 
-  });
+      output_two.innerHTML = frameString;
 
-// end of info for number of fingers and hands 
+    });
+
+  };
+
+  handNumber();
+
+  // end of info for number of fingers and hands 
 
 
 
-  // initializing the canvas 
-  var canvasElement = $("canvas")
 
 
   // initializing the controller 
@@ -142,7 +185,7 @@ $(document).ready(function() {
       var canvasY = canvasElement.height * (1 - normalizedPosition[1]);
 
       // don't know what the code below does 
-      // displayArea.strokeText("(" + canvasX.toFixed(1) + ", " + canvasY.toFixed(1) + ")", canvasX, canvasY);
+      displayArea.strokeText("(" + canvasX.toFixed(1) + ", " + canvasY.toFixed(1) + ")", canvasX, canvasY);
     }
   });
 
@@ -171,38 +214,38 @@ $(document).ready(function() {
 
     // Display Gesture object data
     // also changing the color with swipe direction 
-    if (frame.gestures.length > 0) {
-      for (var i = 0; i < frame.gestures.length; i++) {
-        var gesture = frame.gestures[i];
-        if (gesture.type === "swipe") {
-          //Classify swipe as either horizontal or vertical
-          var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
-          //Classify as right-left or up-down
-          if (isHorizontal) {
-            if (gesture.direction[0] > 0) {
-              var swipeDirection = "right";
-              var newColor = 0xF5F29C;
-              cubeColor(newColor);
-            } else {
-              var swipeDirection = "left";
-              var newColor = 0xF53B84;
-              cubeColor(newColor);
-            }
-          } else { //vertical
-            if (gesture.direction[1] > 0) {
-              var swipeDirection = "up";
-              var newColor = 0xBC87FF;
-              cubeColor(newColor);
-            } else {
-              var swipeDirection = "down";
-              var newColor = 0xF5B89C;
-              cubeColor(newColor);
-            }
-          }
-          console.log(swipeDirection)
-        }
-      }
-    }
+    // if (frame.gestures.length > 0) {
+    //   for (var i = 0; i < frame.gestures.length; i++) {
+    //     var gesture = frame.gestures[i];
+    //     if (gesture.type === "swipe") {
+    //       //Classify swipe as either horizontal or vertical
+    //       var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
+    //       //Classify as right-left or up-down
+    //       if (isHorizontal) {
+    //         if (gesture.direction[0] > 0) {
+    //           var swipeDirection = "right";
+    //           var newColor = 0xF5F29C;
+    //           cubeColor(newColor);
+    //         } else {
+    //           var swipeDirection = "left";
+    //           var newColor = 0xF53B84;
+    //           cubeColor(newColor);
+    //         }
+    //       } else { //vertical
+    //         if (gesture.direction[1] > 0) {
+    //           var swipeDirection = "up";
+    //           var newColor = 0xBC87FF;
+    //           cubeColor(newColor);
+    //         } else {
+    //           var swipeDirection = "down";
+    //           var newColor = 0xF5B89C;
+    //           cubeColor(newColor);
+    //         }
+    //       }
+    //       console.log(swipeDirection)
+    //     }
+    //   }
+    // }
   });
 
 
@@ -218,21 +261,62 @@ $(document).ready(function() {
 
   }
 
-  window.output = $('#output');
+  window.outputRight = $('#outputRight');
+  window.outputLeft = $('#outputLeft');
   Leap.loop({
       hand: function(hand) {
-        var screenPosition = hand.screenPosition(hand.palmPosition);
-        var outputContent = "x: " + (screenPosition[0].toPrecision(4)) + 'px' +
-          "        <br/>y: " + (screenPosition[1].toPrecision(4)) + 'px' +
-          "        <br/>z: " + (screenPosition[2].toPrecision(4)) + 'px';
+        if (hand.type === "right") {
+          var screenPositionRight = hand.screenPosition(hand.palmPosition);
+          // var outputContentRight = "xRight: " + (screenPositionRight[0].toPrecision(4)) + 'px' +
+          //   "        yRight: " + (screenPositionRight[1].toPrecision(4)) + 'px' +
+          //   "        zRight: " + (screenPositionRight[2].toPrecision(4)) + 'px';
 
-        output.html(outputContent);
+          // outputRight.html(outputContentRight);
 
-        var x = (hand.palmPosition[0].toPrecision(4));
-        var y = (hand.palmPosition[1].toPrecision(4));
-        var z = (hand.palmPosition[2].toPrecision(4));
+        } else if (hand.type === "left") {
+          // debugger
+          var screenPositionLeft = hand.screenPosition(hand.palmPosition);
+          // var outputContentLeft = "xLeft: " + (screenPositionLeft[0].toPrecision(4)) + 'px' +
+          //   "        yLeft: " + (screenPositionLeft[1].toPrecision(4)) + 'px' +
+          //   "        zLeft: " + (screenPositionLeft[2].toPrecision(4)) + 'px';
 
-        position(x, y, z);
+          // outputLeft.html(outputContentLeft);
+
+        }
+          
+        // debugger
+        if (hand.type === "right") {
+          // debugger
+          var xRight = parseFloat(hand.palmPosition[0].toPrecision(4));
+          var yRight = parseFloat(hand.palmPosition[1].toPrecision(4));
+          var zRight = parseFloat(hand.palmPosition[2].toPrecision(4));
+        } else if (hand.type === "left") {
+          // debugger  
+
+          var xLeft = parseFloat(hand.palmPosition[0].toPrecision(4));
+          var yLeft = parseFloat(hand.palmPosition[1].toPrecision(4));
+          var zLeft = parseFloat(hand.palmPosition[2].toPrecision(4));
+        }
+         
+
+        if (hand.type === "right" && hand.type === "left") {
+          debugger
+
+          var x = parseFloat(( xRight + xLeft ) / 2 ); 
+          var y = parseFloat(( yRight + yLeft ) / 2 ); 
+          var z = parseFloat(( zRight + zLeft ) / 2 ); 
+
+          position(x, y, z);
+
+        } else if (hand.type === "right" || hand.type === "left") {
+          debugger
+
+          var x = parseFloat(hand.palmPosition[0].toPrecision(4));
+          var y = parseFloat(hand.palmPosition[1].toPrecision(4));
+          var z = parseFloat(hand.palmPosition[2].toPrecision(4));
+
+          position(x, y, z);
+        }
 
       }
 
@@ -242,6 +326,17 @@ $(document).ready(function() {
 
     });
 
+  // frameId = frame.id;
+  // frameHandsLength = frame.hands.length;
+  // frameFingersLength = frame.fingers.length;
+  // handString = concatData("hand_type", hand.type);
+  // handString += concatData("confidence", hand.confidence);
+  // handString += concatData("pinch_strength", hand.pinchStrength);
+  // handString += concatData("grab_strength", hand.grabStrength);
+
+
+  // initializing the canvas 
+  var canvasElement = $("canvas"); 
 
 
 

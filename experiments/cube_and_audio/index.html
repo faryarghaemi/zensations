@@ -4,24 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Leap, Three, Audio</title>
-  <style>
-  canvas {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    background-color: black;
-    max-width: 1024px;
-    max-height: 512px;
-  }
-  #controls,
-  h1 {
-    text-align: center;
-  }
-  #start,
-  #stop {
-    font-size: 16pt;
-  }
-  </style>
+
   <script src="js/three.min.js"></script>
   <script src="js/jquery.js"></script>
   <script src="js/underscore.js"></script>
@@ -33,14 +16,6 @@
 </head>
 
 <body>
-  <p id="controls">
-    <input type="button" id="start" value="Start"> &nbsp; &nbsp;
-    <input type="button" id="stop" value="Stop">
-
-  </p>
-  <div id="output" class="output"></div>
-  <div id="output_two"></div>
-  <div id="cursor"></div>
 
   <script>
   // var scene = new THREE.Scene();
@@ -72,7 +47,33 @@
 
   // render();
   </script>
+  <style>
+  canvas {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    background-color: black;
+    max-width: 1024px;
+    max-height: 512px;
+  }
+  #controls,
+  h1 {
+    text-align: center;
+  }
+  #start,
+  #stop {
+    font-size: 16pt;
+  }
+  </style>
 
+  <p id="controls">
+    <input type="button" id="start" value="Start"> &nbsp; &nbsp;
+    <input type="button" id="stop" value="Stop">
+  </p>
+  <div id="outputRight" class="output"></div>
+  <div id="outputLeft" class="output"></div>
+  <div id="output_two"></div>
+  <div id="cursor"></div>
 
 </body>
 
