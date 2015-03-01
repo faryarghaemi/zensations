@@ -44,7 +44,7 @@
         }, 1000 / 30 );
 
         // Define circle
-        var radius   = 2,
+        var radius   = 4,
         segments = 64,
         material = new THREE.LineBasicMaterial( { color: 0x0000ff } ),
         geometry = new THREE.CircleGeometry( radius, segments );
@@ -72,15 +72,18 @@
             object.position.z -= 0.05;
             var delta = frequencyAmplitudeArray[5];
             var hsl = object.material.color.getHSL();
-            object.material.color.setHSL(hsl.h,delta/255 * 0.8, hsl.l);
+            var musicIntensity = (delta/255) * (delta/255);
+            object.material.color.setHSL(hsl.h, musicIntensity, hsl.l);
+            var hsl = circle.material.color.getHSL();
+            circle.material.color.setHSL(hsl.h, musicIntensity, musicIntensity * musicIntensity);
 
             // Pulse to the music
             // Dealing with small numbers because circles are very sensitive
             // to changes in size
             if (object.position.z < 0.5) {
               var scaleFactor = frequencyAmplitudeArray[j % 15]/25500;
-              object.scale.x *= scaleFactor + 0.997;
-              object.scale.y *= scaleFactor + 0.995;
+              object.scale.x *= scaleFactor + 0.993;
+              object.scale.y *= scaleFactor + 0.993;
               j++;
             }
 
