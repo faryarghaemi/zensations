@@ -127,39 +127,40 @@ $(document).ready(function() {
     enableGestures: true
   };
 
+// hand and finger info put on screen 
   // Main Leap Loop
-  var handNumber = function() {
-    Leap.loop(options, function(frame) {
-      frameId = frame.id;
-      frameHandsLength = frame.hands.length;
-      frameFingersLength = frame.fingers.length;
+  // var handNumber = function() {
+  //   Leap.loop(options, function(frame) {
+  //     frameId = frame.id;
+  //     frameHandsLength = frame.hands.length;
+  //     frameFingersLength = frame.fingers.length;
 
-      frameString = concatData("frame_id", frameId);
-      frameString += concatData("num_hands", frameHandsLength);
-      frameString += concatData("num_fingers", frameFingersLength);
-      frameString += "<br>";
+  //     frameString = concatData("frame_id", frameId);
+  //     frameString += concatData("num_hands", frameHandsLength);
+  //     frameString += concatData("num_fingers", frameFingersLength);
+  //     frameString += "<br>";
 
-      // Showcase some new V2 features
-      for (var i = 0, len = frame.hands.length; i < len; i++) {
-        hand = frame.hands[i];
-        handString = concatData("hand_type", hand.type);
-        handString += concatData("confidence", hand.confidence);
-        handString += concatData("pinch_strength", hand.pinchStrength);
-        handString += concatData("grab_strength", hand.grabStrength);
+  //     // Showcase some new V2 features
+  //     for (var i = 0, len = frame.hands.length; i < len; i++) {
+  //       hand = frame.hands[i];
+  //       handString = concatData("hand_type", hand.type);
+  //       handString += concatData("confidence", hand.confidence);
+  //       handString += concatData("pinch_strength", hand.pinchStrength);
+  //       handString += concatData("grab_strength", hand.grabStrength);
 
-        handString += '<br>';
+  //       handString += '<br>';
 
-        frameString += handString;
-        frameString += fingerString;
-      }
+  //       frameString += handString;
+  //       frameString += fingerString;
+  //     }
 
-      output_two.innerHTML = frameString;
+  //     output_two.innerHTML = frameString;
 
-    });
+  //   });
 
-  };
+  // };
 
-  handNumber();
+  // handNumber();
 
   // end of info for number of fingers and hands 
 
@@ -289,15 +290,31 @@ $(document).ready(function() {
         }
 
 
+        // as abs of difference between two hands increases, the cube scale increases 
+
+        // differentiates between one hand and two hands 
         var handType = function() {
           Leap.loop(options, function(frame) {
             if (frame.hands.length === 2) {
-              var x = ((parseFloat(frame.hands[0].palmPosition[0].toPrecision(4))) + (parseFloat(frame.hands[1].palmPosition[0].toPrecision(4))) / 2);
-              var y = ((parseFloat(frame.hands[0].palmPosition[1].toPrecision(4))) + (parseFloat(frame.hands[1].palmPosition[1].toPrecision(4))) / 2);
+              var xFirstHand = (parseFloat(frame.hands[0].palmPosition[0].toPrecision(4))); 
 
-              var z = ((parseFloat(frame.hands[0].palmPosition[2].toPrecision(4))) + (parseFloat(frame.hands[1].palmPosition[2].toPrecision(4))) / 2);
+              var xSecondHand = (parseFloat(frame.hands[1].palmPosition[0].toPrecision(4))); 
+
+              var x = (((xFirstHand) + (xSecondHand)) / 2);
+
+              var yFirstHand = (parseFloat(frame.hands[0].palmPosition[1].toPrecision(4))); 
+              var ySecondHand = (parseFloat(frame.hands[1].palmPosition[1].toPrecision(4))); 
+
+              var y = ((yFirstHand) + (ySecondHand) / 2);
+
+              var zFirstHand = (parseFloat(frame.hands[0].palmPosition[2].toPrecision(4))); 
+              var zSecondHand = (parseFloat(frame.hands[1].palmPosition[2].toPrecision(4))); 
+
+              var z = ((zFirstHand) + (zSecondHand) / 2);
 
               position(x, y, z);
+
+              // if (Math.abs(xFirstHand - xSecondHand))
 
             } else if (frame.hands.length === 1) {
 
