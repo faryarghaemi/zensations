@@ -48,7 +48,8 @@
         circle = new THREE.Line( geometry, material )
 
         // Setting colour twice - ineffecient but couldn't get pusher output
-        var color = pusher.color('hsv', [Math.round(i), 70, 70]).hex6();
+        // You can do this directly without pusher - see setHSL in three.js
+        var color = pusher.color('hsv', [Math.round(i), 70, 100]).hex6();
         circle.material.color.setHex( color );
         i += 0.1;
 
@@ -60,15 +61,14 @@
         scene.traverse (function (object)
         {
           if (object instanceof THREE.Line) {
-            // object.scale.x *= 0.98;
-            // object.scale.y *= 0.98;
-            // object.scale.z *= 0.98;
 
             object.position.z -= 0.1;
 
             circle.rotation.x += 0.1;
-            // object.rotation.y += 0.1;
-            // object.rotation.z += 0.1;
+            circle.rotation.y += 0.01;
+
+            object.material.color.offsetHSL(0,-0.001, -0.001);
+
           };
         });
 
@@ -76,7 +76,7 @@
         // as it didn't like the object being deleted
         for ( var k =  0; k < scene.children.length ; k++ ) {
             var obj = scene.children[ k ];
-            if ( obj instanceof THREE.Mesh && ballCount >= 100) {
+            if ( obj instanceof THREE.Mesh && ballCount >= 70) {
               scene.remove(obj);
               break;
             }
