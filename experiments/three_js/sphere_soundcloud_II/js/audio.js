@@ -10,8 +10,6 @@ window.AudioContext = (function(){
           window.mozAudioContext;
 })();
 
-var streamUrl;
-
 $(document).ready(function() {
 
   // URL for streaming soundcloud
@@ -26,86 +24,85 @@ $(document).ready(function() {
   var searchSoundCloud = function (trackUrl) {
     var soundCloudUrl = 'http://api.soundcloud.com/resolve.json?';
 
-    $.getJSON(soundCloudUrl, {
+    return $.getJSON(soundCloudUrl, {
       url: trackUrl,
       client_id: 'c6407cab6ee52bfb52b2dc922c512b07'
-    }).done( function (result) {
-      streamUrl = result.stream_url;
-    });
+    })
   };
 
-  searchSoundCloud('https://soundcloud.com/actuallygrimes/d-r-o-m-e-whoknoidontno');
-
+  searchSoundCloud('https://soundcloud.com/actuallygrimes/d-r-o-m-e-whoknoidontno').then(function(result) {
+    var streamUrl = result.stream_url;
   // Creating an Audio object.
 
-  var audio0 = new Audio(),
-      source,
-      // `stream_url` you'd get from 
-      // requesting http://api.soundcloud.com/tracks/165133010.json
-      url = streamUrl + '?client_id=c6407cab6ee52bfb52b2dc922c512b07';
-  debugger
-  audio0.src = url;
-  audio0.controls = true;
-  audio0.autoplay = false;
-  audio0.loop = true;
+    var audio0 = new Audio(),
+        source,
+        // `stream_url` you'd get from 
+        // requesting http://api.soundcloud.com/tracks/165133010.json
+        url = streamUrl + '?client_id=c6407cab6ee52bfb52b2dc922c512b07';
 
-  // Passing the Audio object into the sourceNode.
-  var sourceNode = audioContext.createMediaElementSource(audio0);
+    audio0.src = url;
+    audio0.controls = true;
+    audio0.autoplay = false;
+    audio0.loop = true;
 
-  // Initalising the Analyser Node object.
-  var analyserNode = audioContext.createAnalyser();
-  // Setting the bin count (number of data bands).
-  analyserNode.fftSize = 32; // Must be ** 2, and min 32.
-  //
-  analyserNode.smoothingTimeConstant = 0.0; //
-  // number of samples to collect before analyzing data.
-  sampleSize = 1024
+    // Passing the Audio object into the sourceNode.
+    var sourceNode = audioContext.createMediaElementSource(audio0);
 
-  // Creates a ScriptProcessorNode used for direct audio processing.
-  var javascriptNode = audioContext.createScriptProcessor(sampleSize, 1, 1);
+    // Initalising the Analyser Node object.
+    var analyserNode = audioContext.createAnalyser();
+    // Setting the bin count (number of data bands).
+    analyserNode.fftSize = 32; // Must be ** 2, and min 32.
+    //
+    analyserNode.smoothingTimeConstant = 0.0; //
+    // number of samples to collect before analyzing data.
+    sampleSize = 1024
 
-
-  // Connecting the nodes
-    /// AnalyserNode needs to be connected to both the destination (speakers)!
-    /// Javascript node needs to be connected from the analyserNode and to the
-    /// destination!
-  sourceNode.connect(analyserNode);
-  analyserNode.connect(javascriptNode);
-  analyserNode.connect(audioContext.destination);
-  javascriptNode.connect(audioContext.destination);
+    // Creates a ScriptProcessorNode used for direct audio processing.
+    var javascriptNode = audioContext.createScriptProcessor(sampleSize, 1, 1);
 
 
-  // Uint8Array = Unsigned Integer 8bit byte Array
-  // Values between 0-255 will be pushed into this array
-  // Which represent -1 to +1 (in audio terms)
-  // Note that this is a global
-  frequencyAmplitudeArray = new Uint8Array(analyserNode.frequencyBinCount);
+    // Connecting the nodes
+      /// AnalyserNode needs to be connected to both the destination (speakers)!
+      /// Javascript node needs to be connected from the analyserNode and to the
+      /// destination!
+    sourceNode.connect(analyserNode);
+    analyserNode.connect(javascriptNode);
+    analyserNode.connect(audioContext.destination);
+    javascriptNode.connect(audioContext.destination);
 
-  // Copies the current time-domain (waveform) data into the passed frequencyAmplitudeArray.
-  var getFrequencies = function() {
-    analyserNode.getByteFrequencyData(frequencyAmplitudeArray);
-    return frequencyAmplitudeArray;
-  };
 
-  // Play sound & visualise
-  $("#start").on('click', function() {
-    music_playing = true;
-    audio0.play();
-    // An event listener which is called periodically for audio processing.
-    javascriptNode.onaudioprocess = function () {
-      // Get the Time Domain data for this sample
+    // Uint8Array = Unsigned Integer 8bit byte Array
+    // Values between 0-255 will be pushed into this array
+    // Which represent -1 to +1 (in audio terms)
+    // Note that this is a global
+    frequencyAmplitudeArray = new Uint8Array(analyserNode.frequencyBinCount);
+
+    // Copies the current time-domain (waveform) data into the passed frequencyAmplitudeArray.
+    var getFrequencies = function() {
       analyserNode.getByteFrequencyData(frequencyAmplitudeArray);
-    }
-    // Render in three.js
-    render();
-  });
+      return frequencyAmplitudeArray;
+    };
 
-  // Stop sound & visualise
-  $("#stop").on('click', function() {
-    audio0.pause();
-    audio0.currentTime = 0;
-    music_playing = false;
-  });
+    // Play sound & visualise
+    $("#start").on('click', function() {
+      music_playing = true;
+      audio0.play();
+      // An event listener which is called periodically for audio processing.
+      javascriptNode.onaudioprocess = function () {
+        // Get the Time Domain data for this sample
+        analyserNode.getByteFrequencyData(frequencyAmplitudeArray);
+      }
+      // Render in three.js
+      render();
+    });
+
+    // Stop sound & visualise
+    $("#stop").on('click', function() {
+      audio0.pause();
+      audio0.currentTime = 0;
+      music_playing = false;
+    });
+  }); 
 
 });
 
