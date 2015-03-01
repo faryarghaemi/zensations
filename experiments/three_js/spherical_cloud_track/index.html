@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Multiple Cubes</title>
+    <title>Multiple Circles</title>
     <style>
       canvas {
           margin-left: auto;
@@ -38,32 +38,37 @@
 
       var render = function () {
         requestAnimationFrame( render );
-        var geometry = new THREE.BoxGeometry( 0.5, 0.5, 0.5 );
-        var color = pusher.color('hsv', [Math.round(i), 70, 70]).hex6();
-        var material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
-        var Cube = new THREE.Mesh( geometry, material );
-        // Setting colour twice - ineffecient but couldn't get pusher output
+        var radius   = 4,
+        segments = 64,
+        material = new THREE.LineBasicMaterial( { color: 0x0000ff } ),
+        geometry = new THREE.CircleGeometry( radius, segments );
+        // Remove center vertex
+        geometry.vertices.shift();
         // to work with MeshBasicMaterial
-        Cube.material.color.setHex( color );
+        circle = new THREE.Line( geometry, material )
+
+        // Setting colour twice - ineffecient but couldn't get pusher output
+        var color = pusher.color('hsv', [Math.round(i), 70, 70]).hex6();
+        circle.material.color.setHex( color );
         i += 0.1;
 
         // Very bad hard coded mouse position
-        Cube.position.x = mousePosition.x / 100 - 6;
-        Cube.position.y = mousePosition.y * - 1 / 100 + 1;
-        Cube.position.z = 2;
+        circle.position.x = mousePosition.x / 100 - 6;
+        circle.position.y = mousePosition.y * - 1 / 100 + 1;
+        circle.position.z = 2;
 
         scene.traverse (function (object)
         {
-          if (object instanceof THREE.Mesh) {
+          if (object instanceof THREE.Line) {
             // object.scale.x *= 0.98;
             // object.scale.y *= 0.98;
             // object.scale.z *= 0.98;
 
             object.position.z -= 0.1;
 
-            object.rotation.x += 0.1;
-            object.rotation.y += 0.1;
-            object.rotation.z += 0.1;
+            // object.rotation.x += 0.1;
+            // object.rotation.y += 0.1;
+            // object.rotation.z += 0.1;
           };
         });
 
@@ -71,13 +76,13 @@
         // as it didn't like the object being deleted
         for ( var k =  0; k < scene.children.length ; k++ ) {
             var obj = scene.children[ k ];
-            if ( obj instanceof THREE.Mesh && ballCount >= 2000) {
+            if ( obj instanceof THREE.Mesh && ballCount >= 100) {
               scene.remove(obj);
               break;
             }
         }
 
-        scene.add( Cube );
+        scene.add( circle );
         ballCount++;
 
         renderer.render(scene, camera);
