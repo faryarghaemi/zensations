@@ -103,6 +103,8 @@ $(document).ready(function() {
       }
       // Render in three.js
       render();
+      controls = new THREE.OrbitControls( camera );
+      controls.damping = 0.2;
     });
 
     // Stop sound & visualise

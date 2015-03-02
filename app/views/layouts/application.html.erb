@@ -79,12 +79,10 @@
             // Pulse to the music
             // Dealing with small numbers because circles are very sensitive
             // to changes in size
-            if (object.position.z < 1.5) {
-              var scaleFactor = frequencyAmplitudeArray[j % frequencyAmplitudeArray.length]/25500;
-              object.scale.x *= scaleFactor + 0.993;
-              object.scale.y *= scaleFactor + 0.993;
-              j++;
-            }
+            var scaleFactor = frequencyAmplitudeArray[j % frequencyAmplitudeArray.length]/25500;
+            object.scale.x *= scaleFactor + 0.996;
+            object.scale.y *= scaleFactor + 0.996;
+            j++;
 
             // Rotate rings
             circle.rotation.x += 0.1;
@@ -108,7 +106,7 @@
     </script>
     <div class="container">
       <div class="row">
-        <h3 class="white">Zensations</h3>
+        <h3 class="white zensations">Zensation<span class="mirror-letter">Z</span></h3>
       </div>
       <div class="row">
         <div class="six columns">
