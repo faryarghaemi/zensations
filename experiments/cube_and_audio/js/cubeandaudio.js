@@ -1,4 +1,6 @@
 var cube;
+var geometry;
+var cubeMaterials;
 $(document).ready(function() {
 
   // cube info 
@@ -46,11 +48,11 @@ $(document).ready(function() {
     }),
   ];
 
-  // setting cubeMaterial for multi-colored cube 
-  // var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
+  // setting cubeMaterials for multi-colored cube 
+  // var cubeMaterials = new THREE.MeshFaceMaterial(cubeMaterials);
 
-  // setting cubeMaterial for cube that changes color with gestures 
-  var cubeMaterial = new THREE.MeshBasicMaterial({
+  // setting cubeMaterials for cube that changes color with gestures 
+  var cubeMaterials = new THREE.MeshBasicMaterial({
     color: 0x8796FF
   });
 
@@ -59,7 +61,7 @@ $(document).ready(function() {
     cube.material.color.setHex(newColor);
   };
 
-  cube = new THREE.Mesh(geometry, cubeMaterial);
+  cube = new THREE.Mesh(geometry, cubeMaterials);
 
   scene.add(cube);
 
@@ -295,11 +297,30 @@ $(document).ready(function() {
         }
 
 
-
-
-
-
         var frame = controller.frame();
+
+        // creating more cubes with grab strength 
+        // console.log(hand.grabStrength); 
+
+        if (hand.grabStrength >= 0.90 && hand.confidence >= 0.40) {
+          cube = new THREE.Mesh(geometry, cubeMaterials);
+          scene.add(cube);
+
+        }
+
+        scene.traverse(function(cube) {
+          if (cube instanceof THREE.Mesh) {
+            // Move cube further back
+            cube.position.z -= 0.20;
+
+            // Rotate cubes
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+          };
+        });
+
+        
+
 
 
         // differentiates between one hand and two hands 
@@ -354,7 +375,7 @@ $(document).ready(function() {
 
     })
     .use('screenPosition', {
-      scale: 200
+      scale: 100
 
     });
 
