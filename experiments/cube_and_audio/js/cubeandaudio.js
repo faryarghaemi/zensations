@@ -208,10 +208,10 @@ $(document).ready(function() {
             // console.log("Circle Gesture");
             break;
           case "keyTap":
-            // console.log("Key Tap Gesture");
+            console.log("Key Tap Gesture");
             break;
           case "screenTap":
-            // console.log("Screen Tap Gesture");
+            console.log("Screen Tap Gesture");
             break;
           case "swipe":
             // console.log("Swipe Gesture");
@@ -301,17 +301,17 @@ $(document).ready(function() {
         var frame = controller.frame();
 
         // creating more cubes with grab strength 
-        var drawCube = function() {
 
-          if (hand.grabStrength >= 0.90 && hand.confidence >= 0.45) {
-            cube = new THREE.Mesh(geometry, cubeMaterials);
-            scene.add(cube);
-          }
-        };
+        if (frame.valid && frame.gestures.length > 0) {
+          frame.gestures.forEach(function(gesture) {
+            switch (gesture.type) {
+              case "keyTap":
+                cube = new THREE.Mesh(geometry, cubeMaterials);
+                scene.add(cube);
+            }
+          });
+        }
 
-        drawCube(); 
-
-        // _.debounce(drawCube, 5000);
 
         scene.traverse(function(cube) {
           if (cube instanceof THREE.Mesh) {
