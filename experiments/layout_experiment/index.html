@@ -1,9 +1,11 @@
 <html>
   <head>
-    <title>Multiple Circles</title>
+    <title>Layout Test</title>
     <style>
     </style>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="js/three.min.js"></script>
     <script src="js/jquery.js"></script>
     <script src="js/pusher.js"></script>
@@ -75,8 +77,8 @@
             // to changes in size
             if (object.position.z < 0.5) {
               var scaleFactor = frequencyAmplitudeArray[j % 15]/25500;
-              object.scale.x *= scaleFactor + 0.993;
-              object.scale.y *= scaleFactor + 0.993;
+              object.scale.x *= scaleFactor + 0.99;
+              object.scale.y *= scaleFactor + 0.99;
               j++;
             }
 
@@ -100,20 +102,31 @@
       };
 
     </script>
-    <p id="controls">
-      <input type="button" id="start" value="Start">
-      &nbsp; &nbsp;
-      <input type="button" id="stop" value="Stop">
-    </p>
-    <a class="show" style="color:#999;">>>></a>
-    <div id="slide-menu">
-      <ul>
-          <li>menu 1</li>
-          <li>menu 2</li>
-          <li>menu 3</li>
-          <li>menu 4</li>
-          <li>menu 5</li>
-      </ul>
+    <div class="container">
+      <div class="row">
+        <h3>Zensations</h3>
+      </div>
+      <div class="row">
+        <div class="six columns">
+          <a class="show" style="color:#999;">>>></a>
+          <div id="slide-menu">
+            <ul>
+                <li>menu 1</li>
+                <li>menu 2</li>
+                <li>menu 3</li>
+                <li>menu 4</li>
+                <li>menu 5</li>
+            </ul>
+          </div>
+        </div>
+        <div class="six columns right">
+          <p id="controls">
+            <input type="button" id="start" value="Start">
+            &nbsp; &nbsp;
+            <input type="button" id="stop" value="Stop">
+          </p>
+        </div>
+      </div>
     </div>
   </body>
 </html>
