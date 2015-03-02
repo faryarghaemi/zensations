@@ -1,0 +1,169 @@
+<html>
+  <head>
+    <title>My first Three.js app</title>
+    <style>
+      body { margin: 0; }
+      canvas { width: 100%; height: 100% }
+    </style>
+  </head>
+  <body>
+        <div id="layout">
+        <!-- Menu toggle -->
+        <a href="#menu" id="menuLink" class="menu-link">
+            <!-- Hamburger icon -->
+            <span></span>
+        </a>
+
+        <div id="menu">
+            <div class="pure-menu pure-menu-open">
+              <div class="pure-menu-heading">
+                <a href="../../../index.php">www.malinc.se</a>
+                 
+          </div>
+                <ul>
+                      <li class="menu-item-divided pure-menu-selected" >
+                  <a href="Lorenz.php">Interactive Lorenz Attractor</a></li>
+              <li  >
+                  <a href="PythagorasTree.php">Variations on Pythagoras' Tree</a></li>
+              <li  >
+                  <a href="InvertedMondrian.php">Paint Circle-Inverted Mondrian!</a></li>
+              <li  >
+                  <a href="MakingABezierSpline.php">How to Make a Cubic Bézier Spline</a></li>
+              <li  >
+                  <a href="DeCasteljauAndBezier.php">De Casteljau's Algorithm and Bézier Curves</a></li>
+              <li  >
+                  <a href="DampedLissajous.php">Damped Lissajous Curves</a></li>
+              <li  >
+                  <a href="NewtonFractals.php">Newton Fractals</a></li>
+              <li  >
+                  <a href="ModellingIllusions.php">Modelling 3D Illusions</a></li>
+                       </ul>
+            </div>
+        </div>
+      <div id="content">
+        <article class="myarticle">
+      <header>
+        <h1>Interactive Lorenz Attractor</h1>
+          <p> <a href="https://plus.google.com/u/0/+MalinChristersson/posts">Malin Christersson</a> &loz;&loz;&loz;
+             <time>2015-02-21</time> </p>
+      </header>
+      <div id = "webglContent">
+      <table class="breadcrumbs">
+      <tr>
+        <th class="left">
+                <a href="PythagorasTree.php" >&larr;Variations on Pythagoras' Tree</a>
+              </th>
+        <th class="right">
+                &loz;&loz;&loz;
+              </th>
+      </tr>
+    </table>
+
+      <p>&nbsp;</p>
+
+      <div class= "center">
+        <form>
+          <button id="showButterflies" type="button" onclick="handleShowButterflies()" 
+            style="width:90%;">Hide butterflies</button>
+          <button id="showCurves" type="button" onclick="handleShowCurves()" 
+            style="width:90%;">Hide curves</button><br>
+        </form>
+        <form>
+          <span> Randomize blue butterflies in:</span> <br>
+          <button type="button" onClick = "randomizeParticles()">Large cube</button>
+          <button type="button" onClick = "particlesFromPoint()">Small cube</button>
+        </form>
+        <div class="inlineDiv">
+          <div class = "inlineDiv">
+            <input id="sigmaSlider" type="range" min="0.5" max="60" value="10" step="0.5" onchange="changeSigma(this.value)"/>
+            <var>&sigma;</var><span id="sigmaText"> = 10</span>
+          </div>
+          <div class = "inlineDiv">
+            <input id="rhoSlider" type="range" min="0.5" max="60" value="28" step="0.5" onchange="changeRho(this.value)"/>
+            <var>r</var><span id="rhoText"> = 28</span>
+          </div>
+          <div class = "inlineDiv">
+            <input id="betaSlider" type="range" min="0.1" max="10" value="2.5" step="0.1" onchange="changeBeta(this.value)"/>
+            <var>b</var><span id="betaText"> = 2.7</span>
+          </div>
+        </div>
+        
+      </div>
+
+      <figure> 
+        <div id="LorenzCanvas"></div>
+        <figcaption>The Butterfly: Rotate, pan or zoom!</figcaption>
+      </figure>
+
+      <p>The positions of the butterflies are described by the Lorenz equations:</p>
+      \[
+      \begin{align*}
+        \frac{dx}{dt} &amp;= -\sigma x+\sigma y \\
+        \frac{dy}{dt} &amp;= -xz+rx-y \\
+        \frac{dz}{dt} &amp;= xy-bz
+      \end{align*}
+      \]
+
+      <p>The red and yellow curves can be seen as the trajectories of two butterflies during a period of time. </p>
+
+      <p>For some values of the parameters <var>&sigma;</var>, <var>r</var> and <var>b</var> (like the initial values shown 
+      above); the butterflies will be attracted to a so-called <em>strange attractor</em> called the Lorenz attractor. Two butterflies 
+      starting at the same exact position will have exactly the same paths. There is nothing random in the system - it is deterministic. 
+      Two butterflies that are not at the same position but arbitrarily close to each other will however, diverge after a number of times 
+      steps, making it impossible to predict the position of any butterfly after many time steps. 
+      Any approximation, such as approximate measurements of real life data, will give rise to unpredictable motion. 
+      This behavior can be seen if the butterflies are placed at random positions inside a very small cube, and then watch how they spread out. 
+      Press the "Small cube" button! Even though the subsequent paths of the butterflies are unpredictable, they don't spread out in a random way. 
+      It is certain that all butterflies will be on the attractor, but it is impossible to foresee where on the attractor. This is an example of 
+      <em>deterministic chaos</em>.</p>
+
+      <p>The Lorenz attractor was first described in 1963 by the meteorologist Edward Lorenz.<sup>1</sup> In his book <em>"The Essence of Chaos"</em>, 
+      Lorenz describes how the expression "butterfly effect" appeared:</p>
+
+      <blockquote>
+      The expression has a somewhat cloudy history. It appears to have arisen following a paper that I presented at a meeting in Washington in 1972, 
+      entitled "Does the Flap of a Butterfly's Wings in Brazil Set Off a Tornado in Texas?" <br>
+      ...<br>
+      The thing that has first made the origin of the phrase a bit uncertain is a peculiarity of the first chaotic system I studied in detail. Here 
+      an abbreviated graphical representation of a special collection of states known as "strange attractor" was subsequently found to resemble a butterfly,
+      and soon became known as the butterfly. <br>
+      ...<br>
+      Before the Washington meeting I had sometimes used a sea gull as a symbol for sensitive dependence. The switch to a butterfly was actually made by 
+      the session convenor, the meteorologist Philip Merilees, who was unable to check with me when he submitted the program titles. <br>
+      ...<br>
+      Perhaps the butterfly, with its seemingly frailty and lack of power, is a natural choice for a symbol of the small that can produce the great.
+
+      <sup>2</sup>
+      </blockquote>
+
+      <h2>References</h2>
+
+      <p><sup>1</sup>Deterministic Nonperiodic Flow, Edward N. Lorenz, 1963: 
+      <a href="http://journals.ametsoc.org/doi/abs/10.1175/1520-0469%281963%29020%3C0130%3ADNF%3E2.0.CO%3B2">American Meteorology Society, AMS Journals Online</a></p>
+      <p><sup>2</sup>The Essence of Chaos, Edward N. Lorenz, 1993, University of Washington Press, pp 14-15</p>
+      <p>Made using <a href="http://threejs.org/">three.js</a>
+
+      <script src="js/three.min.js"></script> 
+      <script src="js/LorenzControlsDetector.min.js"> </script>  
+        
+      </div>
+    </article>
+
+    <table class="breadcrumbs">
+      <tr>
+        <th class="left">
+                <a href="PythagorasTree.php" >&larr;Variations on Pythagoras' Tree</a>
+              </th>
+        <th class="right">
+                &loz;&loz;&loz;
+              </th>
+      </tr>
+    </table>
+
+
+    <p>&nbsp;</p>
+
+    </div> <!--main-->
+
+  </body>
+</html>
