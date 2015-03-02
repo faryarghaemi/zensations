@@ -49,7 +49,7 @@
         }, 1000 / 30 );
 
         // Define circle
-        var radius   = 4,
+        var radius   = 2,
         segments = 64,
         material = new THREE.LineBasicMaterial( { color: 0x000000 } ),
         geometry = new THREE.CircleGeometry( radius, segments );
@@ -73,27 +73,24 @@
         {
           if (object instanceof THREE.Line) {
 
-            var sensitivity = 0.3
-
-            // Move circle further back
-            object.position.z -= 0.05;
+            var sensitivity = 1
             
             // Cycle through colours
             var hsl = object.material.color.getHSL();
             var averageVolume = getAverageVolume(frequencyAmplitudeArray);
             var musicIntensity = Math.pow(averageVolume/255, sensitivity);
-            console.log((musicIntensity));
             object.material.color.setHSL(hsl.h, musicIntensity, hsl.l);
-            var hsl = circle.material.color.getHSL();
-            circle.material.color.setHSL(hsl.h, musicIntensity, musicIntensity);
+
+            // Move circle further back
+            object.position.z -= musicIntensity / 2 ;
 
             // Pulse to the music
             // Dealing with small numbers because circles are very sensitive
             // to changes in size
-            if (object.position.z < 0.5) {
-              var scaleFactor = musicIntensity/100;
-              object.scale.x *= 0.99 + scaleFactor;
-              object.scale.y *= 0.99 + scaleFactor;
+            if (object.position.z < 1.5) {
+              var scaleFactor = frequencyAmplitudeArray[j % frequencyAmplitudeArray.length]/25500;
+              object.scale.x *= scaleFactor + 0.993;
+              object.scale.y *= scaleFactor + 0.993;
               j++;
             }
 
@@ -102,7 +99,7 @@
             circle.rotation.y += 0.01;
 
             // Make objects in the distance darker
-            object.material.color.offsetHSL(0,-0.001, -0.001);
+            object.material.color.offsetHSL(0,0, -0.003);
 
           };
         });
