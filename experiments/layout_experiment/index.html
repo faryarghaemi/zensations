@@ -70,7 +70,7 @@
             var musicIntensity = (delta/255) * (delta/255);
             object.material.color.setHSL(hsl.h, musicIntensity, hsl.l);
             var hsl = circle.material.color.getHSL();
-            circle.material.color.setHSL(hsl.h, musicIntensity, musicIntensity * musicIntensity);
+            circle.material.color.setHSL(hsl.h, musicIntensity, musicIntensity);
 
             // Pulse to the music
             // Dealing with small numbers because circles are very sensitive
@@ -104,7 +104,7 @@
     </script>
     <div class="container">
       <div class="row">
-        <h3>Zensations</h3>
+        <h3 class="white">Zensations</h3>
       </div>
       <div class="row">
         <div class="six columns">
@@ -121,6 +121,10 @@
         </div>
         <div class="six columns right">
           <p id="controls">
+            <form id="form">
+              <input id="input" class="u-full-width" placeholder="Paste Soundcloud URL here (https://soundcloud.com/artist/track)">
+              <button type="submit" id="submit">Load it!</button>
+            </form>
             <input type="button" id="start" value="Start">
             &nbsp; &nbsp;
             <input type="button" id="stop" value="Stop">
