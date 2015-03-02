@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/skeleton.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/three.min.js"></script>
+    <script src="js/OrbitControls.js"></script>
     <script src="js/jquery.js"></script>
     <script src="js/pusher.js"></script>
     <script src="js/audio.js"></script>
@@ -86,13 +87,12 @@
 
             // Pulse to the music
             // Dealing with small numbers because circles are very sensitive
-            // to changes in size
-            if (object.position.z < 1.5) {
-              var scaleFactor = frequencyAmplitudeArray[j % frequencyAmplitudeArray.length]/25500;
-              object.scale.x *= scaleFactor + 0.993;
-              object.scale.y *= scaleFactor + 0.993;
-              j++;
-            }
+            // to changes in size           
+            var scaleFactor = frequencyAmplitudeArray[j % frequencyAmplitudeArray.length]/25500;
+            object.scale.x *= scaleFactor + 0.995;
+            object.scale.y *= scaleFactor + 0.995;
+            j++;
+            
 
             // Rotate rings
             circle.rotation.x += 0.1;
