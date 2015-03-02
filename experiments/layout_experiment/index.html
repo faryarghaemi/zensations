@@ -8,6 +8,7 @@
           top:0;
           width:100%;
           height:100%;
+          z-index: -1;
       }
       #controls, h1 {
         text-align: center;
@@ -59,9 +60,14 @@
         i += 0.1;
 
         // Very bad hard coded mouse position
-        circle.position.x = mousePosition.x / 100 - 6;
-        circle.position.y = mousePosition.y * - 1 / 100 + 1;
+        circle.position.x = 8 * (mousePosition.x / window.innerWidth - 0.5);
+        circle.position.y = -8 * (mousePosition.y / window.innerHeight - 0.5);
         circle.position.z = 2;
+
+        console.log("pointer-x-pos",mousePosition.x);
+        console.log("pointer-y-pos",mousePosition.y);
+        console.log("circle-x-pos", circle.position.x);
+        console.log("circle-y-pos", circle.position.y);
 
         scene.traverse (function (object)
         {
@@ -101,8 +107,6 @@
           scene.add( circle );
           ballCount++;
         };
-
-        console.log(scene.children.length);
 
         renderer.render(scene, camera);
       };
