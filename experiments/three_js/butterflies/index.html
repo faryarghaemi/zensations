@@ -7,7 +7,8 @@
     </style>
   </head>
   <body>
-        <div id="layout">
+  
+      <div id="layout">
         <!-- Menu toggle -->
         <a href="#menu" id="menuLink" class="menu-link">
             <!-- Hamburger icon -->
@@ -143,6 +144,7 @@
       <p><sup>2</sup>The Essence of Chaos, Edward N. Lorenz, 1993, University of Washington Press, pp 14-15</p>
       <p>Made using <a href="http://threejs.org/">three.js</a>
 
+
       <script src="js/three.min.js"></script> 
       <script src="js/LorenzControlsDetector.min.js"> </script>  
         
@@ -165,5 +167,26 @@
 
     </div> <!--main-->
 
+    </div> <!--layout-->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          config: ["MMLorHTML.js"],
+        jax: ["input/TeX","input/MathML","input/AsciiMath","output/HTML-CSS","output/NativeMML"],
+        extensions: ["tex2jax.js","mml2jax.js","asciimath2jax.js","MathMenu.js","MathZoom.js"],
+        TeX: {
+          extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
+        }
+      });
+    </script>
+    <script type="text/javascript" src="js/MathJax.js"></script>
+
+
+    <script src="js/m03.min.js"></script>
   </body>
 </html>
