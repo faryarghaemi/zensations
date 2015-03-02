@@ -12,3 +12,13 @@ canvas {
 #start, #stop {
   font-size: 16pt;
 }
+
+/* Slide out menu */
+
+#slide-menu {
+    height: 100%;
+    position: fixed;
+    background: #666;
+    width: 300px;
+    left: -300px;
+}
