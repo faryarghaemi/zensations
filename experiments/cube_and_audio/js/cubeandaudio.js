@@ -1,11 +1,49 @@
-var cube;
+var sphere;
 var geometry;
-var cubeMaterials;
+var sphereMaterials;
 var newColor;
-var cubeColor;
+var sphereColor;
 $(document).ready(function() {
 
-  // cube info 
+
+  // setting sphereMaterials for multi-colored sphere 
+  // var sphereMaterials = new THREE.MeshFaceMaterial(sphereMaterials);
+
+  // each sphere side gets another color
+  // var sphereMaterials = [
+  //   new THREE.MeshBasicMaterial({
+  //     color: 0x33AA55,
+  //     transparent: true,
+  //     opacity: 0.8
+  //   }),
+  //   new THREE.MeshBasicMaterial({
+  //     color: 0x55CC00,
+  //     transparent: true,
+  //     opacity: 0.8
+  //   }),
+  //   new THREE.MeshBasicMaterial({
+  //     color: 0x669999,
+  //     transparent: true,
+  //     opacity: 0.8
+  //   }),
+  //   new THREE.MeshBasicMaterial({
+  //     color: 0x801515,
+  //     transparent: true,
+  //     opacity: 0.8
+  //   }),
+  //   new THREE.MeshBasicMaterial({
+  //     color: 0xD49A6A,
+  //     transparent: true,
+  //     opacity: 0.8
+  //   }),
+  //   new THREE.MeshBasicMaterial({
+  //     color: 0x55AA55,
+  //     transparent: true,
+  //     opacity: 0.8
+  //   }),
+  // ];
+
+  // scene & camera info 
 
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -14,49 +52,12 @@ $(document).ready(function() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
+  // sphere info 
+
   var geometry = new THREE.SphereGeometry(40, 16, 16, 16);
 
-  // each cube side gets another color
-  var cubeMaterials = [
-    new THREE.MeshBasicMaterial({
-      color: 0x33AA55,
-      transparent: true,
-      opacity: 0.8
-    }),
-    new THREE.MeshBasicMaterial({
-      color: 0x55CC00,
-      transparent: true,
-      opacity: 0.8
-    }),
-    new THREE.MeshBasicMaterial({
-      color: 0x669999,
-      transparent: true,
-      opacity: 0.8
-    }),
-    new THREE.MeshBasicMaterial({
-      color: 0x801515,
-      transparent: true,
-      opacity: 0.8
-    }),
-    new THREE.MeshBasicMaterial({
-      color: 0xD49A6A,
-      transparent: true,
-      opacity: 0.8
-    }),
-    new THREE.MeshBasicMaterial({
-      color: 0x55AA55,
-      transparent: true,
-      opacity: 0.8
-    }),
-  ];
-
-
-
-  // setting cubeMaterials for multi-colored cube 
-  // var cubeMaterials = new THREE.MeshFaceMaterial(cubeMaterials);
-
-  // setting cubeMaterials for cube that changes color with gestures 
-  var cubeMaterials = new THREE.MeshPhongMaterial({
+  // setting sphereMaterials for sphere that changes color with gestures 
+  var sphereMaterials = new THREE.MeshPhongMaterial({
     ambient: 0x030303,
     color: 0xdddddd,
     specular: 0x009900,
@@ -65,13 +66,13 @@ $(document).ready(function() {
   });
 
   var newColor;
-  var cubeColor = function(newColor) {
-    cube.material.color.setHex(newColor);
+  var sphereColor = function(newColor) {
+    sphere.material.color.setHex(newColor);
   };
 
-  cube = new THREE.Mesh(geometry, cubeMaterials);
+  sphere = new THREE.Mesh(geometry, sphereMaterials);
 
-  scene.add(cube);
+  scene.add(sphere);
 
 
   // the light sources 
@@ -142,17 +143,17 @@ scene.add( plane );
 
     requestAnimationFrame(render);
 
-    cube.scale.y = (1 + frequencyAmplitudeArray[0] / 512);
+    sphere.scale.y = (1 + frequencyAmplitudeArray[0] / 512);
 
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
+    sphere.rotation.x += 0.01;
+    sphere.rotation.y += 0.01;
 
     renderer.render(scene, camera);
   };
 
   render();
 
-  // end cube info 
+  // end sphere info 
 
   // info for number of fingers and hands 
 
@@ -298,21 +299,21 @@ scene.add( plane );
             if (gesture.direction[0] > 0) {
               var swipeDirection = "right";
               var newColor = 0x0F5B30;
-              cubeColor(newColor);
+              sphereColor(newColor);
             } else {
               var swipeDirection = "left";
               var newColor = 0xF53B84;
-              cubeColor(newColor);
+              sphereColor(newColor);
             }
           } else { //vertical
             if (gesture.direction[1] > 0) {
               var swipeDirection = "up";
               var newColor = 0xBC87FF;
-              cubeColor(newColor);
+              sphereColor(newColor);
             } else {
               var swipeDirection = "down";
               var newColor = 0xFFFF25;
-              cubeColor(newColor);
+              sphereColor(newColor);
             }
           }
           // console.log(swipeDirection)
@@ -322,16 +323,16 @@ scene.add( plane );
   });
 
 
-  // changing the cube position in relation to hand position 
+  // changing the sphere position in relation to hand position 
   controller.connect();
   var position = function(x, y, z) {
 
 
-    cube.position.x = parseFloat(x);
+    sphere.position.x = parseFloat(x);
 
-    cube.position.y = parseFloat(y) - window.innerHeight / 2;
+    sphere.position.y = parseFloat(y) - window.innerHeight / 2;
 
-    cube.position.z = parseFloat(z);
+    sphere.position.z = parseFloat(z);
 
 
   }
@@ -391,13 +392,13 @@ scene.add( plane );
 
           // var previousFrame = controller.frame(150);
           // var handScale = hand.scaleFactor(previousFrame);
-          // cube.scale.x = handScale;
+          // sphere.scale.x = handScale;
 
           // console.log("Hand Scale: " + handScale);
 
           var previousFrame = controller.frame(150);
           var frameScale = frame.scaleFactor(previousFrame);
-          cube.scale.x = frameScale;
+          sphere.scale.x = frameScale;
 
           // console.log("Frame Scale: " + frameScale);
 
@@ -415,35 +416,35 @@ scene.add( plane );
         }
 
 
-        // creating more cubes with grab strength 
+        // creating more spheres with grab strength 
 
         if (frame.valid && frame.gestures.length > 0) {
           frame.gestures.forEach(function(gesture) {
             switch (gesture.type) {
               case "keyTap":
-                var drawCube = function() {
-                  cube = new THREE.Mesh(geometry, cubeMaterials);
-                  scene.add(cube);
+                var drawsphere = function() {
+                  sphere = new THREE.Mesh(geometry, sphereMaterials);
+                  scene.add(sphere);
                 };
-                drawCube();
-                _.debounce(drawCube, 2000);
+                drawsphere();
+                _.debounce(drawsphere, 2000);
                 break;
               case "screenTap":
                 var newColor = 0xdddddd;
-                cubeColor(newColor);
+                sphereColor(newColor);
             }
           });
         }
 
 
-        scene.traverse(function(cube, plane) {
-          if (cube instanceof THREE.Mesh) {
-            // // Move cube further back
-            // cube.position.z -= 0.60;
+        scene.traverse(function(sphere, plane) {
+          if (sphere instanceof THREE.Mesh) {
+            // // Move sphere further back
+            // sphere.position.z -= 0.60;
 
-            // // Rotate cubes
-            // cube.rotation.x += 0.01;
-            // cube.rotation.y += 0.01;
+            // // Rotate spheres
+            // sphere.rotation.x += 0.01;
+            // sphere.rotation.y += 0.01;
           };
         });
 
