@@ -53,7 +53,8 @@ $(document).ready(function() {
 
   // setting cubeMaterials for cube that changes color with gestures 
   var cubeMaterials = new THREE.MeshBasicMaterial({
-    color: 0x8796FF
+    color: 0x8796FF,
+    wireframe: true
   });
 
   var newColor;
@@ -300,13 +301,17 @@ $(document).ready(function() {
         var frame = controller.frame();
 
         // creating more cubes with grab strength 
-        // console.log(hand.grabStrength); 
+        var drawCube = function() {
 
-        if (hand.grabStrength >= 0.90 && hand.confidence >= 0.40) {
-          cube = new THREE.Mesh(geometry, cubeMaterials);
-          scene.add(cube);
+          if (hand.grabStrength >= 0.90 && hand.confidence >= 0.45) {
+            cube = new THREE.Mesh(geometry, cubeMaterials);
+            scene.add(cube);
+          }
+        };
 
-        }
+        drawCube(); 
+
+        // _.debounce(drawCube, 5000);
 
         scene.traverse(function(cube) {
           if (cube instanceof THREE.Mesh) {
@@ -318,10 +323,6 @@ $(document).ready(function() {
             cube.rotation.y += 0.01;
           };
         });
-
-        
-
-
 
         // differentiates between one hand and two hands 
 

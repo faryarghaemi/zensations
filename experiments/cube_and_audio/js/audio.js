@@ -34,7 +34,7 @@ $(document).ready(function() {
   // Setting the bin count (number of data bands).
   analyserNode.fftSize = 32; // Must be ** 2, and min 32.
   //
-  analyserNode.smoothingTimeConstant = 0.0; //
+  analyserNode.smoothingTimeConstant = 0.8; //
   // number of samples to collect before analyzing data.
   sampleSize = 1024
 
