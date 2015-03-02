@@ -1,0 +1,117 @@
+<html>
+  <head>
+    <title>Multiple Circles</title>
+    <style>
+      canvas {
+          position:fixed;
+          left:0;
+          top:0;
+          width:100%;
+          height:100%;
+      }
+      #controls, h1 {
+        text-align: center;
+      }
+      #start, #stop {
+        font-size: 16pt;
+      }
+    </style>
+    <script src="js/three.min.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/pusher.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/mouse.js"></script>
+  </head>
+  <body>
+    <script>
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera( 25, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      document.body.appendChild( renderer.domElement );
+
+      camera.position.z = 10;
+      var ballCount = 0; //counter for spheres
+      var i = 0; //counter for hue
+      var j = 0; //counter for freq channel
+
+      var render = function () {
+        // Throttle frame rate
+        setTimeout( function() {
+          requestAnimationFrame( render );
+        }, 1000 / 30 );
+
+        // Define circle
+        var radius   = 4,
+        segments = 64,
+        material = new THREE.LineBasicMaterial( { color: 0x000000 } ),
+        geometry = new THREE.CircleGeometry( radius, segments );
+        // Remove center vertex
+        geometry.vertices.shift();
+        // to work with MeshBasicMaterial
+        circle = new THREE.Line( geometry, material )
+
+        // Setting colour twice - Ineffient
+        // You can do this directly without pusher - see setHSL in three.js
+        var color = pusher.color('hsv', [Math.round(i), 70, 100]).hex6();
+        circle.material.color.setHex( color );
+        i += 0.1;
+
+        // Very bad hard coded mouse position
+        circle.position.x = mousePosition.x / 100 - 6;
+        circle.position.y = mousePosition.y * - 1 / 100 + 1;
+        circle.position.z = 2;
+
+        scene.traverse (function (object)
+        {
+          if (object instanceof THREE.Line) {
+
+            //Cycle through colours
+            object.position.z -= 0.05;
+            var delta = frequencyAmplitudeArray[5];
+            var hsl = object.material.color.getHSL();
+            var musicIntensity = (delta/255) * (delta/255);
+            object.material.color.setHSL(hsl.h, musicIntensity, hsl.l);
+            var hsl = circle.material.color.getHSL();
+            circle.material.color.setHSL(hsl.h, musicIntensity, musicIntensity * musicIntensity);
+
+            // Pulse to the music
+            // Dealing with small numbers because circles are very sensitive
+            // to changes in size
+            if (object.position.z < 0.5) {
+              var scaleFactor = frequencyAmplitudeArray[j % 15]/25500;
+              object.scale.x *= scaleFactor + 0.993;
+              object.scale.y *= scaleFactor + 0.993;
+              j++;
+            }
+
+            // Rotate rings
+            circle.rotation.x += 0.1;
+            circle.rotation.y += 0.01;
+
+            // Make objects in the distance darker
+            object.material.color.offsetHSL(0,-0.001, -0.001);
+
+          };
+        });
+
+        // Don't add a new circle if music is not playing
+        if (frequencyAmplitudeArray[5]) {
+          scene.add( circle );
+          ballCount++;
+        };
+
+        console.log(scene.children.length);
+
+        renderer.render(scene, camera);
+      };
+
+    </script>
+    <p id="controls">
+      <input type="button" id="start" value="Start">
+      &nbsp; &nbsp;
+      <input type="button" id="stop" value="Stop">
+    </p>
+  </body>
+</html>
