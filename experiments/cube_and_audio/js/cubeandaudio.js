@@ -131,7 +131,7 @@ $(document).ready(function() {
     enableGestures: true
   };
 
-// hand and finger info put on screen 
+  // hand and finger info put on screen 
   // Main Leap Loop
   // var handNumber = function() {
   //   Leap.loop(options, function(frame) {
@@ -171,7 +171,9 @@ $(document).ready(function() {
 
 
   // initializing the controller 
-  var deviceLoopController = new Leap.Controller({frameEventName: 'deviceFrame'});
+  var deviceLoopController = new Leap.Controller({
+    frameEventName: 'deviceFrame'
+  });
   deviceLoopController.on("frame", function(frame) {
     if (frame.pointables.length > 0) {
       canvasElement.width = canvasElement.width; //clear
@@ -262,7 +264,7 @@ $(document).ready(function() {
     cube.position.y = parseFloat(y) - window.innerHeight / 2;
 
     cube.position.z = parseFloat(z);
-    
+
 
   }
 
@@ -281,7 +283,7 @@ $(document).ready(function() {
 
 
         } else if (hand.type === "left") {
-         
+
           var screenPositionLeft = hand.screenPosition(hand.palmPosition);
           // var outputContentLeft = "xLeft: " + (screenPositionLeft[0].toPrecision(4)) + 'px' +
           //   "        yLeft: " + (screenPositionLeft[1].toPrecision(4)) + 'px' +
@@ -295,69 +297,58 @@ $(document).ready(function() {
 
 
 
-        // as abs of difference between two hands increases, the cube scale increases 
 
-        // differentiates between one hand and two hands 
 
-      
         var frame = controller.frame();
 
 
-        // var handType = function() {
-        //   debugger
-        //   // Leap.loop(options, function(frame) {
-            if (frame.hands.length === 2) {
-              var xFirstHand = (parseFloat(frame.hands[0].palmPosition[0].toPrecision(4))); 
+        // differentiates between one hand and two hands 
 
-              var xSecondHand = (parseFloat(frame.hands[1].palmPosition[0].toPrecision(4))); 
+        if (frame.hands.length === 2) {
+          var xFirstHand = (parseFloat(frame.hands[0].palmPosition[0].toPrecision(4)));
 
-              var x = (((xFirstHand) + (xSecondHand)) / 2);
+          var xSecondHand = (parseFloat(frame.hands[1].palmPosition[0].toPrecision(4)));
 
-              var yFirstHand = (parseFloat(frame.hands[0].palmPosition[1].toPrecision(4))); 
-              var ySecondHand = (parseFloat(frame.hands[1].palmPosition[1].toPrecision(4))); 
+          var x = (((xFirstHand) + (xSecondHand)) / 2);
 
-              var y = ((yFirstHand) + (ySecondHand) / 2);
+          var yFirstHand = (parseFloat(frame.hands[0].palmPosition[1].toPrecision(4)));
+          var ySecondHand = (parseFloat(frame.hands[1].palmPosition[1].toPrecision(4)));
 
-              var zFirstHand = (parseFloat(frame.hands[0].palmPosition[2].toPrecision(4))); 
-              var zSecondHand = (parseFloat(frame.hands[1].palmPosition[2].toPrecision(4))); 
+          var y = ((yFirstHand) + (ySecondHand) / 2);
 
-              var z = ((zFirstHand) + (zSecondHand) / 2);
+          var zFirstHand = (parseFloat(frame.hands[0].palmPosition[2].toPrecision(4)));
+          var zSecondHand = (parseFloat(frame.hands[1].palmPosition[2].toPrecision(4)));
 
-              position(x, y, z);
+          var z = ((zFirstHand) + (zSecondHand) / 2);
 
-
-              // var previousFrame = controller.frame(150);
-              // var handScale = hand.scaleFactor(previousFrame);
-              // cube.scale.x = handScale;
-
-              // console.log("Hand Scale: " + handScale);
-
-              var previousFrame = controller.frame(150);
-              var frameScale = frame.scaleFactor(previousFrame); 
-              cube.scale.x = frameScale;
-
-              // console.log("Frame Scale: " + frameScale);
+          position(x, y, z);
 
 
-            } else if (frame.hands.length === 1) {
+          // var previousFrame = controller.frame(150);
+          // var handScale = hand.scaleFactor(previousFrame);
+          // cube.scale.x = handScale;
 
-              var x = (hand.palmPosition[0].toPrecision(4));
-              var y = (hand.palmPosition[1].toPrecision(4));
-              var z = (hand.palmPosition[2].toPrecision(4));
+          // console.log("Hand Scale: " + handScale);
+
+          var previousFrame = controller.frame(150);
+          var frameScale = frame.scaleFactor(previousFrame);
+          cube.scale.x = frameScale;
+
+          // console.log("Frame Scale: " + frameScale);
 
 
-              position(x, y, z);
+        } else if (frame.hands.length === 1) {
+
+          var x = (hand.palmPosition[0].toPrecision(4));
+          var y = (hand.palmPosition[1].toPrecision(4));
+          var z = (hand.palmPosition[2].toPrecision(4));
 
 
-            }
+          position(x, y, z);
 
 
+        }
 
-          // });
-
-        // };
-
-        // handType();
 
       }
 
