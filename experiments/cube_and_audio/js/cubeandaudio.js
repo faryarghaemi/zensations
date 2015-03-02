@@ -1,6 +1,8 @@
 var cube;
 var geometry;
 var cubeMaterials;
+var newColor; 
+var cubeColor; 
 $(document).ready(function() {
 
   // cube info 
@@ -12,7 +14,7 @@ $(document).ready(function() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  var geometry = new THREE.BoxGeometry(50, 50, 50, 2, 2, 2);
+  var geometry = new THREE.SphereGeometry(40, 16, 16, 16 );
 
   // each cube side gets another color
   var cubeMaterials = [
@@ -52,10 +54,7 @@ $(document).ready(function() {
   // var cubeMaterials = new THREE.MeshFaceMaterial(cubeMaterials);
 
   // setting cubeMaterials for cube that changes color with gestures 
-  var cubeMaterials = new THREE.MeshBasicMaterial({
-    color: 0x8796FF,
-    wireframe: true
-  });
+  var cubeMaterials = new THREE.MeshPhongMaterial( { ambient: 0x030303, color: 0xdddddd, specular: 0x009900, shininess: 30, shading: THREE.FlatShading } );
 
   var newColor;
   var cubeColor = function(newColor) {
@@ -65,6 +64,18 @@ $(document).ready(function() {
   cube = new THREE.Mesh(geometry, cubeMaterials);
 
   scene.add(cube);
+
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
+directionalLight.position.set( 0, 1, 0.2 );
+scene.add( directionalLight );
+
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
+directionalLight.position.set( 1, 0, 0.2 );
+scene.add( directionalLight );
+
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
+directionalLight.position.set( 0, -1, 0.2);
+scene.add( directionalLight );
 
   // debugger;
   camera.position.x = 0;
@@ -205,7 +216,7 @@ $(document).ready(function() {
       frame.gestures.forEach(function(gesture) {
         switch (gesture.type) {
           case "circle":
-            // console.log("Circle Gesture");
+            console.log("Circle Gesture");
             break;
           case "keyTap":
             console.log("Key Tap Gesture");
@@ -232,7 +243,7 @@ $(document).ready(function() {
           if (isHorizontal) {
             if (gesture.direction[0] > 0) {
               var swipeDirection = "right";
-              var newColor = 0xF5F29C;
+              var newColor = 0x0F5B30;
               cubeColor(newColor);
             } else {
               var swipeDirection = "left";
@@ -246,7 +257,7 @@ $(document).ready(function() {
               cubeColor(newColor);
             } else {
               var swipeDirection = "down";
-              var newColor = 0xF5B89C;
+              var newColor = 0xFFFF25;
               cubeColor(newColor);
             }
           }
@@ -300,29 +311,7 @@ $(document).ready(function() {
 
         var frame = controller.frame();
 
-        // creating more cubes with grab strength 
 
-        if (frame.valid && frame.gestures.length > 0) {
-          frame.gestures.forEach(function(gesture) {
-            switch (gesture.type) {
-              case "keyTap":
-                cube = new THREE.Mesh(geometry, cubeMaterials);
-                scene.add(cube);
-            }
-          });
-        }
-
-
-        scene.traverse(function(cube) {
-          if (cube instanceof THREE.Mesh) {
-            // Move cube further back
-            cube.position.z -= 0.20;
-
-            // Rotate cubes
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
-          };
-        });
 
         // differentiates between one hand and two hands 
 
@@ -370,6 +359,34 @@ $(document).ready(function() {
 
 
         }
+
+
+        // creating more cubes with grab strength 
+
+        if (frame.valid && frame.gestures.length > 0) {
+          frame.gestures.forEach(function(gesture) {
+            switch (gesture.type) {
+              case "keyTap":
+                cube = new THREE.Mesh(geometry, cubeMaterials);
+                scene.add(cube);
+              case "circle": 
+              var newColor = 0x0F5B30;
+              cubeColor(newColor);
+            }
+          });
+        }
+
+
+        scene.traverse(function(cube) {
+          if (cube instanceof THREE.Mesh) {
+            // Move cube further back
+            cube.position.z -= 0.40;
+
+            // Rotate cubes
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+          };
+        });
 
 
       }
