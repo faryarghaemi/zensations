@@ -21,7 +21,7 @@ $(document).ready(function() {
 
   // Creating an Audio object.
   var audio0 = new Audio();
-  audio0.src = 'assets/feeling_good.mp3';
+  audio0.src = 'assets/staying_alive.m4a';
   audio0.controls = true;
   audio0.autoplay = false;
   audio0.loop = true;
