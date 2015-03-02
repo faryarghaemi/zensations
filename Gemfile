@@ -35,13 +35,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'underscore-rails'
-gem 'carrierwave'
 gem 'rails_12factor', :group => :production 
-gem 'cloudinary'
 gem 'mini_magick'
 gem 'haml'
-gem 'bootstrap-sass'
-gem 'bootstrap-datepicker-rails'
 
 # debugger gems 
 group :development do
