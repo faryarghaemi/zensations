@@ -1,0 +1,2 @@
+class UserTracksController < ApplicationController
+end
