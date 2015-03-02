@@ -25,7 +25,7 @@ development:
   <<: *default
   database: project_two_development
   host: localhost
-  username: liamdarmody
+  username: ENTER YOUR USERNAME
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
