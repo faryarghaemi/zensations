@@ -1,3 +1,4 @@
+var cube;
 $(document).ready(function() {
 
   // cube info 
@@ -45,21 +46,24 @@ $(document).ready(function() {
     }),
   ];
 
-  var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
-  // var cube = new THREE.Mesh(geometry, cubeMaterial);
+  // setting cubeMaterial for multi-colored cube 
+  // var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
 
-  // var material = new THREE.MeshBasicMaterial({
-  //   color: 0x8796FF
-  // });
+  // setting cubeMaterial for cube that changes color with gestures 
+  var cubeMaterial = new THREE.MeshBasicMaterial({
+    color: 0x8796FF
+  });
+
+  var newColor;
+  var cubeColor = function(newColor) {
+    cube.material.color.setHex(newColor);
+  };
 
   cube = new THREE.Mesh(geometry, cubeMaterial);
+
   scene.add(cube);
 
-  // var newColor;
-  // var cubeColor = function(newColor) {
-  //   cube.material.color.setHex(newColor);
-  // };
-
+  // debugger;
   camera.position.x = 0;
   camera.position.y = 0;
   camera.position.z = 500;
@@ -166,11 +170,9 @@ $(document).ready(function() {
 
 
 
-
-
   // initializing the controller 
-  var controller = new Leap.Controller();
-  controller.on("frame", function(frame) {
+  var deviceLoopController = new Leap.Controller({frameEventName: 'deviceFrame'});
+  deviceLoopController.on("frame", function(frame) {
     if (frame.pointables.length > 0) {
       canvasElement.width = canvasElement.width; //clear
 
@@ -207,7 +209,7 @@ $(document).ready(function() {
             // console.log("Screen Tap Gesture");
             break;
           case "swipe":
-            console.log("Swipe Gesture");
+            // console.log("Swipe Gesture");
             break;
         }
       });
@@ -215,38 +217,38 @@ $(document).ready(function() {
 
     // Display Gesture object data
     // also changing the color with swipe direction 
-    // if (frame.gestures.length > 0) {
-    //   for (var i = 0; i < frame.gestures.length; i++) {
-    //     var gesture = frame.gestures[i];
-    //     if (gesture.type === "swipe") {
-    //       //Classify swipe as either horizontal or vertical
-    //       var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
-    //       //Classify as right-left or up-down
-    //       if (isHorizontal) {
-    //         if (gesture.direction[0] > 0) {
-    //           var swipeDirection = "right";
-    //           var newColor = 0xF5F29C;
-    //           cubeColor(newColor);
-    //         } else {
-    //           var swipeDirection = "left";
-    //           var newColor = 0xF53B84;
-    //           cubeColor(newColor);
-    //         }
-    //       } else { //vertical
-    //         if (gesture.direction[1] > 0) {
-    //           var swipeDirection = "up";
-    //           var newColor = 0xBC87FF;
-    //           cubeColor(newColor);
-    //         } else {
-    //           var swipeDirection = "down";
-    //           var newColor = 0xF5B89C;
-    //           cubeColor(newColor);
-    //         }
-    //       }
-    //       console.log(swipeDirection)
-    //     }
-    //   }
-    // }
+    if (frame.gestures.length > 0) {
+      for (var i = 0; i < frame.gestures.length; i++) {
+        var gesture = frame.gestures[i];
+        if (gesture.type === "swipe") {
+          //Classify swipe as either horizontal or vertical
+          var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
+          //Classify as right-left or up-down
+          if (isHorizontal) {
+            if (gesture.direction[0] > 0) {
+              var swipeDirection = "right";
+              var newColor = 0xF5F29C;
+              cubeColor(newColor);
+            } else {
+              var swipeDirection = "left";
+              var newColor = 0xF53B84;
+              cubeColor(newColor);
+            }
+          } else { //vertical
+            if (gesture.direction[1] > 0) {
+              var swipeDirection = "up";
+              var newColor = 0xBC87FF;
+              cubeColor(newColor);
+            } else {
+              var swipeDirection = "down";
+              var newColor = 0xF5B89C;
+              cubeColor(newColor);
+            }
+          }
+          // console.log(swipeDirection)
+        }
+      }
+    }
   });
 
 
@@ -267,7 +269,8 @@ $(document).ready(function() {
   window.outputRight = $('#outputRight');
   window.outputLeft = $('#outputLeft');
   Leap.loop({
-      hand: function(hand) {
+      hand: function(hand, frame) {
+        // debugger;
         if (hand.type === "right") {
           var screenPositionRight = hand.screenPosition(hand.palmPosition);
           // var outputContentRight = "xRight: " + (screenPositionRight[0].toPrecision(4)) + 'px' +
@@ -290,11 +293,19 @@ $(document).ready(function() {
         }
 
 
+
+
         // as abs of difference between two hands increases, the cube scale increases 
 
         // differentiates between one hand and two hands 
-        var handType = function() {
-          Leap.loop(options, function(frame) {
+
+      
+        var frame = controller.frame();
+
+
+        // var handType = function() {
+        //   debugger
+        //   // Leap.loop(options, function(frame) {
             if (frame.hands.length === 2) {
               var xFirstHand = (parseFloat(frame.hands[0].palmPosition[0].toPrecision(4))); 
 
@@ -314,7 +325,19 @@ $(document).ready(function() {
 
               position(x, y, z);
 
-              // if (Math.abs(xFirstHand - xSecondHand))
+
+              // var previousFrame = controller.frame(150);
+              // var handScale = hand.scaleFactor(previousFrame);
+              // cube.scale.x = handScale;
+
+              // console.log("Hand Scale: " + handScale);
+
+              var previousFrame = controller.frame(150);
+              var frameScale = frame.scaleFactor(previousFrame); 
+              cube.scale.x = frameScale;
+
+              // console.log("Frame Scale: " + frameScale);
+
 
             } else if (frame.hands.length === 1) {
 
@@ -322,16 +345,19 @@ $(document).ready(function() {
               var y = (hand.palmPosition[1].toPrecision(4));
               var z = (hand.palmPosition[2].toPrecision(4));
 
+
               position(x, y, z);
+
+
             }
 
 
 
-          });
+          // });
 
-        };
+        // };
 
-        handType();
+        // handType();
 
       }
 
