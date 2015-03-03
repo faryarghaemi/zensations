@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root :to => 'pages#home'
+  root :to => 'pages#visualiser'
   
   resources :users, :except => [:destroy] do
     resources :tracks, :only => [:new, :create, :index] do
