@@ -23,21 +23,20 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+# required for heroku deployment
+gem 'rails_12factor', group: :production
 
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
-
-gem 'dotenv-rails', :groups => [:development, :test]
-gem 'underscore-rails'
-gem 'rails_12factor', :group => :production 
-gem 'mini_magick'
+# haml
 gem 'haml'
+
+# saas bootstrap
+gem 'bootstrap-sass'
+
+# underscore.js
+gem 'underscore-rails'
+
+# env setup
+gem 'dotenv-rails', :groups => [:development, :test]
 
 # debugger gems 
 group :development do
@@ -50,6 +49,15 @@ group :development do
   gem 'meta_request'
 end
 
+# Use ActiveModel has_secure_password
+gem 'bcrypt', '~> 3.1.7'
+
+# Use Unicorn as the app server
+# gem 'unicorn'
+
+# Use Capistrano for deployment
+# gem 'capistrano-rails', group: :development
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -60,4 +68,3 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-

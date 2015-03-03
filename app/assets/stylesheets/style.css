@@ -31,7 +31,7 @@ canvas {
 
 /* Slide out menu */
 
-#slide-menu {
+/*#slide-menu {
     height: 200px;
     position: fixed;
     background: rgba(200, 200, 200, 0.8);
@@ -43,4 +43,25 @@ canvas {
 .submenu {
     background: rgba(255, 255, 255, 0.8);
     z-index: 2;
+}*/
+
+/*Slide Up Menu*/
+
+.navbar-fixed-bottom {
+    margin-top: 20px;
+}
+.navbar-fixed-top, .navbar-fixed-bottom {
+    position: static;
+}
+.navbar-fixed-bottom {
+    bottom: 0;
+}
+.navbar-fixed-top, .navbar-fixed-bottom {
+    left: 0;
+    margin-bottom: 0;
+    right: 0;
+    z-index: 1030;
+}
+.navbar {
+    overflow: visible;
 }
