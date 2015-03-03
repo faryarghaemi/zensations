@@ -13,7 +13,7 @@ window.AudioContext = (function(){
 $(document).ready(function() {
 
   // Define default formUrl
-  var formUrl = 'https://soundcloud.com/actuallygrimes/d-r-o-m-e-whoknoidontno';
+  var formUrl;
 
   // Handle the form submit event to load the new URL
   form.addEventListener('submit', function(e) {
@@ -93,7 +93,6 @@ $(document).ready(function() {
     };
 
     // Play sound & visualise
-    $("#start").on('click', function() {
       music_playing = true;
       audio0.play();
       // An event listener which is called periodically for audio processing.
@@ -105,13 +104,13 @@ $(document).ready(function() {
       render();
       controls = new THREE.OrbitControls( camera );
       controls.damping = 0.2;
-    });
-
+    
     // Stop sound & visualise
     $("#stop").on('click', function() {
       audio0.pause();
       audio0.currentTime = 0;
       music_playing = false;
+      cancelAnimationFrame(zensationAnimation);
     });
   };
   

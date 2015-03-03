@@ -37,7 +37,7 @@
       var render = function () {
         // Throttle frame rate
         setTimeout( function() {
-          requestAnimationFrame( render );
+          zensationAnimation = requestAnimationFrame( render );
         }, 1000 / 30 );
 
         // Define circle
@@ -122,15 +122,12 @@
           </div>
         </div>
         <div class="six columns right audio-controls">
-          <p id="controls">
             <form id="form">
               <input id="input" class="u-full-width" placeholder="Paste Soundcloud URL here (https://soundcloud.com/artist/track)">
-              <button type="submit" id="submit">Load it!</button>
+              <button type="submit" id="submit">Play it!</button>
+              &nbsp; &nbsp;
+              <input type="button" id="stop" value="Stop">
             </form>
-            <input type="button" id="start" value="Start">
-            &nbsp; &nbsp;
-            <input type="button" id="stop" value="Stop">
-          </p>
         </div>
       </div>
     </div>
