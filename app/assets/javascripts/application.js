@@ -15,4 +15,5 @@
 //= require turbolinks
 //= require underscore
 //= require three.min.js
+//= require handlebars
 //= require_tree .
