@@ -3,8 +3,10 @@ var geometry;
 var sphereMaterials;
 var newColor;
 var sphereColor;
-var floorColor; 
+var floorColor;
 $(document).ready(function() {
+
+
 
 
   // setting sphereMaterials for multi-colored sphere 
@@ -71,33 +73,33 @@ $(document).ready(function() {
     sphere.material.color.setHex(newColor);
   };
 
-var createSphere = function () {
-  var sphere = new THREE.Mesh(geometry, sphereMaterials);
-  sphere.castShadow = true;
-  return sphere; 
-}; 
+  var createSphere = function() {
+    var sphere = new THREE.Mesh(geometry, sphereMaterials);
+    sphere.castShadow = true;
+    return sphere;
+  };
 
-sphere = createSphere(); 
+  sphere = createSphere();
 
-scene.add(sphere);
+  scene.add(sphere);
 
 
 
   // the light sources 
   var directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
   directionalLight.position.set(0.2, 1, 0.2);
-  directionalLight.castShadow = true; 
+  directionalLight.castShadow = true;
   scene.add(directionalLight);
 
 
   var directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
   directionalLight.position.set(1, 0, 0.2);
-  directionalLight.castShadow = true; 
+  directionalLight.castShadow = true;
   scene.add(directionalLight);
 
   var directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
   directionalLight.position.set(0, -1, 0.2);
-  directionalLight.castShadow = true; 
+  directionalLight.castShadow = true;
   scene.add(directionalLight);
 
 
@@ -148,57 +150,57 @@ scene.add(sphere);
 
   // floor color 
 
-  Leap.loop( function() {
+  Leap.loop(function() {
 
-    var red = Math.round(((sphere.position.x/40) / window.innerWidth) * 255);
-    var green = Math.round(((sphere.position.y/20) / window.innerHeight) * 255);
+    var red = Math.round(((sphere.position.x / 40) / window.innerWidth) * 255);
+    var green = Math.round(((sphere.position.y / 20) / window.innerHeight) * 255);
 
-    var pageZ = Math.sqrt((sphere.position.y/20) * (sphere.position.y/20) + (sphere.position.x/40) * (sphere.position.x/40)); 
-    var innerZ = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight); 
+    var pageZ = Math.sqrt((sphere.position.y / 20) * (sphere.position.y / 20) + (sphere.position.x / 40) * (sphere.position.x / 40));
+    var innerZ = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight);
     var blue = Math.round(pageZ / innerZ * 255);
 
     // the function below is to get the brightest colors for the floor 
-    var colorResponse = function (color) {
-      color = color * Math.PI / 2; 
-      return (0.8) * Math.sin(color) + 0.4; 
+    var colorResponse = function(color) {
+      color = color * Math.PI / 2;
+      return (0.8) * Math.sin(color) + 0.4;
 
     }
 
-    var r = colorResponse(red); 
-    var g = colorResponse(green); 
-    var b = colorResponse(blue); 
+    var r = colorResponse(red);
+    var g = colorResponse(green);
+    var b = colorResponse(blue);
 
 
-    floorColor(r, g, b); 
+    floorColor(r, g, b);
 
 
   });
 
   // shadow 
 
-renderer.shadowMapEnabled = true;
-// renderer.shadowMapSoft = true;
+  renderer.shadowMapEnabled = true;
+  // renderer.shadowMapSoft = true;
 
-renderer.shadowCameraNear = 0;
-renderer.shadowCameraFar = 20;
-renderer.shadowCameraFov = 30;
+  renderer.shadowCameraNear = 0;
+  renderer.shadowCameraFar = 20;
+  renderer.shadowCameraFov = 30;
 
-renderer.shadowMapBias = 0.0039;
-renderer.shadowMapDarkness = 0.5;
-renderer.shadowMapWidth = 1024;
-renderer.shadowMapHeight = 1024;
+  renderer.shadowMapBias = 0.0039;
+  renderer.shadowMapDarkness = 0.5;
+  renderer.shadowMapWidth = 1024;
+  renderer.shadowMapHeight = 1024;
 
-floor.receiveShadow = true;
+  floor.receiveShadow = true;
 
-// camera position 
+  // camera position 
   camera.position.x = 0;
   camera.position.y = 0;
   camera.position.z = 500;
 
-    // initializing the canvas 
+  // initializing the canvas 
   var canvasElement = $("canvas");
 
-// rendering the info 
+  // rendering the info 
   var render = function() {
 
     requestAnimationFrame(render);
@@ -381,9 +383,10 @@ floor.receiveShadow = true;
     }
   });
 
+  // To get frames rolling
+  controller.connect();
 
   // changing the sphere position in relation to hand position 
-  // controller.connect();
   var position = function(x, y, z) {
 
 
