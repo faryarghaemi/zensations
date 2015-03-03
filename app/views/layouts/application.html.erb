@@ -39,16 +39,14 @@
 }
 
       var render = function () {
-        // Throttle frame rate
-        // setTimeout( function() {
-        //   zensationAnimation = requestAnimationFrame( render );
-        // }, 1000 / 30 );
 
-        zensationAnimation = requestAnimationFrame( render );
-
-        if (!music_playing) {
+        if (music_playing) {
+          // Throttle frame rate
+          setTimeout( function() {
+            zensationAnimation = requestAnimationFrame( render );
+          }, 1000 / 30 );
+        } else {
           cancelAnimationFrame(zensationAnimation);// Stop the animation
-          console.log(scene.children.length);
         }
 
         // Define circle
@@ -91,8 +89,8 @@
             // Dealing with small numbers because circles are very sensitive
             // to changes in size
             var scaleFactor = frequencyAmplitudeArray[j % frequencyAmplitudeArray.length]/25500;
-            object.scale.x *= scaleFactor + 0.996;
-            object.scale.y *= scaleFactor + 0.996;
+            object.scale.x *= scaleFactor * 2 + 0.995;
+            object.scale.y *= scaleFactor * 2 + 0.995;
             j++;
 
             // Rotate rings
