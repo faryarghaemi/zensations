@@ -16,6 +16,8 @@
   </head>
   <body>
     <script>
+      var currentXrot = 0; 
+      var currentYrot = 0; 
       var getAverageVolume = function(array) {
         var values = 0;
         var average;
@@ -52,13 +54,18 @@
         // Define circle
         var radius   = 2,
         segments = 64,
-        material = new THREE.LineBasicMaterial( { color: 0x000000 } ),
+        material = new THREE.LineBasicMaterial( { color: 0xFFFFFF } ),
         geometry = new THREE.CircleGeometry( radius, segments );
         // Remove center vertex
         geometry.vertices.shift();
         // to work with MeshBasicMaterial
         var circle = new THREE.Line( geometry, material )
-        console.log(circle.rotation);
+
+        // Rotate rings
+        circle.rotation.x = currentXrot;
+        circle.rotation.y = currentYrot;
+        currentXrot += 0.1;
+        currentYrot += 0.01;
 
         // Setting colour twice - Ineffient
         // You can do this directly without pusher - see setHSL in three.js
@@ -71,10 +78,6 @@
         circle.position.y = -8 * (mousePosition.y / window.innerHeight - 0.5);
         circle.position.z = 2;
 
-        // debugger 
-
-        console.log(mousePosition.x, mousePosition.y); 
-
         scene.traverse (function (object)
         {
           if (object instanceof THREE.Line) {
@@ -83,25 +86,20 @@
             
             // Cycle through colours
             var hsl = object.material.color.getHSL();
-            var averageVolume = getAverageVolume(frequencyAmplitudeArray);
-            var musicIntensity = Math.pow(averageVolume/255, sensitivity);
-            object.material.color.setHSL(hsl.h, musicIntensity, hsl.l);
+            // var averageVolume = getAverageVolume(frequencyAmplitudeArray);
+            // var musicIntensity = Math.pow(averageVolume/255, sensitivity);
+            // object.material.color.setHSL(hsl.h, musicIntensity, hsl.l);
 
             // Move circle further back
-            object.position.z -= musicIntensity / 2 ;
+            object.position.z -= 0.5 ;
 
             // Pulse to the music
             // Dealing with small numbers because circles are very sensitive
             // to changes in size           
-            var scaleFactor = frequencyAmplitudeArray[j % frequencyAmplitudeArray.length]/25500;
-            object.scale.x *= scaleFactor + 0.996;
-            object.scale.y *= scaleFactor + 0.996;
-            j++;
-            
-
-            // Rotate rings
-            circle.rotation.x += 0.1;
-            circle.rotation.y += 0.01;
+            // var scaleFactor = frequencyAmplitudeArray[j % frequencyAmplitudeArray.length]/25500;
+            // object.scale.x *= scaleFactor + 0.996;
+            // object.scale.y *= scaleFactor + 0.996;
+            // j++;
 
             // Make objects in the distance darker
             object.material.color.offsetHSL(0,0, -0.002);
@@ -110,16 +108,16 @@
         });
 
         // Don't add a new circle if music is not playing
-        if (getAverageVolume(frequencyAmplitudeArray)) {
+        // if (getAverageVolume(frequencyAmplitudeArray)) {
           scene.add( circle );
-          ballCount++;
-        };
+        //   ballCount++;
+        // };
 
         // Delete the last element. Could not use scene.traverse to do this
         // as it didn't like the object being deleted
         for ( var k =  0; k < scene.children.length ; k++ ) {
             var obj = scene.children[ k ];
-            if ( obj instanceof THREE.Line && obj.position.z < -2) {
+            if ( obj instanceof THREE.Line && obj.position.z < -10) {
               scene.remove(obj);
             }
         }
