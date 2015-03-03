@@ -1,4 +1,5 @@
 var controller; 
+var frame; 
 $(document).ready(function() {
 
 
@@ -10,7 +11,8 @@ $(document).ready(function() {
 
   // var circlePosition; 
 
-  controller = Leap.loop(function(frame) {
+  var controller = Leap.loop(function(frame) {
+    var frame = controller.frame();
     var interactionBox = frame.interactionBox;
 
     if (frame.pointables.length > 0) {
