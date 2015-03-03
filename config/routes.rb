@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'tracks/new'
+
   root :to => 'pages#visualiser'
   
   resources :users, :except => [:destroy] do
@@ -6,7 +8,8 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :tracks, :only => [:index]
+  resources :tracks do
+  end
 
   get '/login' => 'session#new'
   post '/login' => 'session#create'

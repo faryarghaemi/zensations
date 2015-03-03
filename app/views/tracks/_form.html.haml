@@ -1,0 +1,9 @@
+= form_for @track do |f|
+  %div.form-group
+    = f.label :soundcloud_id
+    = f.text_field :soundcloud_id, :autofocus => true, :required => true, :class => 'form-control'
+
+    = f.label :stream_url
+    = f.text_field :stream_url, :class => 'form-control'
+
+  = f.submit 'Save', :class => 'btn btn-primary'
