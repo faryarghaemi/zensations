@@ -3,6 +3,7 @@ var geometry;
 var sphereMaterials;
 var newColor;
 var sphereColor;
+var floorColor; 
 $(document).ready(function() {
 
 
@@ -89,48 +90,67 @@ $(document).ready(function() {
   scene.add(directionalLight);
 
 
-// white spotlight shining from the side, casting shadow
+  // white spotlight shining from the side, casting shadow
 
-// var spotLight = new THREE.SpotLight( 0xffffff );
-// spotLight.position.set( 100, 1000, 100 );
+  // var spotLight = new THREE.SpotLight( 0xffffff );
+  // spotLight.position.set( 100, 1000, 100 );
 
-// spotLight.castShadow = true;
+  // spotLight.castShadow = true;
 
-// spotLight.shadowMapWidth = 1024;
-// spotLight.shadowMapHeight = 1024;
+  // spotLight.shadowMapWidth = 1024;
+  // spotLight.shadowMapHeight = 1024;
 
-// spotLight.shadowCameraNear = 500;
-// spotLight.shadowCameraFar = 4000;
-// spotLight.shadowCameraFov = 30;
+  // spotLight.shadowCameraNear = 500;
+  // spotLight.shadowCameraFar = 4000;
+  // spotLight.shadowCameraFov = 30;
 
-// scene.add( spotLight );
+  // scene.add( spotLight );
 
-// plane
-// var planeGeometry = new THREE.PlaneGeometry( 1280, 20, 10, 20 );
-// var planeMaterial = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
-// var plane = new THREE.Mesh( planeGeometry, planeMaterial );
-// scene.add( plane );
+  // floor
+  // var floorGeometry = new THREE.floorGeometry( 1280, 20, 10, 20 );
+  // var floorMaterial = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
+  // var floor = new THREE.Mesh( floorGeometry, floorMaterial );
+  // scene.add( floor );
 
-// plane
-var planeGeometry = new THREE.BoxGeometry( 400, 600, 1 );
-var planeMaterial = new THREE.MeshPhongMaterial( {
-  ambient: 0x030303,
-  color: 0xdddddd,
-  specular: 0x009900,
-  shininess: 30,
-  shading: THREE.FlatShading
-});
-var plane = new THREE.Mesh( planeGeometry, planeMaterial );
+  // floor
+  var floorColor = function(r, g, b) {
+    var floor = scene.getObjectByName('floor');
+    floor.material.color.setRGB(r/255.0, g/255.0, b/255.0);
+  };
 
-// what does overdraw mean? 
-// plane.overdraw = true;
-plane.rotation.x = -1.3; 
-plane.position.y = -100; 
-
-
-scene.add( plane );
+  var floorGeometry = new THREE.BoxGeometry(425, 800, 1);
+  var floorMaterial = new THREE.MeshPhongMaterial({
+    ambient: 0x030303,
+    color: 'rgb(100,100,100)',//0xdddddd,
+    specular: 0x009900,
+    shininess: 30,
+    shading: THREE.FlatShading,
+  });
+  var floor = new THREE.Mesh(floorGeometry, floorMaterial);
 
 
+  floor.rotation.x = -1.5;
+  floor.position.y = -100;
+  floor.name = 'floor';
+
+  scene.add(floor);
+
+  var blue = 0;
+
+  $(window).on('mousemove', function(event) {
+
+    var red = Math.round((event.pageX / window.innerWidth) * 255);
+    var green = Math.round((event.pageY / window.innerHeight) * 255);
+
+    var pageZ = Math.sqrt(event.pageY * event.pageY + event.pageX * event.pageX)
+    var innerZ = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight)
+    var blue = Math.round(pageZ / innerZ * 255);
+
+
+    floorColor(red, green, blue);
+
+
+  });
 
 
   // debugger;
@@ -437,14 +457,14 @@ scene.add( plane );
         }
 
 
-        scene.traverse(function(sphere, plane) {
-          if (sphere instanceof THREE.Mesh) {
-            // // Move sphere further back
-            // sphere.position.z -= 0.60;
+        scene.traverse(function(objects) {
+          if (objects instanceof THREE.Mesh && !(objects.name === 'floor')) {
+            // Move objects further back
+            objects.position.z -= 0.60;
 
-            // // Rotate spheres
-            // sphere.rotation.x += 0.01;
-            // sphere.rotation.y += 0.01;
+            // Rotate objectss
+            objects.rotation.x += 0.01;
+            objects.rotation.y += 0.01;
           };
         });
 
