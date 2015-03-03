@@ -14,4 +14,5 @@
 #
 
 class Track < ActiveRecord::Base
+  has_many :user_tracks
 end
