@@ -72,7 +72,6 @@ $(document).ready(function() {
   };
 
   sphere = new THREE.Mesh(geometry, sphereMaterials);
-
   scene.add(sphere);
 
 
@@ -83,10 +82,14 @@ $(document).ready(function() {
 
   var directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
   directionalLight.position.set(1, 0, 0.2);
+
+
   scene.add(directionalLight);
 
   var directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
   directionalLight.position.set(0, -1, 0.2);
+
+
   scene.add(directionalLight);
 
 
@@ -118,7 +121,7 @@ $(document).ready(function() {
     floor.material.color.setRGB(r, g, b);
   };
 
-  var floorGeometry = new THREE.BoxGeometry(400, 800, 1);
+  var floorGeometry = new THREE.BoxGeometry(350, 1000, 2);
   var floorMaterial = new THREE.MeshPhongMaterial({
     ambient: 0x030303,
     color: 'rgb(227, 0, 31)',
@@ -129,31 +132,27 @@ $(document).ready(function() {
   var floor = new THREE.Mesh(floorGeometry, floorMaterial);
 
 
-
-
   floor.rotation.x = -1.5;
   floor.position.y = -100;
   floor.name = 'floor';
 
   scene.add(floor);
 
-  var blue = 0;
-
-
+  // floor color 
 
   Leap.loop( function() {
 
-    var red = Math.round(((sphere.position.x/50) / window.innerWidth) * 255);
+    var red = Math.round(((sphere.position.x/40) / window.innerWidth) * 255);
     var green = Math.round(((sphere.position.y/20) / window.innerHeight) * 255);
 
-    var pageZ = Math.sqrt((sphere.position.y/20) * (sphere.position.y/20) + (sphere.position.x/50) * (sphere.position.x/50)); 
+    var pageZ = Math.sqrt((sphere.position.y/20) * (sphere.position.y/20) + (sphere.position.x/40) * (sphere.position.x/40)); 
     var innerZ = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight); 
     var blue = Math.round(pageZ / innerZ * 255);
 
     // the function below is to get the brightest colors for the floor 
     var colorResponse = function (color) {
       color = color * Math.PI / 2; 
-      return (0.8) * Math.sin(color) + 0.5; 
+      return (0.8) * Math.sin(color) + 0.4; 
 
     }
 
@@ -162,15 +161,31 @@ $(document).ready(function() {
     var b = colorResponse(blue); 
 
 
-    floorColor(r, g, b);
-    console.log(r, g, b); 
-    console.log(sphere.position); 
+    floorColor(r, g, b); 
 
 
   });
 
+  // shadow 
 
-  // debugger;
+renderer.shadowMapEnabled = true;
+renderer.shadowMapSoft = true;
+
+renderer.shadowCameraNear = 0;
+renderer.shadowCameraFar = 20;
+renderer.shadowCameraFov = 30;
+
+renderer.shadowMapBias = 0.0039;
+renderer.shadowMapDarkness = 0.5;
+renderer.shadowMapWidth = 1024;
+renderer.shadowMapHeight = 1024;
+
+directionalLight.castShadow = true;
+sphere.castShadow = true;
+floor.receiveShadow = true;
+
+
+
   camera.position.x = 0;
   camera.position.y = 0;
   camera.position.z = 500;
@@ -184,6 +199,7 @@ $(document).ready(function() {
 
     sphere.rotation.x += 0.01;
     sphere.rotation.y += 0.01;
+
 
     renderer.render(scene, camera);
   };
@@ -311,10 +327,10 @@ $(document).ready(function() {
             // console.log("Circle Gesture");
             break;
           case "keyTap":
-            console.log("Key Tap Gesture");
+            // console.log("Key Tap Gesture");
             break;
           case "screenTap":
-            console.log("Screen Tap Gesture");
+            // console.log("Screen Tap Gesture");
             break;
           case "swipe":
             // console.log("Swipe Gesture");
