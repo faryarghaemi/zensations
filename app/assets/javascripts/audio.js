@@ -109,7 +109,7 @@ $(document).ready(function() {
     $("#stop").on('click', function() {
       audio0.pause();
       audio0.currentTime = 0;
-      audio0 = undefined;
+      javascriptNode.onaudioprocess = null;
       music_playing = false;
     });
   };

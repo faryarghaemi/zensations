@@ -40,17 +40,19 @@
 
       var render = function () {
         // Throttle frame rate
-        setTimeout( function() {
-          zensationAnimation = requestAnimationFrame( render );
-        }, 1000 / 30 );
+        // setTimeout( function() {
+        //   zensationAnimation = requestAnimationFrame( render );
+        // }, 1000 / 30 );
+
+        zensationAnimation = requestAnimationFrame( render );
 
         if (!music_playing) {
           cancelAnimationFrame(zensationAnimation);// Stop the animation
-          console.log(scene.children.length)
+          console.log(scene.children.length);
         }
 
         // Define circle
-        var radius   = 2,
+        var radius = 2,
         segments = 64,
         material = new THREE.LineBasicMaterial( { color: 0x000000 } ),
         geometry = new THREE.CircleGeometry( radius, segments );
