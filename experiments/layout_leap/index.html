@@ -1,21 +1,31 @@
 <html>
-  <head>
-    <title>Layout Test</title>
-    <style>
-    </style>
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/skeleton.css">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/three.min.js"></script>
-    <script src="js/OrbitControls.js"></script>
-    <script src="js/jquery.js"></script>
-    <script src="js/pusher.js"></script>
-    <script src="js/audio.js"></script>
-    <script src="js/mouse.js"></script>
-    <script src="js/menu.js"></script>
-  </head>
-  <body>
-    <script>
+
+<head>
+  <title>Leap and Layout</title>
+  <style>
+  </style>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/three.min.js"></script>
+  <script src="js/OrbitControls.js"></script>
+  <script src="js/underscore.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/pusher.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/leap.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="https://js.leapmotion.com/leap-0.6.4.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="js/leap.screen-position.js"></script>
+</head>
+<body>
+<p id="lmCoordinates">...</p>
+<p id="normalizedCoordinates">...</p>
+<p id="windowCoordinates">...</p>
+<script>
+
+
       var getAverageVolume = function(array) {
         var values = 0;
         var average;
@@ -65,14 +75,17 @@
         circle.material.color.setHex( color );
         i += 0.1;
 
-        // Mouse interaction
-        circle.position.x = 8 * (mousePosition.x / window.innerWidth - 0.5);
-        circle.position.y = -8 * (mousePosition.y / window.innerHeight - 0.5);
+        // Leap interaction
+        circlePosition = function (x, y) {
+        circle.position.x = 8 * (x / window.innerWidth - 0.5);
+        circle.position.y = -8 * (y / window.innerHeight - 0.5);
         circle.position.z = 2;
 
-        // debugger 
+      }; 
 
-        console.log(mousePosition.x, mousePosition.y); 
+        // debugger 
+        // console.log(windowPosition[0], windowPosition[1]); 
+
 
         scene.traverse (function (object)
         {

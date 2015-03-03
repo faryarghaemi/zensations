@@ -71,25 +71,33 @@ $(document).ready(function() {
     sphere.material.color.setHex(newColor);
   };
 
-  sphere = new THREE.Mesh(geometry, sphereMaterials);
-  scene.add(sphere);
+var createSphere = function () {
+  var sphere = new THREE.Mesh(geometry, sphereMaterials);
+  sphere.castShadow = true;
+  return sphere; 
+}; 
+
+sphere = createSphere(); 
+
+scene.add(sphere);
+
 
 
   // the light sources 
   var directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
   directionalLight.position.set(0.2, 1, 0.2);
+  directionalLight.castShadow = true; 
   scene.add(directionalLight);
+
 
   var directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
   directionalLight.position.set(1, 0, 0.2);
-
-
+  directionalLight.castShadow = true; 
   scene.add(directionalLight);
 
   var directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
   directionalLight.position.set(0, -1, 0.2);
-
-
+  directionalLight.castShadow = true; 
   scene.add(directionalLight);
 
 
@@ -169,7 +177,7 @@ $(document).ready(function() {
   // shadow 
 
 renderer.shadowMapEnabled = true;
-renderer.shadowMapSoft = true;
+// renderer.shadowMapSoft = true;
 
 renderer.shadowCameraNear = 0;
 renderer.shadowCameraFar = 20;
@@ -180,17 +188,17 @@ renderer.shadowMapDarkness = 0.5;
 renderer.shadowMapWidth = 1024;
 renderer.shadowMapHeight = 1024;
 
-directionalLight.castShadow = true;
-sphere.castShadow = true;
 floor.receiveShadow = true;
 
-
-
+// camera position 
   camera.position.x = 0;
   camera.position.y = 0;
   camera.position.z = 500;
 
+    // initializing the canvas 
+  var canvasElement = $("canvas");
 
+// rendering the info 
   var render = function() {
 
     requestAnimationFrame(render);
@@ -205,8 +213,6 @@ floor.receiveShadow = true;
   };
 
   render();
-
-  // end sphere info 
 
   // info for number of fingers and hands 
 
@@ -377,7 +383,7 @@ floor.receiveShadow = true;
 
 
   // changing the sphere position in relation to hand position 
-  controller.connect();
+  // controller.connect();
   var position = function(x, y, z) {
 
 
@@ -449,6 +455,8 @@ floor.receiveShadow = true;
 
           // console.log("Hand Scale: " + handScale);
 
+          // code below is for scaling the sphere 
+
           var previousFrame = controller.frame(150);
           var frameScale = frame.scaleFactor(previousFrame);
           sphere.scale.x = frameScale;
@@ -476,7 +484,7 @@ floor.receiveShadow = true;
             switch (gesture.type) {
               case "keyTap":
                 var drawsphere = function() {
-                  sphere = new THREE.Mesh(geometry, sphereMaterials);
+                  sphere = createSphere();
                   scene.add(sphere);
                 };
                 drawsphere();
@@ -512,8 +520,7 @@ floor.receiveShadow = true;
 
 
 
-  // initializing the canvas 
-  var canvasElement = $("canvas");
+
 
 
 
