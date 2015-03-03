@@ -12,6 +12,6 @@
 
 class User < ActiveRecord::Base
   has_secure_password
-  has_many :user_tracks
+  has_and_belongs_to_many :tracks
   validates :name, :presence => true, :uniqueness => true
 end
