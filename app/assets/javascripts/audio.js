@@ -93,24 +93,24 @@ $(document).ready(function() {
     };
 
     // Play sound & visualise
-      music_playing = true;
-      audio0.play();
-      // An event listener which is called periodically for audio processing.
-      javascriptNode.onaudioprocess = function () {
-        // Get the Time Domain data for this sample
-        analyserNode.getByteFrequencyData(frequencyAmplitudeArray);
-      }
-      // Render in three.js
-      render();
-      controls = new THREE.OrbitControls( camera );
-      controls.damping = 0.2;
+    music_playing = true;
+    audio0.play();
+    // An event listener which is called periodically for audio processing.
+    javascriptNode.onaudioprocess = function () {
+      // Get the Time Domain data for this sample
+      analyserNode.getByteFrequencyData(frequencyAmplitudeArray);
+    }
+    // Render in three.js
+    render();
+    controls = new THREE.OrbitControls( camera );
+    controls.damping = 0.2;
     
     // Stop sound & visualise
     $("#stop").on('click', function() {
       audio0.pause();
       audio0.currentTime = 0;
+      audio0 = undefined;
       music_playing = false;
-      cancelAnimationFrame(zensationAnimation);
     });
   };
   

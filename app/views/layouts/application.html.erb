@@ -20,7 +20,7 @@
 
         average = values / length;
         return average;
-      }
+      } 
 
       var scene = new THREE.Scene();
       var camera = new THREE.PerspectiveCamera( 25, window.innerWidth/window.innerHeight, 0.1, 1000 );
@@ -34,11 +34,20 @@
       var i = 0; //counter for hue
       var j = 0; //counter for freq channel
 
+      function empty(elem) {
+      while (elem.lastChild) elem.removeChild(elem.lastChild);
+}
+
       var render = function () {
         // Throttle frame rate
         setTimeout( function() {
           zensationAnimation = requestAnimationFrame( render );
         }, 1000 / 30 );
+
+        if (!music_playing) {
+          cancelAnimationFrame(zensationAnimation);// Stop the animation
+          console.log(scene.children.length)
+        }
 
         // Define circle
         var radius   = 2,
