@@ -32,9 +32,15 @@ canvas {
 /* Slide out menu */
 
 #slide-menu {
-    height: 300px;
+    height: 200px;
     position: fixed;
     background: rgba(200, 200, 200, 0.8);
     width: 100%;
     bottom: 0px;
+    padding-top: 20px;
+}
+
+.submenu {
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 2;
 }
