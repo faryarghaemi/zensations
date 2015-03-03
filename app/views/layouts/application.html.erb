@@ -116,29 +116,35 @@
     <div class="container">
       <div class="row">
         <h3 class="white zensations">Zensation<span class="mirror-letter">Z</span></h3>
+        <a class="show" style="color:#999;">>>></a>
       </div>
-      <div class="row">
-        <div class="six columns">
-          <a class="show" style="color:#999;">>>></a>
-          <div id="slide-menu">
-            <ul>
-                <li>menu 1</li>
-                <li>menu 2</li>
-                <li>menu 3</li>
-                <li>menu 4</li>
-                <li>menu 5</li>
-            </ul>
-          </div>
+    </div>
+
+    <div id="slide-menu">
+    <div class="container">
+      <div class="clearfix">
+        <div class="col col-4 px2">
+          <h2>Music</h2>
+          <form id="form">
+            <label for="input">Paste Soundcloud URL here</label>
+            <input id="input" class="block full-width field-light" placeholder="https://soundcloud.com/jrhodespianist/chopin-nocturne-in-c-minor-opus-481">
+            <p>
+              <button type="submit" id="submit" class="button black bg-silver mb1">Play it!</button>
+              &nbsp;
+              <input type="button" id="stop" value="Stop" class="button black bg-silver mb1">
+            </p>
+          </form>
         </div>
-        <div class="six columns right audio-controls">
-            <form id="form">
-              <input id="input" class="u-full-width" placeholder="Paste Soundcloud URL here (https://soundcloud.com/artist/track)">
-              <button type="submit" id="submit">Play it!</button>
-              &nbsp; &nbsp;
-              <input type="button" id="stop" value="Stop">
-            </form>
+        <div class="col col-4 px2">
+          <h2>Visualisations</h2>
+        </div>
+        <div class="col col-4 px2">
+          <h2>Sign Up</h2>
+          <h2>Log In</h2>
         </div>
       </div>
     </div>
+    </div>
+
   </body>
 </html>
