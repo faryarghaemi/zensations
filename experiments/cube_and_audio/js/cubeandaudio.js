@@ -114,19 +114,21 @@ $(document).ready(function() {
 
   // floor
   var floorColor = function(r, g, b) {
-    var floor = scene.getObjectByName('floor');
-    floor.material.color.setRGB(r/255.0, g/255.0, b/255.0);
+    // var floor = scene.getObjectByName('floor');
+    floor.material.color.setRGB(r, g, b);
   };
 
-  var floorGeometry = new THREE.BoxGeometry(425, 800, 1);
+  var floorGeometry = new THREE.BoxGeometry(400, 800, 1);
   var floorMaterial = new THREE.MeshPhongMaterial({
     ambient: 0x030303,
-    color: 'rgb(100,100,100)',//0xdddddd,
+    color: 'rgb(227, 0, 31)',
     specular: 0x009900,
     shininess: 30,
     shading: THREE.FlatShading,
   });
   var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+
+
 
 
   floor.rotation.x = -1.5;
@@ -137,17 +139,32 @@ $(document).ready(function() {
 
   var blue = 0;
 
-  $(window).on('mousemove', function(event) {
 
-    var red = Math.round((event.pageX / window.innerWidth) * 255);
-    var green = Math.round((event.pageY / window.innerHeight) * 255);
 
-    var pageZ = Math.sqrt(event.pageY * event.pageY + event.pageX * event.pageX)
-    var innerZ = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight)
+  Leap.loop( function() {
+
+    var red = Math.round(((sphere.position.x/50) / window.innerWidth) * 255);
+    var green = Math.round(((sphere.position.y/20) / window.innerHeight) * 255);
+
+    var pageZ = Math.sqrt((sphere.position.y/20) * (sphere.position.y/20) + (sphere.position.x/50) * (sphere.position.x/50)); 
+    var innerZ = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight); 
     var blue = Math.round(pageZ / innerZ * 255);
 
+    // the function below is to get the brightest colors for the floor 
+    var colorResponse = function (color) {
+      color = color * Math.PI / 2; 
+      return (0.8) * Math.sin(color) + 0.5; 
 
-    floorColor(red, green, blue);
+    }
+
+    var r = colorResponse(red); 
+    var g = colorResponse(green); 
+    var b = colorResponse(blue); 
+
+
+    floorColor(r, g, b);
+    console.log(r, g, b); 
+    console.log(sphere.position); 
 
 
   });
