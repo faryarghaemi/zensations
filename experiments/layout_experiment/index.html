@@ -57,7 +57,8 @@
         // Remove center vertex
         geometry.vertices.shift();
         // to work with MeshBasicMaterial
-        circle = new THREE.Line( geometry, material )
+        var circle = new THREE.Line( geometry, material )
+        console.log(circle.rotation);
 
         // Setting colour twice - Ineffient
         // You can do this directly without pusher - see setHSL in three.js
@@ -103,7 +104,7 @@
             circle.rotation.y += 0.01;
 
             // Make objects in the distance darker
-            object.material.color.offsetHSL(0,0, -0.003);
+            object.material.color.offsetHSL(0,0, -0.002);
 
           };
         });
@@ -113,6 +114,15 @@
           scene.add( circle );
           ballCount++;
         };
+
+        // Delete the last element. Could not use scene.traverse to do this
+        // as it didn't like the object being deleted
+        for ( var k =  0; k < scene.children.length ; k++ ) {
+            var obj = scene.children[ k ];
+            if ( obj instanceof THREE.Line && obj.position.z < -2) {
+              scene.remove(obj);
+            }
+        }
 
         renderer.render(scene, camera);
       };
