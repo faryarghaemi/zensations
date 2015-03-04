@@ -1,6 +1,6 @@
 var renderer; 
-
-var spaceslugMouse = function() {
+var render; 
+ spaceslugMouse = function() {
     
 
       var currentXrot = 0; 
@@ -33,7 +33,7 @@ var spaceslugMouse = function() {
       var i = 0; //counter for hue
       var j = 0; //counter for freq channel
 
-      var render = function () {
+     render = function () {
         // Throttle frame rate
         setTimeout( function() {
           requestAnimationFrame( render );

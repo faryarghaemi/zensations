@@ -9,7 +9,7 @@ var controls;
 
 // $(document).ready(function() {
 
-var spaceslugLeap = function() {
+spaceslugLeap = function() {
 
 
   // normalizing the coordinates 
@@ -93,7 +93,7 @@ var spaceslugLeap = function() {
   }
 
   var controller = new Leap.Controller();
-  var frame = controller.frame()
+  frame = controller.frame()
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 5000);
 
