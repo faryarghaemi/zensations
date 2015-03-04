@@ -39,6 +39,27 @@ $(document).ready(function() {
     })
   };
 
+  var checkError = function(result) {
+    if (result.errors) {
+      // Do something like pop up a message
+    } else {
+      createAudio(result);
+    }
+  }
+
+  // Enter the audio entry into the database
+  var databaseEntry = function() {
+    $.ajax('/tasks', {
+      type: 'POST',
+      dataType: 'json',
+      data: {
+        "task[title]": $('#task_title').val(),
+        "task[description]": $('#task_description').val(),
+        "task[completed]": $('#task_completed:checked').val()
+      }
+    })
+  };
+
   var createAudio = function(result) {
     
     // Define sreamUrl
