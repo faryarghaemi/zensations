@@ -32,13 +32,6 @@ ActiveRecord::Schema.define(version: 20150303225026) do
     t.integer "user_id"
   end
 
-  create_table "user_tracks", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "track_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
