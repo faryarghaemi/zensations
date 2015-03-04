@@ -4,10 +4,9 @@ var sphereMaterials;
 var newColor;
 var sphereColor;
 var floorColor;
-var render; 
-var frame; 
+var render;
 
-discoattackMouse = function () {
+discoattackMouse = function() {
 
 
   // scene & camera info 
@@ -94,26 +93,26 @@ discoattackMouse = function () {
 
   // Leap.loop(function() {
 
-    var red = Math.round(((sphere.position.x / 40) / window.innerWidth) * 255);
-    var green = Math.round(((sphere.position.y / 20) / window.innerHeight) * 255);
+  var red = Math.round(((sphere.position.x / 40) / window.innerWidth) * 255);
+  var green = Math.round(((sphere.position.y / 20) / window.innerHeight) * 255);
 
-    var pageZ = Math.sqrt((sphere.position.y / 20) * (sphere.position.y / 20) + (sphere.position.x / 40) * (sphere.position.x / 40));
-    var innerZ = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight);
-    var blue = Math.round(pageZ / innerZ * 255);
+  var pageZ = Math.sqrt((sphere.position.y / 20) * (sphere.position.y / 20) + (sphere.position.x / 40) * (sphere.position.x / 40));
+  var innerZ = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight);
+  var blue = Math.round(pageZ / innerZ * 255);
 
-    // the function below is to get the brightest colors for the floor 
-    var colorResponse = function(color) {
-      color = color * Math.PI / 2;
-      return (0.8) * Math.sin(color) + 0.4;
+  // the function below is to get the brightest colors for the floor 
+  var colorResponse = function(color) {
+    color = color * Math.PI / 2;
+    return (0.8) * Math.sin(color) + 0.4;
 
-    }
+  }
 
-    var r = colorResponse(red);
-    var g = colorResponse(green);
-    var b = colorResponse(blue);
+  var r = colorResponse(red);
+  var g = colorResponse(green);
+  var b = colorResponse(blue);
 
 
-    floorColor(r, g, b);
+  floorColor(r, g, b);
 
 
   // });
@@ -145,10 +144,9 @@ discoattackMouse = function () {
   // rendering the info 
   render = function() {
     if (music_playing === false) {
-      frequencyAmplitudeArray = 0; 
+      frequencyAmplitudeArray = 0;
     }
 
-  
 
     requestAnimationFrame(render);
 
@@ -164,287 +162,72 @@ discoattackMouse = function () {
   render();
 
 
-
-  // info for number of fingers and hands 
-
-  // function concatData(id, data) {
-  //   return id + ": " + data + "<br>";
-  // }
-
-  // function getFingerName(fingerType) {
-  //   switch (fingerType) {
-  //     case 0:
-  //       return 'Thumb';
-  //       break;
-
-  //     case 1:
-  //       return 'Index';
-  //       break;
-
-  //     case 2:
-  //       return 'Middle';
-  //       break;
-
-  //     case 3:
-  //       return 'Ring';
-  //       break;
-
-  //     case 4:
-  //       return 'Pinky';
-  //       break;
-  //   }
-  // }
-
-  // function concatJointPosition(id, position) {
-  //   return id + ": " + position[0] + ", " + position[1] + ", " + position[2] + "<br>";
-  // }
-
-
-  // var output_two = document.getElementById('output_two');
-  // var frameString = "",
-  //   handString = "",
-  //   fingerString = "";
-  // var hand, finger;
-
-  // // Leap.loop uses browser's requestAnimationFrame
-  // var options = {
-  //   enableGestures: true
-  // };
-
-  // hand and finger info put on screen 
-  // Main Leap Loop
-  // var handNumber = function() {
-  //   Leap.loop(options, function(frame) {
-  //     frameId = frame.id;
-  //     frameHandsLength = frame.hands.length;
-  //     frameFingersLength = frame.fingers.length;
-
-  //     frameString = concatData("frame_id", frameId);
-  //     frameString += concatData("num_hands", frameHandsLength);
-  //     frameString += concatData("num_fingers", frameFingersLength);
-  //     frameString += "<br>";
-
-  //     // Showcase some new V2 features
-  //     for (var i = 0, len = frame.hands.length; i < len; i++) {
-  //       hand = frame.hands[i];
-  //       handString = concatData("hand_type", hand.type);
-  //       handString += concatData("confidence", hand.confidence);
-  //       handString += concatData("pinch_strength", hand.pinchStrength);
-  //       handString += concatData("grab_strength", hand.grabStrength);
-
-  //       handString += '<br>';
-
-  //       frameString += handString;
-  //       frameString += fingerString;
-  //     }
-
-  //     output_two.innerHTML = frameString;
-
-  //   });
-
-  // };
-
-  // handNumber();
-
-  // end of info for number of fingers and hands 
-
-
-  // // initializing the controller 
-  // var deviceLoopController = new Leap.Controller({
-  //   frameEventName: 'deviceFrame'
-  // });
-  // deviceLoopController.on("frame", function(frame) {
-  //   if (frame.pointables.length > 0) {
-  //     canvasElement.width = canvasElement.width; //clear
-
-  //     //Get a pointable and normalize the tip position
-  //     var pointable = frame.pointables[0];
-  //     // setting the interaction box so it doesn't go outside of frame (i think i still need to clamp)
-  //     var interactionBox = frame.interactionBox;
-  //     // normalizing
-  //     var normalizedPosition = interactionBox.normalizePoint(pointable.tipPosition, true);
-
-  //     // Convert the normalized coordinates to span the canvas (math in docs)
-  //     var canvasX = canvasElement.width * normalizedPosition[0];
-  //     var canvasY = canvasElement.height * (1 - normalizedPosition[1]);
-
-  //     // don't know what the code below does 
-  //     displayArea.strokeText("(" + canvasX.toFixed(1) + ", " + canvasY.toFixed(1) + ")", canvasX, canvasY);
-  //   }
-  // });
-
-
-  $('#query').on('keypress', function (event) {
-    // Ignore any key presses that are not Enter 
-    if (event.which !== 13) {
-      return; 
-    }
-    searchFlickr(); 
-  }); 
-
   window.addEventListener("keydown", moveSomething, false);
- 
-function moveSomething(e) {
-    switch(e.keyCode) {
-        case 37:
-            var newColor = 0xF53B84;
-              sphereColor(newColor);
-            break;
-        case 38:
-             var newColor = 0xBC87FF;
-              sphereColor(newColor);
-            break;
-        case 39:
-             var newColor = 0x0F5B30;
-              sphereColor(newColor);
-            break;
-        case 40:
-           var newColor = 0xFFFF25;
-              sphereColor(newColor);
-            break;  
-    }   
-}
 
-
-  // changing the sphere position in relation to hand position 
-  var position = function(x, y, z) {
-
-
-    sphere.position.x = parseFloat(x);
-
-    sphere.position.y = parseFloat(y) - window.innerHeight / 2;
-
-    sphere.position.z = parseFloat(z);
-
-
-  }
-
-  window.outputRight = $('#outputRight');
-  window.outputLeft = $('#outputLeft');
-  Leap.loop({
-      hand: function(hand, frame) {
-        // debugger;
-        if (hand.type === "right") {
-          var screenPositionRight = hand.screenPosition(hand.palmPosition);
-          // var outputContentRight = "xRight: " + (screenPositionRight[0].toPrecision(4)) + 'px' +
-          //   "        yRight: " + (screenPositionRight[1].toPrecision(4)) + 'px' +
-          //   "        zRight: " + (screenPositionRight[2].toPrecision(4)) + 'px';
-
-          // outputRight.html(outputContentRight);
-
-
-        } else if (hand.type === "left") {
-
-          var screenPositionLeft = hand.screenPosition(hand.palmPosition);
-          // var outputContentLeft = "xLeft: " + (screenPositionLeft[0].toPrecision(4)) + 'px' +
-          //   "        yLeft: " + (screenPositionLeft[1].toPrecision(4)) + 'px' +
-          //   "        zLeft: " + (screenPositionLeft[2].toPrecision(4)) + 'px';
-
-          // outputLeft.html(outputContentLeft);
-
-
+  function moveSomething(e) {
+    switch (e.keyCode) {
+      case 37:
+        var newColor = 0xF53B84;
+        sphereColor(newColor);
+        break;
+      case 38:
+        var newColor = 0xBC87FF;
+        sphereColor(newColor);
+        break;
+      case 39:
+        var newColor = 0x0F5B30;
+        sphereColor(newColor);
+        break;
+      case 40:
+        var newColor = 0xFFFF25;
+        sphereColor(newColor);
+        break;
+      case 13:
+        var drawsphere = function() {
+          sphere = createSphere();
+          scene.add(sphere);
+        };
+        drawsphere();
+        _.debounce(drawsphere, 2000);
+        break;
+      case 18:
+        var drawsphere = function() {
+          var newColor = 0xdddddd;
+          sphereColor(newColor);
+          // break;
         }
+    }
+
+  };
 
 
-        frame = controller.frame();
+  var position = {
+    x: 0,
+    y: 0
+  };
+
+  position = function(x, y) {
+
+    document.addEventListener('mousemove', function(e) {
+      sphere.position.x = e.clientX || e.pageX;
+      sphere.position.y = e.clientY || e.pageY
+        // sphere.position.z = parseFloat(z);
+    }, false);
+
+  };
 
 
+  scene.traverse(function(objects) {
+    if (objects instanceof THREE.Mesh && !(objects.name === 'floor')) {
+      // Move objects further back
+      objects.position.z -= 0.60;
 
-        // differentiates between one hand and two hands 
-
-        if (frame.hands.length === 2) {
-          var xFirstHand = (parseFloat(frame.hands[0].palmPosition[0].toPrecision(4)));
-
-          var xSecondHand = (parseFloat(frame.hands[1].palmPosition[0].toPrecision(4)));
-
-          var x = (((xFirstHand) + (xSecondHand)) / 2);
-
-          var yFirstHand = (parseFloat(frame.hands[0].palmPosition[1].toPrecision(4)));
-          var ySecondHand = (parseFloat(frame.hands[1].palmPosition[1].toPrecision(4)));
-
-          var y = ((yFirstHand) + (ySecondHand) / 2);
-
-          var zFirstHand = (parseFloat(frame.hands[0].palmPosition[2].toPrecision(4)));
-          var zSecondHand = (parseFloat(frame.hands[1].palmPosition[2].toPrecision(4)));
-
-          var z = ((zFirstHand) + (zSecondHand) / 2);
-
-          position(x, y, z);
-
-
-          // var previousFrame = controller.frame(150);
-          // var handScale = hand.scaleFactor(previousFrame);
-          // sphere.scale.x = handScale;
-
-          // console.log("Hand Scale: " + handScale);
-
-          // code below is for scaling the sphere 
-
-          var previousFrame = controller.frame(150);
-          var frameScale = frame.scaleFactor(previousFrame);
-          sphere.scale.x = frameScale;
-
-          // console.log("Frame Scale: " + frameScale);
-
-
-        } else if (frame.hands.length === 1) {
-
-          var x = (hand.palmPosition[0].toPrecision(4));
-          var y = (hand.palmPosition[1].toPrecision(4));
-          var z = (hand.palmPosition[2].toPrecision(4));
-
-
-          position(x, y, z);
-
-
-        }
-
-
-        // creating more spheres with grab strength 
-
-        if (frame.valid && frame.gestures.length > 0) {
-          frame.gestures.forEach(function(gesture) {
-            switch (gesture.type) {
-              case "keyTap":
-                var drawsphere = function() {
-                  sphere = createSphere();
-                  scene.add(sphere);
-                };
-                drawsphere();
-                _.debounce(drawsphere, 2000);
-                break;
-              case "screenTap":
-                var newColor = 0xdddddd;
-                sphereColor(newColor);
-            }
-          });
-        }
-
-
-        scene.traverse(function(objects) {
-          if (objects instanceof THREE.Mesh && !(objects.name === 'floor')) {
-            // Move objects further back
-            objects.position.z -= 0.60;
-
-            // Rotate objectss
-            objects.rotation.x += 0.01;
-            objects.rotation.y += 0.01;
-          };
-        });
-
-
-      }
-
-    })
-    .use('screenPosition', {
-      scale: 100
-
-    });
-
-
-} 
+      // Rotate objectss
+      objects.rotation.x += 0.01;
+      objects.rotation.y += 0.01;
+    };
+  });
 
 
 
-
-// });
+};
