@@ -1,9 +1,29 @@
-var mouseOrbitControls; 
+mouseOrbitControls = function() {
+  controls = new THREE.OrbitControls(camera);
+  controls.damping = 0.2;
+};
+
+leapOrbitControls = function() {
+
+  controls = new THREE.LeapTwoHandControls(camera, controller, scene);
+
+  controls.translationSpeed = 0.1;
+  controls.translationDecay = 0.3;
+  controls.scaleDecay = 0.5;
+  controls.rotationSlerp = 0.8;
+  controls.rotationSpeed = 0.01;
+  controls.pinchThreshold = 0.8;
+  controls.transSmoothing = 0.5;
+  controls.rotationSmoothing = 0.2;
+  animate();
+
+
+};
 
 // Music playing?
 
 var music_playing = false;
-var frequencyAmplitudeArray; 
+var frequencyAmplitudeArray;
 
 // Browser support hacks
 
@@ -20,14 +40,14 @@ $(document).ready(function() {
 
   // Handle the form submit event to load the new URL
   form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      formUrl = $('#input').val();
-      if (formUrl === "" ) {
-        formUrl = "https://soundcloud.com/the-avener/fade-out-lines-original-mix";
-        $('#input').val(formUrl);
-      };
-      searchSoundCloud(formUrl).then(checkError);
-      // Add error checking for empty/dudd form(URL)
+    e.preventDefault();
+    formUrl = $('#input').val();
+    if (formUrl === "") {
+      formUrl = "https://soundcloud.com/the-avener/fade-out-lines-original-mix";
+      $('#input').val(formUrl);
+    }
+    searchSoundCloud(formUrl).then(checkError);
+    // Add error checking for empty/dudd form(URL)
   });
 
   $(form).trigger('submit');
@@ -44,7 +64,7 @@ $(document).ready(function() {
     return $.getJSON(soundCloudUrl, {
       url: trackUrl,
       client_id: 'c6407cab6ee52bfb52b2dc922c512b07'
-    })
+    });
   };
 
   var checkError = function(result) {
@@ -54,7 +74,7 @@ $(document).ready(function() {
       databaseEntry(result);
       createAudio(result);
     }
-  }
+  };
 
   // Enter the audio entry into the database
   var databaseEntry = function(result) {
@@ -69,7 +89,7 @@ $(document).ready(function() {
         "track[artwork_url]": result.artwork_url,
         "track[video_url]": result.video_url
       }
-    })
+    });
   };
 
   var createAudio = function(result) {
@@ -135,29 +155,6 @@ $(document).ready(function() {
       }
       // Render in three.js
 
-    mouseOrbitControls = function() {
-      controls = new THREE.OrbitControls(camera);
-      controls.damping = 0.2;
-    };
-
-    leapOrbitControls = function() {
-
-      controls = new THREE.LeapTwoHandControls(camera, controller, scene);
-
-      controls.translationSpeed = 0.1;
-      controls.translationDecay = 0.3;
-      controls.scaleDecay = 0.5;
-      controls.rotationSlerp = 0.8;
-      controls.rotationSpeed = 0.01;
-      controls.pinchThreshold = 0.8;
-      controls.transSmoothing = 0.5;
-      controls.rotationSmoothing = 0.2;
-      animate();
-
-
-    };
-
-    // render();
 
     // Stop sound & visualise
     $("#stop").on('click', function() {
