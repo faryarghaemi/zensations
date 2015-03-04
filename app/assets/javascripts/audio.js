@@ -1,3 +1,5 @@
+var mouseOrbitControls; 
+
 // Music playing?
 
 var music_playing = false;
@@ -155,7 +157,7 @@ $(document).ready(function() {
 
     };
 
-    render();
+    // render();
 
     // Stop sound & visualise
     $("#stop").on('click', function() {

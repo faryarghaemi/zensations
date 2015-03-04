@@ -5,6 +5,7 @@ var newColor;
 var sphereColor;
 var floorColor;
 var render; 
+var frame; 
 
 discoattackLeap = function () {
 
@@ -441,7 +442,7 @@ discoattackLeap = function () {
         }
 
 
-        var frame = controller.frame();
+        frame = controller.frame();
 
 
 
