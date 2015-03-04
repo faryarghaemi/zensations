@@ -18,7 +18,11 @@ $(document).ready(function() {
   // Handle the form submit event to load the new URL
   form.addEventListener('submit', function(e) {
       e.preventDefault();
-      formUrl = document.getElementById('input').value;
+      formUrl = $('#input').val();
+      if (formUrl === "" ) {
+        formUrl = "https://soundcloud.com/the-avener/fade-out-lines-original-mix";
+        $('#input').val(formUrl);
+      };
       searchSoundCloud(formUrl).then(checkError);
       // Add error checking for empty/dudd form(URL)
   });
