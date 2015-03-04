@@ -13,6 +13,7 @@ class TracksController < ApplicationController
 
   def create
     @track = Track.create track_params
+    @current_user.tracks << @track
 
     respond_to do |format|
       format.json { render :json => Track.all }
