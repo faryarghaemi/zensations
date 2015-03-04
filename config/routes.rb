@@ -8,8 +8,7 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :tracks do
-  end
+  resources :tracks
 
   get '/login' => 'session#new'
   post '/login' => 'session#create'
