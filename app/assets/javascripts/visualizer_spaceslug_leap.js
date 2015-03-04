@@ -138,6 +138,12 @@ spaceslugLeap = function() {
     // to work with MeshBasicMaterial
     circle = new THREE.Line(geometry, material)
 
+            // Rotate rings
+        circle.rotation.x = currentXrot;
+        circle.rotation.y = currentYrot;
+        currentXrot += 0.1;
+        currentYrot += 0.01;
+
     // Setting colour twice - Ineffient
     // You can do this directly without pusher - see setHSL in three.js
     var color = pusher.color('hsv', [Math.round(i), 70, 100]).hex6();
