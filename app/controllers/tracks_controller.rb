@@ -1,16 +1,5 @@
 class TracksController < ApplicationController
 
-  def index
-    @tracks = Track.all
-    respond_to do |format|
-      format.json { render :json => @tracks }
-    end
-  end
-
-  def new
-    @track = Track.new
-  end
-
   def create
     if @current_user
       @track = Track.create track_params
@@ -20,10 +9,6 @@ class TracksController < ApplicationController
     respond_to do |format|
       format.json { render :json => Track.all }
     end
-  end
-
-  def index
-    @tracks = Track.all
   end
 
   private
