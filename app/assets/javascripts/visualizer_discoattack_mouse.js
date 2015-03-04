@@ -1,15 +1,14 @@
-var sphere;
-var geometry;
-var sphereMaterials;
-var newColor;
-var sphereColor;
-var floorColor;
+// var sphere;
+// var geometry;
+// var sphereMaterials;
+// var newColor;
+// var sphereColor;
+// var floorColor;
 var render;
-var renderer; 
+var renderer;
 var camera;
 
 discoattackMouse = function() {
-
 
   // scene & camera info 
 
@@ -38,6 +37,7 @@ discoattackMouse = function() {
     sphere.material.color.setHex(newColor);
   };
 
+
   var createSphere = function() {
     var sphere = new THREE.Mesh(geometry, sphereMaterials);
     sphere.castShadow = true;
@@ -47,6 +47,11 @@ discoattackMouse = function() {
   sphere = createSphere();
 
   scene.add(sphere);
+
+  // Mouse interaction
+  sphere.position.x = 8 * (mousePosition.x / window.innerWidth - 0.5);
+  sphere.position.y = -8 * (mousePosition.y / window.innerHeight - 0.5);
+  sphere.position.z = 2;
 
 
 
@@ -93,8 +98,6 @@ discoattackMouse = function() {
 
   // floor color 
 
-  // Leap.loop(function() {
-
   var red = Math.round(((sphere.position.x / 40) / window.innerWidth) * 255);
   var green = Math.round(((sphere.position.y / 20) / window.innerHeight) * 255);
 
@@ -117,7 +120,23 @@ discoattackMouse = function() {
   floorColor(r, g, b);
 
 
+  // // floor color v2
+
+  //   $(window).on('mousemove', function(event) {
+
+  //   var red = Math.round((event.pageX / window.innerWidth) * 255);
+  //   var green = Math.round((event.pageY / window.innerHeight) * 255);
+
+  //   var pageZ = Math.sqrt(event.pageY * event.pageY + event.pageX * event.pageX)
+  //   var innerZ = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight)
+  //   var blue = Math.round(pageZ / innerZ * 255);
+
+
+  //   floorColor(red, green, blue);
+
+
   // });
+
 
   // shadow 
 
@@ -202,11 +221,37 @@ discoattackMouse = function() {
 
   };
 
+  // stretching/squishing the disco ball 
 
-  // Mouse interaction
-        sphere.position.x = 8 * (mousePosition.x / window.innerWidth - 0.5);
-        sphere.position.y = -8 * (mousePosition.y / window.innerHeight - 0.5);
-        sphere.position.z = 2;
+  // window.addEventListener("keydown", keysPressed, false);
+  // window.addEventListener("keyup", keysReleased, false);
+
+  // var keys = [];
+
+  // function keysPressed(e) {
+  //     keys[e.keyCode] = true;
+
+  //     // Comma + Period
+  //     if (keys[188] && keys[190]) {
+  //         sphere.scale.x = 5 * x; 
+  //     }
+
+  //     // Shift + Comma + Period
+  //     if (keys[16] && keys[188] && keys[190]) {
+  //         sphere.scale.x = x / 5; 
+
+  //         // prevent default browser behavior
+  //         e.preventDefault(); 
+  //     }
+  // }
+
+  // function keysReleased(e) {
+  //     // mark keys that were released
+  //     keys[e.keyCode] = false;
+  // }
+
+
+
 
 
   scene.traverse(function(objects) {
@@ -214,7 +259,7 @@ discoattackMouse = function() {
       // Move objects further back
       objects.position.z -= 0.60;
 
-      // Rotate objectss
+      // Rotate objects
       objects.rotation.x += 0.01;
       objects.rotation.y += 0.01;
     };
