@@ -6,8 +6,6 @@ $(document).ready(function() {
     mouseMovement();
     render(); 
     mouseOrbitControls();
-
-   
   });
 
 
@@ -20,6 +18,13 @@ $(document).ready(function() {
   $('#discoattack_leap').on('click', function() {
     discoattackLeap();
     render();
+  });
+
+    $('#discoattack_mouse').on('click', function() {
+    discoattackMouse();
+    mouseMovement(); 
+    render();
+    mouseOrbitControls(); 
   });
 
 
