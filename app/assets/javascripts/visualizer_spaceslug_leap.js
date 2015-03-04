@@ -4,12 +4,15 @@ var container;
 var camera;
 var scene;
 var renderer;
-var controller; 
+var render; 
 var controls;
-
+var animate;
 // $(document).ready(function() {
 
 spaceslugLeap = function() {
+  renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
 
 
   // normalizing the coordinates 
@@ -92,33 +95,14 @@ spaceslugLeap = function() {
     return average;
   }
 
-  var controller = new Leap.Controller();
+  controller = new Leap.Controller();
   frame = controller.frame()
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 5000);
 
 
 
-  renderer = new THREE.WebGLRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-
-
-  controls = new THREE.LeapTwoHandControls(camera, controller, scene);
-
-  controls.translationSpeed = 20;
-  controls.translationDecay = 0.3;
-  controls.scaleDecay = 0.5;
-  controls.rotationSlerp = 0.8;
-  controls.rotationSpeed = 4;
-  controls.pinchThreshold = 0.5;
-  controls.transSmoothing = 0.5;
-  controls.rotationSmoothing = 0.2;
-
-
-
-
-  function animate() {
-
+  animate = function () {
 
     requestAnimationFrame(animate);
 
@@ -126,6 +110,7 @@ spaceslugLeap = function() {
     controls.update();
 
   };
+
 
   // animate(); 
 
@@ -135,7 +120,7 @@ spaceslugLeap = function() {
   var i = 0; //counter for hue
   var j = 0; //counter for freq channel
 
-  var render = function() {
+  render = function() {
     // Throttle frame rate
     setTimeout(function() {
       requestAnimationFrame(render);
@@ -167,8 +152,6 @@ spaceslugLeap = function() {
 
     };
 
-    // debugger 
-    // console.log(windowPosition[0], windowPosition[1]); 
 
 
     scene.traverse(function(object) {
@@ -176,7 +159,7 @@ spaceslugLeap = function() {
 
         var sensitivity = 1
 
-        // Cycle through colours
+        // Cycle through colors
         var hsl = object.material.color.getHSL();
         var averageVolume = getAverageVolume(frequencyAmplitudeArray);
         var musicIntensity = Math.pow(averageVolume / 255, sensitivity);
@@ -186,9 +169,10 @@ spaceslugLeap = function() {
         object.position.z -= musicIntensity / 2;
 
         // Pulse to the music
-        // Dealing with small numbers because circles are very sensitive
+        // Dfealing with small numbers because circles are very sensitive
         // to changes in size           
         var scaleFactor = frequencyAmplitudeArray[j % frequencyAmplitudeArray.length] / 25500;
+
         object.scale.x *= scaleFactor + 0.996;
         object.scale.y *= scaleFactor + 0.996;
         j++;
@@ -200,10 +184,8 @@ spaceslugLeap = function() {
 
         // Make objects in the distance darker
         object.material.color.offsetHSL(0, 0, -0.003);
-
       };
     });
-
     // Don't add a new circle if music is not playing
     if (getAverageVolume(frequencyAmplitudeArray)) {
       scene.add(circle);

@@ -1,3 +1,6 @@
+var camera = new THREE.PerspectiveCamera( 25, window.innerWidth/window.innerHeight, 0.1, 1000 );
+camera.position.z = 100;
+
 /**
  * @author qiao / https://github.com/qiao
  * @author mrdoob / http://mrdoob.com
@@ -23,7 +26,7 @@
 
 THREE.OrbitControls = function ( object, domElement ) {
 
-  this.object = object;
+  this.object = object || camera;
   this.domElement = ( domElement !== undefined ) ? domElement : document;
 
   // API

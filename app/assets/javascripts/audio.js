@@ -1,9 +1,8 @@
-
+var frequencyAmplitudeArray;
 
 // Music playing?
 
 var music_playing = false;
-var frequencyAmplitudeArray;
 
 // Browser support hacks
 
@@ -136,16 +135,22 @@ $(document).ready(function() {
       // Render in three.js
       // render(); 
 
-    // mouseOrbitControls = function() {
+mouseOrbitControls = function() {
   controls = new THREE.OrbitControls(camera);
   controls.damping = 0.2;
 
-// };
+};
 
 leapOrbitControls = function() {
 
-  controls = new THREE.LeapTwoHandControls(camera, controller, scene);
 
+  controller = new Leap.Controller();
+  frame = controller.frame()
+
+
+
+  // debugger;
+  controls = new THREE.LeapTwoHandControls(camera, controller, scene);
   controls.translationSpeed = 0.1;
   controls.translationDecay = 0.3;
   controls.scaleDecay = 0.5;
@@ -154,9 +159,16 @@ leapOrbitControls = function() {
   controls.pinchThreshold = 0.8;
   controls.transSmoothing = 0.5;
   controls.rotationSmoothing = 0.2;
+  // controls.connect();
+
+  controls.update();
   animate();
 
+
+
 };
+
+
 
     // Stop sound & visualise
     $("#stop").on('click', function() {
