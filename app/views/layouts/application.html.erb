@@ -12,6 +12,31 @@
       <%= yield %>
     </div>
 
+    <div class="modal-login fade">
+      <div class="modal-dialogue modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button aria-label="Close" class="close" data-dismiss="modal" type="button"></button>
+            <span aria-hidden="true">&times;</span>
+            <h1 class="modal-title">Login</h1>
+          </div>
+          <div class="modal-body">
+            <%= form_tag login_path do %>
+              <%= label_tag :email, nil, :autofocus => true %>
+              <%= text_field_tag :email %>
+              <%= label_tag :password %>
+              <%= password_field_tag :password %>
+              <%= submit_tag 'Login' %>
+            <% end %>
+          </div>
+          <div class="modal-footer">
+            <h2>
+              <%= flash[:error] if flash[:error].present? %>
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
     <!-- Static navbar -->
