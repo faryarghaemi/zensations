@@ -44,18 +44,22 @@ $(document).ready(function() {
       // Do something like pop up a message
     } else {
       createAudio(result);
+      databaseEntry(result);
     }
   }
 
   // Enter the audio entry into the database
-  var databaseEntry = function() {
+  var databaseEntry = function(result) {
     $.ajax('/tasks', {
       type: 'POST',
       dataType: 'json',
       data: {
-        "task[title]": $('#task_title').val(),
-        "task[description]": $('#task_description').val(),
-        "task[completed]": $('#task_completed:checked').val()
+        "track[soundcloud_id]": result.id,
+        "track[title]": result.title,
+        "track[stream_url]": result.stream_url,
+        "track[artist_name]": result.user,
+        "track[artwork_url]": result.stream_url,
+        "track[video_url]": result.video_url    
       }
     })
   };

@@ -4,11 +4,11 @@ class TracksController < ApplicationController
   end
 
   def create
-    @track = Track.new track_params
-    if @track.save
-      redirect_to root_path
-    else
-      render :new
+    @track = Track.create track_params
+
+    respond_to do |format|
+      format.html { redirect_to @track }
+      format.json { render :json => Track.all }
     end
   end
 
