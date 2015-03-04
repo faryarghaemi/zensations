@@ -1,6 +1,7 @@
 // Music playing?
 
 var music_playing = false;
+var frequencyAmplitudeArray; 
 
 // Browser support hacks
 
@@ -31,6 +32,7 @@ $(document).ready(function() {
     // Add error checking for empty/dudd form(URL)
   });
 
+  $(form).trigger('submit');
   // The AudioContext is the primary 'container' for all your audio node objects.
   try {
     audioContext = new webkitAudioContext();

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'tracks/new'
 
-  root :to => 'pages#visualiser'
+  root :to => 'pages#visualizer'
   
   resources :users, :except => [:destroy] do
     resources :tracks, :only => [:new, :create, :index] do

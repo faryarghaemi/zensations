@@ -11,10 +11,13 @@
 // about supported directives.
 //
 //= require jquery
+//= require audio
+//= require visualizer_discoattack_leap
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
 //= require underscore
 //= require three.min.js
 //= require handlebars
+//= require leap 
 //= require_tree .

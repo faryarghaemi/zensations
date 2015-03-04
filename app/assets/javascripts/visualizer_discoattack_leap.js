@@ -203,6 +203,11 @@ $(document).ready(function() {
 
   // rendering the info 
   render = function() {
+    if (music_playing === false) {
+      frequencyAmplitudeArray = 0; 
+    }
+
+    
 
     requestAnimationFrame(render);
 
@@ -216,6 +221,8 @@ $(document).ready(function() {
   };
 
   render();
+
+
 
   // info for number of fingers and hands 
 
@@ -324,6 +331,8 @@ $(document).ready(function() {
       displayArea.strokeText("(" + canvasX.toFixed(1) + ", " + canvasY.toFixed(1) + ")", canvasX, canvasY);
     }
   });
+
+
 
   // tells you with gestures you are using 
   var controller = Leap.loop({

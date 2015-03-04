@@ -1,4 +1,4 @@
 class PagesController < ApplicationController
-  def visualiser
+  def visualizer
   end
 end
