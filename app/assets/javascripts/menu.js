@@ -9,8 +9,20 @@
 // });
 
 
-$(function() {
-  $('#footer_body').on('show', function () {
-    $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+// $(function() {
+//   $('#footer_body').on('show', function () {
+//     $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+//   });
+// });
+
+// // Handle the form submit event to load the new URL
+// .addEventListener('submit', function(e) {
+//   <script>$('.modal-login').modal()</script>
+
+$(document).ready(function() {
+
+  $("a.log_in").on("click", function(){
+    $('.modal-login').modal()
   });
+
 });

@@ -7,49 +7,52 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
+
     <div class="main_container">
       <%= yield %>
     </div>
 
-    <!-- <div id="slide-menu">
-      <div class="container">
-        <div class="flex flex-stretch mxn4">
-          <div class="col col-4 px2 border border-grey">
-            <h2>Music</h2>
-            <form id="form">
-              <label for="input">Paste Soundcloud URL here</label>
-              <input id="input" class="block full-width field-light" placeholder="https://soundcloud.com/jrhodespianist/chopin-nocturne-in-c-minor-opus-481">
-              <p>
-                <button type="submit" id="submit" class="button black bg-silver mb1">Play it!</button>
-                &nbsp;
-                <input type="button" id="stop" value="Stop" class="button black bg-silver mb1">
-              </p>
-            </form>
+    <div class="modal-login fade">
+      <div class="modal-dialogue modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button aria-label="Close" class="close" data-dismiss="modal" type="button"></button>
+            <span aria-hidden="true">&times;</span>
+            <h1 class="modal-title">Login</h1>
           </div>
-          <div class="col col-4 px2 border border-grey">
-            <h2>Visualisations</h2>
+          <div class="modal-body">
+            <%= form_tag login_path do %>
+              <%= label_tag :email, nil, :autofocus => true %>
+              <%= text_field_tag :email %>
+              <%= label_tag :password %>
+              <%= password_field_tag :password %>
+              <%= submit_tag 'Login' %>
+            <% end %>
           </div>
-          <div class="col col-4 px2 border border-grey">
-            <h2>Sign Up</h2>
-            <h2>Log In</h2>
+          <div class="modal-footer">
+            <h2>
+              <%= flash[:error] if flash[:error].present? %>
+            </h2>
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <!-- Static navbar -->
-<div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="/">Zensations</a>
-  </div>
-  <div class="navbar-collapse collapse">
+    <div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Zensations</a>
+      </div>
 
+      <div class="navbar-collapse collapse">
+
+<<<<<<< HEAD
     <!-- Left nav -->
     <ul class="nav navbar-nav">
       <li><a href="#">Choose Track</a></li>
@@ -59,18 +62,28 @@
             <li id="spaceslug_leap"><a href="#spaceslug_leap">Spaceslug - Leap</a></li>
           <li id="discoattack_mouse"><a href="#discoattack_mouse">Disco Attack - Mouse</a></li>
           <li id="discoattack_leap"><a href="#discoattack_leap">Disco Attack - Leap</a></li>
+=======
+        <!-- Left nav -->
+        <ul class="nav navbar-nav">
+          <li><a href="#">Choose Track</a></li>
+          <li><a href="#">Choose Visualisation</a>
+            <ul class="dropdown-menu">
+              <li id="spaceslug"><a href="#spaceslug">Spaceslug</a></li>
+              <li id="discoattack"><a href="#discoattack">Disco Attack</a></li>
+              <li id="eggdrop"><a href="#eggdrop">Egg Drop</a></li>
+              </li>
+            </ul>
+>>>>>>> aba65bc58fda3a1545bf965e5045b884eec99c79
           </li>
         </ul>
-      </li>
-    </ul>
 
-    <!-- Right nav -->
-    <ul class="nav navbar-nav navbar-right">
-      <%== nav_menu_right %>
-    </ul>
+        <!-- Right nav -->
+        <ul class="nav navbar-nav navbar-right">
+          <%== nav_menu_right %>
+        </ul>
 
-  </div><!--/.nav-collapse -->
-</div>
-    
+      </div><!--/.nav-collapse -->
+    </div>
+
   </body>
 </html>
