@@ -1,9 +1,15 @@
 var controller;
 var frame;
+var container;
+var camera;
+var scene;
+var renderer;
+var controller; 
+var controls;
 
 // $(document).ready(function() {
 
-var spaceslugLeap = function() {  
+var spaceslugLeap = function() {
 
 
   // normalizing the coordinates 
@@ -14,11 +20,7 @@ var spaceslugLeap = function() {
 
 
   var controller = Leap.loop(function(frame) {
-    var frame = controller.frame();
-    if (frame.length === 0) {
-      mouseMovement(); 
-      THREE.OrbitControls(); 
-    }
+    frame = controller.frame();
 
     var interactionBox = frame.interactionBox;
 
@@ -70,8 +72,7 @@ var spaceslugLeap = function() {
     x: 0,
     y: 0
   };
-  var container, camera, scene, renderer;
-  var controller, controls;
+
 
 
 
@@ -98,7 +99,7 @@ var spaceslugLeap = function() {
 
 
 
-  var renderer = new THREE.WebGLRenderer();
+  renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
 
 

@@ -1,8 +1,8 @@
+var renderer; 
+
 var spaceslugMouse = function() {
-      
-  $(document).ready(function() {
-      document.body.appendChild( renderer.domElement );
-  });
+    
+
       var currentXrot = 0; 
       var currentYrot = 0; 
       var getAverageVolume = function(array) {
@@ -23,8 +23,10 @@ var spaceslugMouse = function() {
       var scene = new THREE.Scene();
       var camera = new THREE.PerspectiveCamera( 25, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
-      var renderer = new THREE.WebGLRenderer();
+      renderer = new THREE.WebGLRenderer();
       renderer.setSize( window.innerWidth, window.innerHeight );
+
+      document.body.appendChild( renderer.domElement );
 
       camera.position.z = 10;
       var ballCount = 0; //counter for spheres
