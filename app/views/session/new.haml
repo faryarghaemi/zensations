@@ -2,8 +2,8 @@
 
 %h1 Log in
 = form_tag login_path do
-  = label_tag :username, nil, :autofocus => true
-  = text_field_tag :username
+  = label_tag :email, nil, :autofocus => true
+  = text_field_tag :email
   = label_tag :password
   = password_field_tag :password
   = submit_tag 'Login'
