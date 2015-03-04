@@ -26,10 +26,6 @@ $(document).ready(function() {
       };
       searchSoundCloud(formUrl).then(checkError);
       // Add error checking for empty/dudd form(URL)
-    e.preventDefault();
-    formUrl = document.getElementById('input').value;
-    searchSoundCloud(formUrl).then(checkError);
-    // Add error checking for empty/dudd form(URL)
   });
 
   $(form).trigger('submit');
