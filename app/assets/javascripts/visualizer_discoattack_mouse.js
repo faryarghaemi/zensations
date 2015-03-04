@@ -48,10 +48,6 @@ discoattackMouse = function() {
 
   scene.add(sphere);
 
-  // Mouse interaction
-  sphere.position.x = 8 * (mousePosition.x / window.innerWidth - 0.5);
-  sphere.position.y = -8 * (mousePosition.y / window.innerHeight - 0.5);
-  sphere.position.z = 2;
 
 
 
@@ -96,28 +92,7 @@ discoattackMouse = function() {
 
   scene.add(floor);
 
-  // floor color 
 
-  var red = Math.round(((sphere.position.x / 40) / window.innerWidth) * 255);
-  var green = Math.round(((sphere.position.y / 20) / window.innerHeight) * 255);
-
-  var pageZ = Math.sqrt((sphere.position.y / 20) * (sphere.position.y / 20) + (sphere.position.x / 40) * (sphere.position.x / 40));
-  var innerZ = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight);
-  var blue = Math.round(pageZ / innerZ * 255);
-
-  // the function below is to get the brightest colors for the floor 
-  var colorResponse = function(color) {
-    color = color * Math.PI / 2;
-    return (0.8) * Math.sin(color) + 0.4;
-
-  }
-
-  var r = colorResponse(red);
-  var g = colorResponse(green);
-  var b = colorResponse(blue);
-
-
-  floorColor(r, g, b);
 
 
   // // floor color v2
@@ -176,6 +151,56 @@ discoattackMouse = function() {
     sphere.rotation.x += 0.01;
     sphere.rotation.y += 0.01;
 
+      // Mouse interaction
+  sphere.position.x = 1000 * (mousePosition.x / window.innerWidth - 0.5);
+  sphere.position.y = -1000 * (mousePosition.y / window.innerHeight - 0.5);
+  sphere.position.z = 2;
+  // debugger
+
+    // floor color 
+
+  var red = Math.round(((sphere.position.x / 40) / window.innerWidth) * 255);
+  var green = Math.round(((sphere.position.y / 20) / window.innerHeight) * 255);
+
+  var pageZ = Math.sqrt((sphere.position.y / 20) * (sphere.position.y / 20) + (sphere.position.x / 40) * (sphere.position.x / 40));
+  var innerZ = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight);
+  var blue = Math.round(pageZ / innerZ * 255);
+
+  // the function below is to get the brightest colors for the floor 
+  var colorResponse = function(color) {
+    color = color * Math.PI / 2;
+    return (0.8) * Math.sin(color) + 0.4;
+
+  }
+
+  var r = colorResponse(red);
+  var g = colorResponse(green);
+  var b = colorResponse(blue);
+
+
+  floorColor(r, g, b);
+
+    scene.traverse(function(objects) {
+    if (objects instanceof THREE.Mesh && !(objects.name === 'floor')) {
+      // Move objects further back
+      objects.position.z -= 0.60;
+
+      // Rotate objects
+      objects.rotation.x += 0.01;
+      objects.rotation.y += 0.01;
+    };
+  });
+
+        // Delete the last element. Could not use scene.traverse to do this
+        // as it didn't like the object being deleted
+        for ( var k =  0; k < scene.children.length ; k++ ) {
+            var obj = scene.children[ k ];
+            if ( obj instanceof THREE.Mesh && obj.position.z < -1500 && ! (obj.name === 'floor')) {
+              scene.remove(obj);
+            }
+        }
+
+
 
     renderer.render(scene, camera);
   };
@@ -187,19 +212,19 @@ discoattackMouse = function() {
 
   function moveSomething(e) {
     switch (e.keyCode) {
-      case 37:
+      case 65:
         var newColor = 0xF53B84;
         sphereColor(newColor);
         break;
-      case 38:
+      case 83:
         var newColor = 0xBC87FF;
         sphereColor(newColor);
         break;
-      case 39:
+      case 68:
         var newColor = 0x0F5B30;
         sphereColor(newColor);
         break;
-      case 40:
+      case 70:
         var newColor = 0xFFFF25;
         sphereColor(newColor);
         break;
@@ -254,16 +279,7 @@ discoattackMouse = function() {
 
 
 
-  scene.traverse(function(objects) {
-    if (objects instanceof THREE.Mesh && !(objects.name === 'floor')) {
-      // Move objects further back
-      objects.position.z -= 0.60;
 
-      // Rotate objects
-      objects.rotation.x += 0.01;
-      objects.rotation.y += 0.01;
-    };
-  });
 
 
 

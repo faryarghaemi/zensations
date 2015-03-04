@@ -2,10 +2,13 @@ var renderer;
 var render; 
 var camera; 
  spaceslugMouse = function() {
-    
+      if (music_playing === false) {
+      frequencyAmplitudeArray = 0; 
+      }
 
       var currentXrot = 0; 
       var currentYrot = 0; 
+
       var getAverageVolume = function(array) {
         var values = 0;
         var average;
@@ -26,15 +29,14 @@ var camera;
 
       renderer = new THREE.WebGLRenderer();
       renderer.setSize( window.innerWidth, window.innerHeight );
-
       document.body.appendChild( renderer.domElement );
 
       camera.position.z = 10;
-      var ballCount = 0; //counter for spheres
+      var ringCount = 0; //counter for rings
       var i = 0; //counter for hue
       var j = 0; //counter for freq channel
 
-     render = function () {
+      render = function () {
         // Throttle frame rate
         setTimeout( function() {
           requestAnimationFrame( render );
@@ -56,11 +58,9 @@ var camera;
         currentXrot += 0.1;
         currentYrot += 0.01;
 
-        // Setting colour twice - Ineffient
-        // You can do this directly without pusher - see setHSL in three.js
-        var color = pusher.color('hsv', [Math.round(i), 70, 100]).hex6();
-        circle.material.color.setHex( color );
-        i += 0.1;
+        // Cycle through hues
+        circle.material.color.setHSL(i%1, 0.7, 0.7);
+        i += 0.0001;
 
         // Mouse interaction
         circle.position.x = 8 * (mousePosition.x / window.innerWidth - 0.5);
@@ -70,47 +70,46 @@ var camera;
         scene.traverse (function (object)
         {
           if (object instanceof THREE.Line) {
-
-            var sensitivity = 1
-            
-            // Cycle through colours
+            // Reduce saturation of rings based on intensity
             var hsl = object.material.color.getHSL();
-            // var averageVolume = getAverageVolume(frequencyAmplitudeArray);
-            // var musicIntensity = Math.pow(averageVolume/255, sensitivity);
-            // object.material.color.setHSL(hsl.h, musicIntensity, hsl.l);
+            var averageVolume = getAverageVolume(frequencyAmplitudeArray);
+            var musicIntensity = averageVolume/255;
+            object.material.color.setHSL(hsl.h, musicIntensity, hsl.l);
 
             // Move circle further back
-            object.position.z -= 0.5 ;
+            object.position.z -= 0.5 * musicIntensity ;
 
             // Pulse to the music
             // Dealing with small numbers because circles are very sensitive
             // to changes in size           
-            // var scaleFactor = frequencyAmplitudeArray[j % frequencyAmplitudeArray.length]/25500;
-            // object.scale.x *= scaleFactor + 0.996;
-            // object.scale.y *= scaleFactor + 0.996;
-            // j++;
+            var scaleFactor = frequencyAmplitudeArray[j % frequencyAmplitudeArray.length]/25500;
+            object.scale.x *= 2 * scaleFactor + 1;
+            object.scale.y *= 2 * scaleFactor + 1;
+            j++;
 
             // Make objects in the distance darker
             object.material.color.offsetHSL(0,0, -0.002);
-
           };
         });
 
         // Don't add a new circle if music is not playing
-        // if (getAverageVolume(frequencyAmplitudeArray)) {
+        if (getAverageVolume(frequencyAmplitudeArray)) {
           scene.add( circle );
-        //   ballCount++;
-        // };
+          ringCount++;
+        };
 
         // Delete the last element. Could not use scene.traverse to do this
-        // as it didn't like the object being deleted
+        // as it didn't like the object being deleted.
         for ( var k =  0; k < scene.children.length ; k++ ) {
             var obj = scene.children[ k ];
-            if ( obj instanceof THREE.Line && obj.position.z < -10) {
+            if ( obj instanceof THREE.Line && ringCount > 300) {
               scene.remove(obj);
+              ringCount--;
+              break;
             }
         }
 
         renderer.render(scene, camera);
       };
+      console.log("hello world!");
     } 
