@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+  // Visualisation selection
 
   $('#spaceslug_mouse').on('click', function() {
     spaceslugMouse();
@@ -27,5 +28,8 @@ $(document).ready(function() {
     mouseOrbitControls(); 
   });
 
+  // Track selection
+
+  
 
 });

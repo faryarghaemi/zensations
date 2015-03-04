@@ -1,6 +1,14 @@
 class TracksController < ApplicationController
   before_action :check_if_logged_in
 
+  def index
+    @tracks = Track.all
+    respond_to do |format|
+      format.html { }
+      format.json { render :json => @tracks }
+    end
+  end
+
   def create
     current_track_id = params[:track][:soundcloud_id]
 
