@@ -21,7 +21,7 @@
  */    
 
 THREE.LeapTwoHandControls = (function () {
-  // console.log("TWO HAND CONTROLS ADDED")
+  
   var PI_2 = Math.PI * 2;
   var X_AXIS = new THREE.Vector3(1, 0, 0);
   var Y_AXIS = new THREE.Vector3(0, 1, 0);
@@ -65,13 +65,10 @@ THREE.LeapTwoHandControls = (function () {
   LeapTwoHandControls.prototype.update = function() {
     
     // Just incase this is overwritten somewhere else in the code
-    // console.log("update")
     this.object.matrixAutoUpdate = true;
     
     var self = this;
-    this.controller.connect();
     var frame = this.controller.frame();
-
     var anchorFrame = this.controller.frame(this.anchorDelta);
 
     // do we have a frame
@@ -95,8 +92,7 @@ THREE.LeapTwoHandControls = (function () {
         anchorHands.push(anchorHand);
       }
     });
-    // debugger;
-    // console.log("Hands.length: " + hands.length)
+    
     if (hands.length) {
       // translation
       if (this.shouldTranslate(anchorHands, hands)) {
@@ -129,13 +125,11 @@ THREE.LeapTwoHandControls = (function () {
   }
   
   LeapTwoHandControls.prototype.shouldScale = function (anchorHands, hands) {
-    // console.log("Should scale")
     var isEngaged = this.isEngaged.bind(this);
     return anchorHands.every(isEngaged) && hands.every(isEngaged);
   }
   
   LeapTwoHandControls.prototype.shouldRotate = function (anchorHands, hands) {
-    // console.log("Should rotate")
     var isEngaged = this.isEngaged.bind(this);
     return anchorHands.length > 1
         && hands.length > 1
@@ -144,7 +138,6 @@ THREE.LeapTwoHandControls = (function () {
   }
   
   LeapTwoHandControls.prototype.applyTranslation = function (anchorHands, hands) {
-    // console.log("Apply translation")
     var isEngaged = this.isEngaged.bind(this);
     var translation = this.getTranslation(
                                 anchorHands.filter(isEngaged),
@@ -164,7 +157,6 @@ THREE.LeapTwoHandControls = (function () {
   }
   
   LeapTwoHandControls.prototype.applyRotation = function (anchorHands, hands) {
-    // console.log("Apply rotation")
     var rotation = this.getRotation(anchorHands, hands);
     rotation[0] = this.rotLP[0].sample(rotation[0]);
     rotation[1] = this.rotLP[1].sample(rotation[1]);
@@ -256,7 +248,6 @@ THREE.LeapTwoHandControls = (function () {
   
 
   LeapTwoHandControls.prototype.isEngaged = function(h) {
-    // console.log("Is engaged")
     return h && (h.pinchStrength > this.pinchThreshold);
   }
   

@@ -1,15 +1,15 @@
 var controller; 
 var frame; 
+
 $(document).ready(function() {
 
 
 // normalizing the coordinates 
 
-  var leapCoordinates = document.getElementById('lmCoordinates');
-  var normalizedCoordinates = document.getElementById('normalizedCoordinates');
-  var windowCoordinates = document.getElementById('windowCoordinates');
+  var leapCoordinates = $('#lmCoordinates');
+  var normalizedCoordinates = $('#normalizedCoordinates');
+  var windowCoordinates = ('#windowCoordinates');
 
-  // var circlePosition; 
 
   var controller = Leap.loop(function(frame) {
     var frame = controller.frame();
