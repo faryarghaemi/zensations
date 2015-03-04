@@ -7,7 +7,6 @@ class TracksController < ApplicationController
     @track = Track.create track_params
 
     respond_to do |format|
-      format.html { redirect_to @track }
       format.json { render :json => Track.all }
     end
   end

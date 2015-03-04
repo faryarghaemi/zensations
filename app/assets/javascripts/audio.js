@@ -19,7 +19,7 @@ $(document).ready(function() {
   form.addEventListener('submit', function(e) {
       e.preventDefault();
       formUrl = document.getElementById('input').value;
-      searchSoundCloud(formUrl).then(createAudio);
+      searchSoundCloud(formUrl).then(checkError);
       // Add error checking for empty/dudd form(URL)
   });
 
@@ -43,14 +43,14 @@ $(document).ready(function() {
     if (result.errors) {
       // Do something like pop up a message
     } else {
-      createAudio(result);
       databaseEntry(result);
+      createAudio(result);
     }
   }
 
   // Enter the audio entry into the database
   var databaseEntry = function(result) {
-    $.ajax('/tasks', {
+    $.ajax('/tracks/create', {
       type: 'POST',
       dataType: 'json',
       data: {
