@@ -18,6 +18,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require underscore
+//= require bootstrap/modal
 //= require three.min.js
 //= require handlebars
 //= require leap 
