@@ -8,7 +8,6 @@ $(document).ready(function() {
     } else {
       spaceslugMouse(); 
       mouseMovement(); 
-      THREE.OrbitControls(); 
       mouseOrbitControls(); 
     }
      

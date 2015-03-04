@@ -4,6 +4,7 @@ var sphereMaterials;
 var newColor;
 var sphereColor;
 var floorColor;
+var render; 
 $(document).ready(function() {
 
 
@@ -201,7 +202,7 @@ $(document).ready(function() {
   var canvasElement = $("canvas");
 
   // rendering the info 
-  var render = function() {
+  render = function() {
 
     requestAnimationFrame(render);
 
