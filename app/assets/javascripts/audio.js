@@ -50,15 +50,15 @@ $(document).ready(function() {
 
   // Enter the audio entry into the database
   var databaseEntry = function(result) {
-    $.ajax('/tracks/create', {
-      type: 'POST',
+    $.ajax('/tracks', {
+      type: 'post',
       dataType: 'json',
       data: {
         "track[soundcloud_id]": result.id,
         "track[title]": result.title,
         "track[stream_url]": result.stream_url,
-        "track[artist_name]": result.user,
-        "track[artwork_url]": result.stream_url,
+        "track[artist_name]": result.user.username,
+        "track[artwork_url]": result.artwork_url,
         "track[video_url]": result.video_url    
       }
     })
