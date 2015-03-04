@@ -1,3 +1,4 @@
+var spaceslugMouse = function() {
       
   $(document).ready(function() {
       document.body.appendChild( renderer.domElement );
@@ -109,3 +110,4 @@
 
         renderer.render(scene, camera);
       };
+    } 

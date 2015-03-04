@@ -126,9 +126,30 @@ $(document).ready(function() {
       analyserNode.getByteFrequencyData(frequencyAmplitudeArray);
     }
     // Render in three.js
-    render();
+
+  mouseOrbitControls = function () {
     controls = new THREE.OrbitControls( camera );
     controls.damping = 0.2;
+    render();
+  }; 
+
+  leapOrbitControls = function () {
+
+        controls = new THREE.LeapTwoHandControls(camera, controller, scene);
+
+      controls.translationSpeed = 0.1;
+      controls.translationDecay = 0.3;
+      controls.scaleDecay = 0.5;
+      controls.rotationSlerp = 0.8;
+      controls.rotationSpeed = 0.01;
+      controls.pinchThreshold = 0.8;
+      controls.transSmoothing = 0.5;
+      controls.rotationSmoothing = 0.2;
+      animate();
+    render();
+      
+
+    }; 
     
     // Stop sound & visualise
     $("#stop").on('click', function() {

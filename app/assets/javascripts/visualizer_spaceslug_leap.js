@@ -3,7 +3,7 @@ var frame;
 
 // $(document).ready(function() {
 
-var spaceslug_leap = function() {
+var spaceslugLeap = function() {
 debugger  
 
 
