@@ -5,7 +5,12 @@ var newColor;
 var sphereColor;
 var floorColor;
 var render; 
-$(document).ready(function() {
+
+discoattackLeap = function () {
+
+
+
+// $(document).ready(function() {
 
 
 
@@ -207,7 +212,7 @@ $(document).ready(function() {
       frequencyAmplitudeArray = 0; 
     }
 
-    
+  
 
     requestAnimationFrame(render);
 
@@ -532,9 +537,9 @@ $(document).ready(function() {
     });
 
 
+} 
 
 
 
 
-
-});
+// });

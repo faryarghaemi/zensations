@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require audio
+//= documentready
 //= require visualizer_discoattack_leap
 //= require bootstrap-sprockets
 //= require jquery_ujs

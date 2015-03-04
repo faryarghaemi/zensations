@@ -3,8 +3,7 @@ var frame;
 
 // $(document).ready(function() {
 
-var spaceslugLeap = function() {
-debugger  
+var spaceslugLeap = function() {  
 
 
   // normalizing the coordinates 
