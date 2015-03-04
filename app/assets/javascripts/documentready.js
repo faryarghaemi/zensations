@@ -5,11 +5,7 @@ $(document).ready(function() {
     spaceslugMouse();
     mouseMovement();
     render(); 
-    // render().then(function () {
-    //   controls = new THREE.OrbitControls(camera);
-    //   controls.damping = 0.2;
-    // }); 
-    // mouseOrbitControls();
+    mouseOrbitControls();
 
    
   });
@@ -18,7 +14,7 @@ $(document).ready(function() {
   $('#spaceslug_leap').on('click', function() {
     spaceslugLeap();
     render();
-    // leapOrbitControls();
+    leapOrbitControls();
   });
 
   $('#discoattack_leap').on('click', function() {

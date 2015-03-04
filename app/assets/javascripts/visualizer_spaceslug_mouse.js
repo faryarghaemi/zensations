@@ -1,5 +1,6 @@
 var renderer; 
 var render; 
+var camera; 
  spaceslugMouse = function() {
     
 
@@ -21,7 +22,7 @@ var render;
       }
 
       var scene = new THREE.Scene();
-      var camera = new THREE.PerspectiveCamera( 25, window.innerWidth/window.innerHeight, 0.1, 1000 );
+      camera = new THREE.PerspectiveCamera( 25, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
       renderer = new THREE.WebGLRenderer();
       renderer.setSize( window.innerWidth, window.innerHeight );

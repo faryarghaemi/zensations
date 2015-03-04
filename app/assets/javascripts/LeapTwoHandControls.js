@@ -65,7 +65,7 @@ THREE.LeapTwoHandControls = (function () {
   LeapTwoHandControls.prototype.update = function() {
     
     // Just incase this is overwritten somewhere else in the code
-    // console.log("update")
+    console.log("update")
     this.object.matrixAutoUpdate = true;
     
     var self = this;
