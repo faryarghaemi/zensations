@@ -5,6 +5,8 @@ var newColor;
 var sphereColor;
 var floorColor;
 var render;
+var renderer; 
+var camera;
 
 discoattackMouse = function() {
 
@@ -12,9 +14,9 @@ discoattackMouse = function() {
   // scene & camera info 
 
   var scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-  var renderer = new THREE.WebGLRenderer();
+  renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
@@ -201,20 +203,10 @@ discoattackMouse = function() {
   };
 
 
-  var position = {
-    x: 0,
-    y: 0
-  };
-
-  position = function(x, y) {
-
-    document.addEventListener('mousemove', function(e) {
-      sphere.position.x = e.clientX || e.pageX;
-      sphere.position.y = e.clientY || e.pageY
-        // sphere.position.z = parseFloat(z);
-    }, false);
-
-  };
+  // Mouse interaction
+        sphere.position.x = 8 * (mousePosition.x / window.innerWidth - 0.5);
+        sphere.position.y = -8 * (mousePosition.y / window.innerHeight - 0.5);
+        sphere.position.z = 2;
 
 
   scene.traverse(function(objects) {

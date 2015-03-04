@@ -22,7 +22,9 @@ $(document).ready(function() {
 
     $('#discoattack_mouse').on('click', function() {
     discoattackMouse();
+    mouseMovement(); 
     render();
+    mouseOrbitControls(); 
   });
 
 
