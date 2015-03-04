@@ -195,7 +195,7 @@ discoattackMouse = function() {
         // as it didn't like the object being deleted
         for ( var k =  0; k < scene.children.length ; k++ ) {
             var obj = scene.children[ k ];
-            if ( obj instanceof THREE.Mesh && obj.position.z < -1000 && ! (obj.name === 'floor')) {
+            if ( obj instanceof THREE.Mesh && obj.position.z < -1500 && ! (obj.name === 'floor')) {
               scene.remove(obj);
             }
         }
@@ -212,19 +212,19 @@ discoattackMouse = function() {
 
   function moveSomething(e) {
     switch (e.keyCode) {
-      case 37:
+      case 65:
         var newColor = 0xF53B84;
         sphereColor(newColor);
         break;
-      case 38:
+      case 83:
         var newColor = 0xBC87FF;
         sphereColor(newColor);
         break;
-      case 39:
+      case 68:
         var newColor = 0x0F5B30;
         sphereColor(newColor);
         break;
-      case 40:
+      case 70:
         var newColor = 0xFFFF25;
         sphereColor(newColor);
         break;

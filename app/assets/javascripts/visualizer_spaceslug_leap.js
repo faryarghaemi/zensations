@@ -116,7 +116,7 @@ spaceslugLeap = function() {
 
 
   camera.position.z = 10;
-  var ballCount = 0; //counter for spheres
+  var ringCount = 0; //counter for spheres
   var i = 0; //counter for hue
   var j = 0; //counter for freq channel
 
@@ -144,11 +144,9 @@ spaceslugLeap = function() {
         currentXrot += 0.1;
         currentYrot += 0.01;
 
-    // Setting colour twice - Ineffient
-    // You can do this directly without pusher - see setHSL in three.js
-    var color = pusher.color('hsv', [Math.round(i), 70, 100]).hex6();
-    circle.material.color.setHex(color);
-    i += 0.1;
+    // Cycle through hues
+        circle.material.color.setHSL(i%1, 0.7, 0.7);
+        i += 0.0001;
 
     // Leap interaction
     circlePosition = function(x, y) {
@@ -183,11 +181,6 @@ spaceslugLeap = function() {
         object.scale.y *= scaleFactor + 0.996;
         j++;
 
-
-        // Rotate rings
-        circle.rotation.x += 0.1;
-        circle.rotation.y += 0.01;
-
         // Make objects in the distance darker
         object.material.color.offsetHSL(0, 0, -0.003);
       };
@@ -195,8 +188,19 @@ spaceslugLeap = function() {
     // Don't add a new circle if music is not playing
     if (getAverageVolume(frequencyAmplitudeArray)) {
       scene.add(circle);
-      ballCount++;
+      ringCount++;
     };
+
+            // Delete the last element. Could not use scene.traverse to do this
+        // as it didn't like the object being deleted.
+        for ( var k =  0; k < scene.children.length ; k++ ) {
+            var obj = scene.children[ k ];
+            if ( obj instanceof THREE.Line && ringCount > 300) {
+              scene.remove(obj);
+              ringCount--;
+              break;
+            }
+        }
 
     renderer.render(scene, camera);
   };
