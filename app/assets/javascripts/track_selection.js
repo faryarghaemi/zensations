@@ -21,7 +21,7 @@ var tracksMenu = {
       $a.attr("href", "#");
       $a.text(trackTitle);
       $a.addClass('userTrack');
-      $a.attr("id", track.id);
+      $a.attr("id", track.stream_url);
       $('#user-tracks').append($li.append($a));
     }
   },
@@ -40,7 +40,7 @@ $(document).ready(function () {
   tracksMenu.loadTracks();
   
   $('#user-tracks').on('click', '.userTrack', function () {
-      var id = $(this).attr('id');
-      console.log(id);
+    var stream_url = $(this).attr('id');
+    createAudio(stream_url);
   });  
 });

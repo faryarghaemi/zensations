@@ -3,6 +3,7 @@ var lastSoundCloud;
 var streamUrl;
 var audio_global;
 var javascriptNode;
+var createAudio;
 // Music playing?
 
 var music_playing = false;
@@ -71,7 +72,7 @@ $(document).ready(function() {
     if (result.errors) {
       // Do something like pop up a message
     } else {
-      databaseEntry(result);
+      databaseEntry(result.stream_url);
       createAudio(result);
     }
   };
@@ -92,10 +93,10 @@ $(document).ready(function() {
     });
   };
 
-  var createAudio = function(result) {
+  createAudio = function(stream_url) {
 
     // Define sreamUrl
-    streamUrl = result.stream_url;
+    streamUrl = stream_url;
 
     // Creating an Audio object.
     var audio0 = new Audio(),
