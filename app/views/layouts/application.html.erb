@@ -17,7 +17,7 @@
 
     <div class="modals">
       
-      <div class="modal-signup fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+      <div class="modal-signup fade" id="basicModal modal-signup-id" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -25,22 +25,22 @@
               <h4 class="modal-title" id="myModalLabel">Sign Up</h4>
             </div>
             <div class="modal-body">
-              <%= form_for User.new do |f| %>
+              <%= form_for User.new, :id => "sign_up" do |f| %>
                 <div class="form-group">
-                  <%= f.label :name %>
-                  <%= f.text_field :name, :autofocus => true, :required => true, :class => 'form-control' %>
+                  <%= f.label :name, :id => 'signup-name-label' %>
+                  <%= f.text_field :name, :autofocus => true, :required => true, :class => 'form-control', :id => 'signup-name' %>
                 </div>
                 <div class="form-group">
-                <%= f.label :email %>
-                <%= f.text_field :email, :required => true, :class => 'form-control' %>
+                <%= f.label :email, :id => 'signup-email-label' %>
+                <%= f.text_field :email, :required => true, :class => 'form-control', :id => 'signup-email' %>
                 </div>
                 <div class="form-group">
-                  <%= f.label :password %>
-                  <%= f.password_field :password, :required => true, :class => 'form-control' %>
+                  <%= f.label :password, :id => 'signup-password-label' %>
+                  <%= f.password_field :password, :required => true, :class => 'form-control', :id => 'signup-password' %>
                 </div>
                 <div class="form-group">
-                  <%= f.label :password_confirmation %>
-                  <%= f.password_field :password_confirmation, :required => true, :class => 'form-control' %>
+                  <%= f.label :password_confirmation, :id => 'signup-password-confirmation-label' %>
+                  <%= f.password_field :password_confirmation, :required => true, :class => 'form-control', :id => 'signup-password-confirmation' %>
                 </div>
             </div>
             <div class="modal-footer">
