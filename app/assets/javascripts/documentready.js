@@ -4,15 +4,22 @@ $(document).ready(function() {
 
   // Visualisation selection
 
+
+
   $('#spaceslug_mouse').on('click', function() {
+    if (music_playing === true) {
     spaceslugMouse();
     mouseMovement();
     render(); 
     mouseOrbitControls();
+  } else {
+    alert('Select a song idiot.'); 
+  }
   });
 
 
   $('#spaceslug_leap').on('click', function() {
+    if (music_playing === true) {
     spaceslugLeap();
 
     controls = new THREE.LeapTwoHandControls(camera, controller, scene);
@@ -26,21 +33,37 @@ $(document).ready(function() {
     controls.transSmoothing = 0.5;
     controls.rotationSmoothing = 0.2;
     render();
+  } else {
+    alert('Select a song idiot.'); 
+  }
 
   });
 
 
   $('#discoattack_leap').on('click', function() {
+    if (music_playing === true) {
     discoattackLeap();
     render();
+  } else {
+    alert('Select a song idiot.'); 
+  }
   });
 
-    $('#discoattack_mouse').on('click', function() {
+  $('#discoattack_mouse').on('click', function() {
+    if (music_playing === true) {
     discoattackMouse();
     mouseMovement(); 
     render();
     mouseOrbitControls(); 
+  } else {
+    alert('Select a song idiot.'); 
+  }
   });
+
+    discoattackMouse();
+    mouseMovement(); 
+    render();
+
 
   // Track selection
 
