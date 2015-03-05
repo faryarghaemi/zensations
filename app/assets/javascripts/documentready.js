@@ -63,6 +63,7 @@ $(document).ready(function() {
     discoattackMouse();
     mouseMovement(); 
     render();
+    
 
 
   // Track selection
