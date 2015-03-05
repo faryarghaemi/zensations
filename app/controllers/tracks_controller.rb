@@ -2,7 +2,7 @@ class TracksController < ApplicationController
   before_action :check_if_logged_in
 
   def index
-    @tracks = Track.all
+    @tracks = Track.last(10).reverse
     respond_to do |format|
       format.html { }
       format.json { render :json => @tracks }
