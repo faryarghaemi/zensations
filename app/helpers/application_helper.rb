@@ -4,7 +4,7 @@ module ApplicationHelper
     if @current_user.present?
       links = "<li>#{ link_to('Sign Out ' + @current_user.name, login_path, :method => :delete) }</li>"
     else
-      links = "<li>#{ link_to('Sign Up', new_user_path) }</li><li>#{ link_to('Log In', "#", :class => "log_in") }</li>"
+      links = "<li>#{ link_to('Sign Up', "#", :class => "signup") }</li><li>#{ link_to('Log In', "#", :class => "login") }</li>"
     end
 
     links
