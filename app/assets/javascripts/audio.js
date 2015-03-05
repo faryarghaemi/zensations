@@ -72,8 +72,8 @@ $(document).ready(function() {
     if (result.errors) {
       // Do something like pop up a message
     } else {
-      databaseEntry(result.stream_url);
-      createAudio(result);
+      databaseEntry(result);
+      createAudio(result.stream_url);
     }
   };
 
