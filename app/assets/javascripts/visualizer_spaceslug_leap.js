@@ -67,7 +67,8 @@ spaceslugLeap = function() {
 
 
   $(document).ready(function() {
-    $('body').append(renderer.domElement);
+    $( ".visualizer" ).empty();
+    $( ".visualizer" ).prepend(renderer.domElement);
   });
 
   var leapPosition = {
