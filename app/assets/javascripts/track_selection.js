@@ -13,10 +13,19 @@ var tracksMenu = {
     $('#user-tracks').empty();
     for (i = 0; i < this.tracks.length; i++) {
       track = this.tracks[i];
+      trackTitle = this.shortenName(track.title);
       $li = $('<li>');
-      $li.html('<a href="#">' + track.title + '</a>');
-      console.log($li)
+      $li.html('<a href="#">' + trackTitle + '</a>');
       $('#user-tracks').append($li);
+    }
+  },
+
+  shortenName: function(trackTitle) {
+    if (trackTitle.length > 37) {
+    return jQuery.trim(trackTitle).substring(0, 30)
+                          .trim(this) + "...";
+    } else {
+      return trackTitle
     }
   }
 
