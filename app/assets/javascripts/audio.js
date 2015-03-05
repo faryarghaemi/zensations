@@ -4,6 +4,8 @@ var frequencyAmplitudeArray;
 
 var music_playing = false;
 
+
+
 // Browser support hacks
 
 window.AudioContext = (function() {
@@ -125,8 +127,12 @@ $(document).ready(function() {
     };
 
     // Play sound & visualise
-    music_playing = true;
-    audio0.play();
+    music_playing = true; 
+    // if ($("#input").is(":focus") === true) {
+      audio0.play();
+    // }
+    
+
     // An event listener which is called periodically for audio processing.
     javascriptNode.onaudioprocess = function() {
         // Get the Time Domain data for this sample
