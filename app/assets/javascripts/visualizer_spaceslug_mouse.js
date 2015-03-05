@@ -29,7 +29,8 @@ var camera;
 
       renderer = new THREE.WebGLRenderer();
       renderer.setSize( window.innerWidth, window.innerHeight );
-      document.body.appendChild( renderer.domElement );
+      $( ".visualizer" ).empty();
+      $( ".visualizer" ).prepend(renderer.domElement);
 
       camera.position.z = 10;
       var ringCount = 0; //counter for rings
