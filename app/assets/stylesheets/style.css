@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);*/
 
 body {
     color: black;
@@ -47,23 +47,27 @@ canvas {
     z-index: 2;
 }
 
-/*Slide Up Menu*/
-
-/*.navbar-fixed-bottom {
-    margin-top: 20px;
-}
-.navbar-fixed-top, .navbar-fixed-bottom {
-    position: static;
-}
-.navbar-fixed-bottom {
-    bottom: 0;
-}
-.navbar-fixed-top, .navbar-fixed-bottom {
-    left: 0;
-    margin-bottom: 0;
-    right: 0;
-    z-index: 1030;
-}
-.navbar {
-    overflow: visible;
+/*navbar-right {
+    margin-right: 30px;
 }*/
+#logout-navbar {
+    margin-right: 15px; 
+}
+
+a.login { 
+    margin-right: 15px; 
+}
+
+#input {
+    width: 20em;
+    margin-bottom: 10px; 
+}
+
+.buttonz {
+    color: white;
+    background-color: black; 
+}
+
+.music-search {
+    margin-left: 18px;
+}

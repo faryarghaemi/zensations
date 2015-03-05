@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Zensations</title>
+    <title>ProjectTwo</title>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
@@ -59,18 +59,18 @@
               <h4 class="modal-title" id="myModalLabel">Login</h4>
             </div>
             <div class="modal-body">
-              <%= form_tag login_path do %>
+              <%= form_for Session.new, :id => "sign_up" do |f| %>
                 <div class="form-group">
-                  <%= label_tag :email %>
-                  <%= text_field_tag :email, nil, :type => 'email', :class => 'form-control', :placeholder => "Enter email", :autofocus => true, :id => 'login-email' %>
+                  <%= f.label :email, :id => 'login-email-label' %>
+                  <%= f.text_field :email, nil, :type => 'email', :class => 'form-control', :placeholder => "Enter email", :autofocus => true, :id => 'login-email' %>
                 </div>
                 <div class="form-group">
-                  <%= label_tag :password %>
-                  <%= password_field_tag :password, nil, :type => 'password', :class => 'form-control', :placeholder => "Enter password", :id => 'login-password' %>
+                  <%= f.label :password, :id => 'login-password-label' %>
+                  <%= f.password_field :password, nil, :type => 'password', :class => 'form-control', :placeholder => "Enter password", :id => 'login-password' %>
                 </div>
             </div>
             <div class="modal-footer">
-                <%= submit_tag "Login", :type => 'submit', :class=> 'btn btn-default' %>
+                <%= f.submit "Login", :type => 'submit', :class=> 'btn btn-default' %>
               <% end %>
             </div>
           </div>
@@ -87,7 +87,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand zensations" href="/">Zensation<span class="mirror-letter">Z</span></a>
+        <a class="navbar-brand" href="/">Zensations</a>
       </div>
 
       <div class="navbar-collapse collapse">
@@ -112,7 +112,7 @@
         </ul>
 
         <!-- Right nav -->
-        <ul class="nav navbar-nav navbar-right" id="logout-navbar">
+        <ul class="nav navbar-nav navbar-right">
           <%== nav_menu_right %>
         </ul>
 

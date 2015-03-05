@@ -110,37 +110,37 @@ spaceslugLeap = function() {
 
   // stars 
 
-          for( var i = 0; i < 50; i ++ ){
+        //   for( var i = 0; i < 50; i ++ ){
 
-          geometry = new THREE.Geometry();
+        //   geometry = new THREE.Geometry();
 
-          for( var j = 0 ; j < 100; j++ ){
+        //   for( var j = 0 ; j < 100; j++ ){
 
-            var vert = new THREE.Vector3();
+        //     var vert = new THREE.Vector3();
 
-            vert.x = ( Math.random() - .5 ) * 1000;
-            vert.y = ( Math.random() - .5 ) * 1000;
-            vert.z = ( Math.random() - .5 ) * 1000;
+        //     vert.x = ( Math.random() - .5 ) * 1000;
+        //     vert.y = ( Math.random() - .5 ) * 1000;
+        //     vert.z = ( Math.random() - .5 ) * 1000;
 
-            geometry.vertices.push( vert );
+        //     geometry.vertices.push( vert );
 
-          }
+        //   }
 
-          // var color = new THREE.Color();
-          // color.r = ( Math.random() * .5 ) +.5;
-          // color.g = ( Math.random() * .5 ) +.5;
-          // color.b = ( Math.random() * .5 ) +.5;
+        //   // var color = new THREE.Color();
+        //   // color.r = ( Math.random() * .5 ) +.5;
+        //   // color.g = ( Math.random() * .5 ) +.5;
+        //   // color.b = ( Math.random() * .5 ) +.5;
 
-          var material = new THREE.ParticleSystemMaterial({
-            size: 2, 
-            color: 0x393E69
-          });
+        //   var material = new THREE.ParticleSystemMaterial({
+        //     size: 2, 
+        //     color: 0x393E69
+        //   });
 
-          var particles = new THREE.ParticleSystem( geometry , material );
+        //   var particles = new THREE.ParticleSystem( geometry , material );
 
-          scene.add(particles);
+        //   scene.add(particles);
 
-        }
+        // }
 
   render = function() {
     // Throttle frame rate

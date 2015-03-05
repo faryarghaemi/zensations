@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
   $(".modal-signup form").on("submit", function (event) {
-    console.log("THIS WORKED")
+    // console.log("THIS WORKED")
     event.preventDefault();
 
     var data = {
@@ -45,5 +45,43 @@ $(document).ready(function () {
       }
     });
   });
+
+
+
+// $(".modal-login form").on("submit", function (event) {
+//     console.log("THIS WORKED"); 
+//     event.preventDefault();
+
+//     var data = {
+//         _method: "POST",
+//         user: {
+//           "email": $("#signup-email").val(),
+//           "password": $("#signup-password").val()
+//         }
+//       }
+//       // debugger;
+//     $.ajax("/login",{
+//       dataType: "json",
+//       type: "POST",
+//       data: data
+//     }).done(function (result) {
+//       console.log(result);
+//       // debugger;
+//       if ( result.status ) {
+//          $('.modal-login').modal('hide');  
+//       } else {
+//         // debugger; 
+//          if ( result.email ) {
+//             $("#login-email-label").css("color", "red"); 
+//             var text = $("#login-email-label").text(); 
+//             $("#login-email-label").text(result.email[0]); 
+//         } else if ( result.password ) {
+//             $("#login-password-label").css("color", "red"); 
+//             var text = $("#login-password-label").text(); 
+//             $("#login-password-label").text(result.password[0]); 
+//         }   
+//       }
+//     });
+//   });
 
 });
