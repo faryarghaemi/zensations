@@ -8,78 +8,74 @@
   </head>
   <body>
     <div class="main_container">
+      
       <%= yield %>
-      
+
       <div class="visualizer"></div>
+
+    </div>
+
+    <div class="modals">
       
-      <div class="row">
-        <div class="col-md-12">
-          <div class="modal-login fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title" id="myModalLabel">Login</h4>
+      <div class="modal-signup fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Sign Up</h4>
+            </div>
+            <div class="modal-body">
+              <%= form_for User.new do |f| %>
+                <div class="form-group">
+                  <%= f.label :name %>
+                  <%= f.text_field :name, :autofocus => true, :required => true, :class => 'form-control' %>
                 </div>
-                <div class="modal-body">
-                  <%= form_tag login_path do %>
-                    <div class="form-group">
-                      <%= label_tag :email %>
-                      <%= text_field_tag :email, nil, :type => 'email', :class => 'form-control', :placeholder => "Enter email", :autofocus => true %>
-                    </div>
-                    <div class="form-group">
-                      <%= label_tag :password %>
-                      <%= password_field_tag :password, nil, :type => 'password', :class => 'form-control', :placeholder => "Enter password" %>
-                    </div>
+                <div class="form-group">
+                <%= f.label :email %>
+                <%= f.text_field :email, :required => true, :class => 'form-control' %>
                 </div>
-                <div class="modal-footer">
-                    <%= submit_tag "Login", :type => 'submit', :class=> 'btn btn-default' %>
-                  <% end %>
+                <div class="form-group">
+                  <%= f.label :password %>
+                  <%= f.password_field :password, :required => true, :class => 'form-control' %>
                 </div>
-              </div>
+                <div class="form-group">
+                  <%= f.label :password_confirmation %>
+                  <%= f.password_field :password_confirmation, :required => true, :class => 'form-control' %>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <%= f.submit 'Sign Up', :class => 'btn btn-default' %>
+              <% end %>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-12">
-          <div class="modal-signup fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title" id="myModalLabel">Sign Up</h4>
+      <div class="modal-login fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Login</h4>
+            </div>
+            <div class="modal-body">
+              <%= form_tag login_path do %>
+                <div class="form-group">
+                  <%= label_tag :email %>
+                  <%= text_field_tag :email, nil, :type => 'email', :class => 'form-control', :placeholder => "Enter email", :autofocus => true %>
                 </div>
-                <div class="modal-body">
-                  <%= form_for User.new do |f| %>
-                    <div class="form-group">
-                      <%= f.label :name %>
-                      <%= f.text_field :name, :autofocus => true, :required => true, :class => 'form-control' %>
-                    </div>
-                    <div class="form-group">
-                    <%= f.label :email %>
-                    <%= f.text_field :email, :required => true, :class => 'form-control' %>
-                    </div>
-                    <div class="form-group">
-                      <%= f.label :password %>
-                      <%= f.password_field :password, :required => true, :class => 'form-control' %>
-                    </div>
-                    <div class="form-group">
-                      <%= f.label :password_confirmation %>
-                      <%= f.password_field :password_confirmation, :required => true, :class => 'form-control' %>
-                    </div>
+                <div class="form-group">
+                  <%= label_tag :password %>
+                  <%= password_field_tag :password, nil, :type => 'password', :class => 'form-control', :placeholder => "Enter password" %>
                 </div>
-                <div class="modal-footer">
-                    <%= f.submit 'Sign Up', :class => 'btn btn-default' %>
-                  <% end %>
-                </div>
-              </div>
+            </div>
+            <div class="modal-footer">
+                <%= submit_tag "Login", :type => 'submit', :class=> 'btn btn-default' %>
+              <% end %>
             </div>
           </div>
         </div>
       </div>
-
     </div>
 
     <!-- Static navbar -->
@@ -100,7 +96,7 @@
         <ul class="nav navbar-nav">
           <li><a href="#">Choose Track</a>
             <ul id="user-tracks" class="dropdown-menu">
-              <li><a href="#">Log in to save tracks</a></li>
+              <li><a class="login-save" href="#">Log In To Save Tracks</a></li>
             </ul>
           </li>
           <li><a href="#">Choose Visualisation</a>
