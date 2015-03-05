@@ -165,7 +165,7 @@ $(document).ready(function() {
 
 mouseOrbitControls = function() {
   controls = new THREE.OrbitControls(camera);
-  controls.damping = 0.2;
+  controls.damping = 2;
 };
 
 

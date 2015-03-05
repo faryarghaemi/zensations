@@ -1,9 +1,3 @@
-// var sphere;
-// var geometry;
-// var sphereMaterials;
-// var newColor;
-// var sphereColor;
-// var floorColor;
 var render;
 var renderer;
 var camera;
@@ -49,9 +43,6 @@ discoattackMouse = function() {
 
   scene.add(sphere);
 
-
-
-
   // the light sources 
   var directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
   directionalLight.position.set(0.2, 1, 0.2);
@@ -92,27 +83,6 @@ discoattackMouse = function() {
   floor.name = 'floor';
 
   scene.add(floor);
-
-
-
-
-  // // floor color v2
-
-  //   $(window).on('mousemove', function(event) {
-
-  //   var red = Math.round((event.pageX / window.innerWidth) * 255);
-  //   var green = Math.round((event.pageY / window.innerHeight) * 255);
-
-  //   var pageZ = Math.sqrt(event.pageY * event.pageY + event.pageX * event.pageX)
-  //   var innerZ = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight)
-  //   var blue = Math.round(pageZ / innerZ * 255);
-
-
-  //   floorColor(red, green, blue);
-
-
-  // });
-
 
   // shadow 
 
@@ -241,47 +211,9 @@ discoattackMouse = function() {
         var drawsphere = function() {
           var newColor = 0xdddddd;
           sphereColor(newColor);
-          // break;
         }
     }
 
   };
-
-  // stretching/squishing the disco ball 
-
-  // window.addEventListener("keydown", keysPressed, false);
-  // window.addEventListener("keyup", keysReleased, false);
-
-  // var keys = [];
-
-  // function keysPressed(e) {
-  //     keys[e.keyCode] = true;
-
-  //     // Comma + Period
-  //     if (keys[188] && keys[190]) {
-  //         sphere.scale.x = 5 * x; 
-  //     }
-
-  //     // Shift + Comma + Period
-  //     if (keys[16] && keys[188] && keys[190]) {
-  //         sphere.scale.x = x / 5; 
-
-  //         // prevent default browser behavior
-  //         e.preventDefault(); 
-  //     }
-  // }
-
-  // function keysReleased(e) {
-  //     // mark keys that were released
-  //     keys[e.keyCode] = false;
-  // }
-
-
-
-
-
-
-
-
 
 };

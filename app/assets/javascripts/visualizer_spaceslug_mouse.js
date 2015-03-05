@@ -37,40 +37,6 @@ var camera;
       var i = 0; //counter for hue
       var j = 0; //counter for freq channel
 
-      // stars 
-
-        //   for( var i = 0; i < 50; i ++ ){
-
-        //   geometry = new THREE.Geometry();
-
-        //   for( var j = 0 ; j < 100; j++ ){
-
-        //     var vert = new THREE.Vector3();
-
-        //     vert.x = ( Math.random() - .5 ) * 1000;
-        //     vert.y = ( Math.random() - .5 ) * 1000;
-        //     vert.z = ( Math.random() - .5 ) * 1000;
-
-        //     geometry.vertices.push( vert );
-
-        //   }
-
-        //   // var color = new THREE.Color();
-        //   // color.r = ( Math.random() * .5 ) +.5;
-        //   // color.g = ( Math.random() * .5 ) +.5;
-        //   // color.b = ( Math.random() * .5 ) +.5;
-
-        //   var material = new THREE.ParticleSystemMaterial({
-        //     size: 2, 
-        //     color: 0x393E69
-        //   });
-
-        //   var particles = new THREE.ParticleSystem( geometry , material );
-
-        //   scene.add(particles);
-
-        // }
-
       render = function () {
         // Throttle frame rate
         setTimeout( function() {
