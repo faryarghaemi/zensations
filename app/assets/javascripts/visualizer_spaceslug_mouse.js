@@ -112,5 +112,4 @@ var camera;
 
         renderer.render(scene, camera);
       };
-      console.log("hello world!");
     } 
