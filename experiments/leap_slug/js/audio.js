@@ -106,7 +106,7 @@ $(document).ready(function() {
       
       // controls = new THREE.OrbitControls( camera );
       // controls.damping = 0.2;
-
+      debugger;
       controls = new THREE.LeapTwoHandControls(camera, controller, scene);
 
       controls.translationSpeed = 0.1;

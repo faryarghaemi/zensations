@@ -28,6 +28,7 @@ THREE.LeapTwoHandControls = (function () {
   var Z_AXIS = new THREE.Vector3(0, 0, 1);
   
   var LeapTwoHandControls = function (object, controller, invert) {
+    // debugger;
     this.object = object;
     this.controller = controller;
     this.invert = (invert === undefined ? true : invert);
@@ -63,9 +64,9 @@ THREE.LeapTwoHandControls = (function () {
   }
   
   LeapTwoHandControls.prototype.update = function() {
-    
+    // console.log("Leap Two Hand Controls Update");
     // Just incase this is overwritten somewhere else in the code
-    console.log("update")
+    // console.log("update")
     this.object.matrixAutoUpdate = true;
     
     var self = this;

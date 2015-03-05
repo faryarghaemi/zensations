@@ -1,13 +1,13 @@
 var controller;
+var controller10;
 var frame;
 var container;
 var camera;
 var scene;
 var renderer;
-var render; 
+var render;
 var controls;
-var animate;
-// $(document).ready(function() {
+
 
 spaceslugLeap = function() {
   renderer = new THREE.WebGLRenderer();
@@ -22,7 +22,7 @@ spaceslugLeap = function() {
   var windowCoordinates = ('#windowCoordinates');
 
 
-  var controller = Leap.loop(function(frame) {
+  controller = Leap.loop(function(frame) {
     frame = controller.frame();
 
     var interactionBox = frame.interactionBox;
@@ -65,7 +65,6 @@ spaceslugLeap = function() {
   }
 
 
-  // });
 
   $(document).ready(function() {
     $('body').append(renderer.domElement);
@@ -77,7 +76,8 @@ spaceslugLeap = function() {
   };
 
 
-
+  var currentXrot = 0;
+  var currentYrot = 0;
 
 
   var getAverageVolume = function(array) {
@@ -95,24 +95,11 @@ spaceslugLeap = function() {
     return average;
   }
 
-  controller = new Leap.Controller();
-  frame = controller.frame()
-  var scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 5000);
+  // controller = new Leap.Controller();
+  // frame = controller.frame()
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 5000);
 
-
-
-  animate = function () {
-
-    requestAnimationFrame(animate);
-
-    renderer.render(scene, camera);
-    controls.update();
-
-  };
-
-
-  // animate(); 
 
 
   camera.position.z = 10;
@@ -122,6 +109,7 @@ spaceslugLeap = function() {
 
   render = function() {
     // Throttle frame rate
+    // console.log("Render called: " + Math.random())
     setTimeout(function() {
       requestAnimationFrame(render);
     }, 1000 / 30);
@@ -138,15 +126,15 @@ spaceslugLeap = function() {
     // to work with MeshBasicMaterial
     circle = new THREE.Line(geometry, material)
 
-            // Rotate rings
-        circle.rotation.x = currentXrot;
-        circle.rotation.y = currentYrot;
-        currentXrot += 0.1;
-        currentYrot += 0.01;
+    // Rotate rings
+    circle.rotation.x = currentXrot;
+    circle.rotation.y = currentYrot;
+    currentXrot += 0.1;
+    currentYrot += 0.01;
 
     // Cycle through hues
-        circle.material.color.setHSL(i%1, 0.7, 0.7);
-        i += 0.0001;
+    circle.material.color.setHSL(i % 1, 0.7, 0.7);
+    i += 0.0001;
 
     // Leap interaction
     circlePosition = function(x, y) {
@@ -191,17 +179,17 @@ spaceslugLeap = function() {
       ringCount++;
     };
 
-            // Delete the last element. Could not use scene.traverse to do this
-        // as it didn't like the object being deleted.
-        for ( var k =  0; k < scene.children.length ; k++ ) {
-            var obj = scene.children[ k ];
-            if ( obj instanceof THREE.Line && ringCount > 300) {
-              scene.remove(obj);
-              ringCount--;
-              break;
-            }
-        }
-
+    // Delete the last element. Could not use scene.traverse to do this
+    // as it didn't like the object being deleted.
+    for (var k = 0; k < scene.children.length; k++) {
+      var obj = scene.children[k];
+      if (obj instanceof THREE.Line && ringCount > 300) {
+        scene.remove(obj);
+        ringCount--;
+        break;
+      }
+    }
+    controls.update();
     renderer.render(scene, camera);
   };
 

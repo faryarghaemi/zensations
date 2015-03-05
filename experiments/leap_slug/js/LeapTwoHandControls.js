@@ -28,6 +28,7 @@ THREE.LeapTwoHandControls = (function () {
   var Z_AXIS = new THREE.Vector3(0, 0, 1);
   
   var LeapTwoHandControls = function (object, controller, invert) {
+    // debugger;
     this.object = object;
     this.controller = controller;
     this.invert = (invert === undefined ? true : invert);

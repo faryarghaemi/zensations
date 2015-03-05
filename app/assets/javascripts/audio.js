@@ -144,25 +144,24 @@ mouseOrbitControls = function() {
 leapOrbitControls = function() {
 
 
-  controller = new Leap.Controller();
-  frame = controller.frame()
+  // controller = new Leap.Controller();
+  // frame = controller.frame()
 
 
 
-  // debugger;
-  controls = new THREE.LeapTwoHandControls(camera, controller, scene);
-  controls.translationSpeed = 0.1;
-  controls.translationDecay = 0.3;
-  controls.scaleDecay = 0.5;
-  controls.rotationSlerp = 0.8;
-  controls.rotationSpeed = 0.01;
-  controls.pinchThreshold = 0.8;
-  controls.transSmoothing = 0.5;
-  controls.rotationSmoothing = 0.2;
+  // // debugger;
+  // controls = new THREE.LeapTwoHandControls(camera, controller, scene);
+  // controls.translationSpeed = 0.1;
+  // controls.translationDecay = 0.3;
+  // controls.scaleDecay = 0.5;
+  // controls.rotationSlerp = 0.8;
+  // controls.rotationSpeed = 0.01;
+  // controls.pinchThreshold = 0.8;
+  // controls.transSmoothing = 0.5;
+  // controls.rotationSmoothing = 0.2;
   // controls.connect();
 
-  controls.update();
-  animate();
+ 
 
 
 

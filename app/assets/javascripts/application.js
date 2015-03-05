@@ -11,6 +11,8 @@
 // about supported directives.
 //
 //= require jquery
+//= require three.min.js
+//= require LeapTwoHandControls
 //= require audio
 //= require visualizer_discoattack_leap
 //= require visualizer_spaceslug_leap
@@ -20,7 +22,6 @@
 //= require turbolinks
 //= require underscore
 //= require bootstrap/modal
-//= require three.min.js
 //= require handlebars
 //= require leap 
 //= require documentready
