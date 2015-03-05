@@ -16,12 +16,14 @@ var tracksMenu = {
       trackTitle = this.shortenName(track.title);
       $li = $('<li>');
       $li.html('<a href="#">' + trackTitle + '</a>');
+      $li.addClass('userTrack');
+      $li.attr("id", track.id);
       $('#user-tracks').append($li);
     }
   },
 
   shortenName: function(trackTitle) {
-    if (trackTitle.length > 37) {
+    if (trackTitle.length > 39) {
     return jQuery.trim(trackTitle).substring(0, 30)
                           .trim(this) + "...";
     } else {
