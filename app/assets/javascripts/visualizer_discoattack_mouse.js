@@ -155,7 +155,7 @@ discoattackMouse = function() {
       // Mouse interaction
   sphere.position.x = 400 * (mousePosition.x / window.innerWidth - 0.5);
   sphere.position.y = -400 * (mousePosition.y / window.innerHeight - 0.5);
-  sphere.position.z = 2;
+  sphere.position.z = -2; 
   // debugger
 
     // floor color 

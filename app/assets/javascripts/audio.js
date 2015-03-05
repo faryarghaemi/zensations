@@ -1,9 +1,18 @@
 var frequencyAmplitudeArray;
-
+var lastSoundCloud;
+var streamUrl;
+var audio_global;
+var javascriptNode;
 // Music playing?
 
 var music_playing = false;
 
+var stopMusic = function () {
+  audio_global.pause();
+  audio_global.currentTime = 0;
+  javascriptNode.onaudioprocess = null;
+  music_playing = false;
+}
 
 
 // Browser support hacks
@@ -22,10 +31,20 @@ $(document).ready(function() {
   // Handle the form submit event to load the new URL
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    formUrl = $('#input').val();
+    if ( lastSoundCloud === $("#input").val() ) {
+      return;
+    }
+
+    if ( streamUrl !== undefined ) {
+      stopMusic();
+    }
+
+    lastSoundCloud = $('#input').val();
+    formUrl = lastSoundCloud;
     if (formUrl === "") {
       formUrl = "https://soundcloud.com/the-avener/fade-out-lines-original-mix";
       $('#input').val(formUrl);
+      lastSoundCloud = formUrl;
     }
     searchSoundCloud(formUrl).then(checkError);
     // Add error checking for empty/dudd form(URL)
@@ -76,7 +95,7 @@ $(document).ready(function() {
   var createAudio = function(result) {
 
     // Define sreamUrl
-    var streamUrl = result.stream_url;
+    streamUrl = result.stream_url;
 
     // Creating an Audio object.
     var audio0 = new Audio(),
@@ -89,6 +108,8 @@ $(document).ready(function() {
     audio0.controls = true;
     audio0.autoplay = false;
     audio0.loop = true;
+
+    audio_global = audio0;
 
     // Passing the Audio object into the sourceNode.
     var sourceNode = audioContext.createMediaElementSource(audio0);
@@ -103,7 +124,7 @@ $(document).ready(function() {
     sampleSize = 1024
 
     // Creates a ScriptProcessorNode used for direct audio processing.
-    var javascriptNode = audioContext.createScriptProcessor(sampleSize, 1, 1);
+    javascriptNode = audioContext.createScriptProcessor(sampleSize, 1, 1);
 
     // Connecting the nodes
     /// AnalyserNode needs to be connected to both the destination (speakers)!
@@ -152,10 +173,8 @@ mouseOrbitControls = function() {
 
     // Stop sound & visualise
     $("#stop").on('click', function() {
-      audio0.pause();
-      audio0.currentTime = 0;
-      javascriptNode.onaudioprocess = null;
-      music_playing = false;
+      lastSoundCloud = "";
+      stopMusic();
     });
   };
 
