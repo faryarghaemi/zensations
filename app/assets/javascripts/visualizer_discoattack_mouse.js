@@ -153,8 +153,8 @@ discoattackMouse = function() {
     sphere.rotation.y += 0.01;
 
       // Mouse interaction
-  sphere.position.x = 1000 * (mousePosition.x / window.innerWidth - 0.5);
-  sphere.position.y = -1000 * (mousePosition.y / window.innerHeight - 0.5);
+  sphere.position.x = 400 * (mousePosition.x / window.innerWidth - 0.5);
+  sphere.position.y = -400 * (mousePosition.y / window.innerHeight - 0.5);
   sphere.position.z = 2;
   // debugger
 

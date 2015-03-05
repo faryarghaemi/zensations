@@ -12,8 +12,8 @@
 //
 //= require jquery
 //= require three.min.js
-//= require LeapTwoHandControls
 //= require audio
+//= require LeapTwoHandControls
 //= require visualizer_discoattack_leap
 //= require visualizer_spaceslug_leap
 //= require bootstrap
