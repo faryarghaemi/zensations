@@ -1,11 +1,16 @@
-%h2= flash[:error] if flash[:error].present?
+%div.container
+  %div.row
+    %div.col-lg-6
 
-%h1 Log in
-= form_tag login_path do
-  = label_tag :email, nil, :autofocus => true
-  = text_field_tag :email
-  = label_tag :password
-  = password_field_tag :password
-  = submit_tag 'Login'
-
-%p
+      %h1.page-header Log in
+      %p= flash[:error] if flash[:error].present?
+      
+      = form_tag login_path do
+        %div.form-group
+          = label_tag :email 
+          = text_field_tag :email, nil, :autofocus => true, :required => true, :class => 'form-control'
+          
+          = label_tag :password
+          = password_field_tag :password, nil, :required => true, :class => 'form-control'
+      
+        = submit_tag 'Login', :class => 'btn btn-primary'
