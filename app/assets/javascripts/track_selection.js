@@ -41,6 +41,9 @@ $(document).ready(function () {
   
   $('#user-tracks').on('click', '.userTrack', function () {
     var stream_url = $(this).attr('id');
+    if (music_playing) {
+      stopMusic();
+    }
     createAudio(stream_url);
   });  
 });

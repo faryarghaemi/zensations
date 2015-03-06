@@ -4,11 +4,12 @@ var streamUrl;
 var audio_global;
 var javascriptNode;
 var createAudio;
+var stopMusic;
 // Music playing?
 
 var music_playing = false;
 
-var stopMusic = function () {
+stopMusic = function () {
   audio_global.pause();
   audio_global.currentTime = 0;
   javascriptNode.onaudioprocess = null;
