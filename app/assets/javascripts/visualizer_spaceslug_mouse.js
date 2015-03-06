@@ -22,7 +22,7 @@ var camera;
       }
 
       var scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera( 25, window.innerWidth/window.innerHeight, 0.1, 1000 );
+      camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 5000);
 
       renderer = new THREE.WebGLRenderer();
       renderer.setSize( window.innerWidth, window.innerHeight );
@@ -42,7 +42,7 @@ var camera;
         // Throttle frame rate
         setTimeout( function() {
           requestAnimationFrame( render );
-        }, 1000 / 30 );
+        }, 500 / 30 );
 
         // Define circle
         var radius   = 2,
@@ -113,4 +113,6 @@ var camera;
 
         renderer.render(scene, camera);
       };
+      var controls = new THREE.OrbitControls(camera);
+      controls.damping = 0.2;
     } 

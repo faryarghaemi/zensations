@@ -150,29 +150,15 @@ $(document).ready(function() {
       return frequencyAmplitudeArray;
     };
 
-    // Play sound & visualise
+    // Play sound
     music_playing = true; 
-    // if ($("#input").is(":focus") === true) {
-      audio0.play();
-    // }
-    
+    audio0.play();
 
     // An event listener which is called periodically for audio processing.
     javascriptNode.onaudioprocess = function() {
-        // Get the Time Domain data for this sample
-        analyserNode.getByteFrequencyData(frequencyAmplitudeArray);
-      }
-      // Render in three.js
-      // render(); 
-
-mouseOrbitControls = function() {
-  controls = new THREE.OrbitControls(camera);
-  controls.damping = 2;
-};
-
-
-
-
+      // Get the Time Domain data for this sample
+      analyserNode.getByteFrequencyData(frequencyAmplitudeArray);
+    }
 
     // Stop sound & visualise
     $("#stop").on('click', function() {

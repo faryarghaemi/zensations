@@ -11,7 +11,6 @@ $(document).ready(function() {
     spaceslugMouse();
     mouseMovement();
     render(); 
-    mouseOrbitControls();
   } else {
     alert('Select a song idiot.'); 
   }
@@ -54,7 +53,6 @@ $(document).ready(function() {
     discoattackMouse();
     mouseMovement(); 
     render();
-    mouseOrbitControls(); 
   } else {
     alert('Select a song idiot.'); 
   }
