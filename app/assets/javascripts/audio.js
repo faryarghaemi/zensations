@@ -20,9 +20,7 @@ stopMusic = function () {
 // Browser support hacks
 
 window.AudioContext = (function() {
-  return window.webkitAudioContext ||
-    window.AudioContext ||
-    window.mozAudioContext;
+  return window.AudioContext
 })();
 
 $(document).ready(function() {
@@ -55,7 +53,7 @@ $(document).ready(function() {
   $(form).trigger('submit');
   // The AudioContext is the primary 'container' for all your audio node objects.
   try {
-    audioContext = new webkitAudioContext();
+    audioContext = new AudioContext();
   } catch (e) {
     alert('Web Audio API is not supported in this browser');
   };
