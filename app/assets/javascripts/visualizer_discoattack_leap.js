@@ -9,50 +9,6 @@ var frame;
 
 discoattackLeap = function () {
 
-
-
-// $(document).ready(function() {
-
-
-
-
-  // setting sphereMaterials for multi-colored sphere 
-  // var sphereMaterials = new THREE.MeshFaceMaterial(sphereMaterials);
-
-  // each sphere side gets another color
-  // var sphereMaterials = [
-  //   new THREE.MeshBasicMaterial({
-  //     color: 0x33AA55,
-  //     transparent: true,
-  //     opacity: 0.8
-  //   }),
-  //   new THREE.MeshBasicMaterial({
-  //     color: 0x55CC00,
-  //     transparent: true,
-  //     opacity: 0.8
-  //   }),
-  //   new THREE.MeshBasicMaterial({
-  //     color: 0x669999,
-  //     transparent: true,
-  //     opacity: 0.8
-  //   }),
-  //   new THREE.MeshBasicMaterial({
-  //     color: 0x801515,
-  //     transparent: true,
-  //     opacity: 0.8
-  //   }),
-  //   new THREE.MeshBasicMaterial({
-  //     color: 0xD49A6A,
-  //     transparent: true,
-  //     opacity: 0.8
-  //   }),
-  //   new THREE.MeshBasicMaterial({
-  //     color: 0x55AA55,
-  //     transparent: true,
-  //     opacity: 0.8
-  //   }),
-  // ];
-
   // scene & camera info 
 
   var scene = new THREE.Scene();
@@ -109,29 +65,6 @@ discoattackLeap = function () {
   directionalLight.position.set(0, -1, 0.2);
   directionalLight.castShadow = true;
   scene.add(directionalLight);
-
-
-  // white spotlight shining from the side, casting shadow
-
-  // var spotLight = new THREE.SpotLight( 0xffffff );
-  // spotLight.position.set( 100, 1000, 100 );
-
-  // spotLight.castShadow = true;
-
-  // spotLight.shadowMapWidth = 1024;
-  // spotLight.shadowMapHeight = 1024;
-
-  // spotLight.shadowCameraNear = 500;
-  // spotLight.shadowCameraFar = 4000;
-  // spotLight.shadowCameraFov = 30;
-
-  // scene.add( spotLight );
-
-  // floor
-  // var floorGeometry = new THREE.floorGeometry( 1280, 20, 10, 20 );
-  // var floorMaterial = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
-  // var floor = new THREE.Mesh( floorGeometry, floorMaterial );
-  // scene.add( floor );
 
   // floor
   var floorColor = function(r, g, b) {
@@ -277,44 +210,6 @@ discoattackLeap = function () {
     enableGestures: true
   };
 
-  // hand and finger info put on screen 
-  // Main Leap Loop
-  // var handNumber = function() {
-  //   Leap.loop(options, function(frame) {
-  //     frameId = frame.id;
-  //     frameHandsLength = frame.hands.length;
-  //     frameFingersLength = frame.fingers.length;
-
-  //     frameString = concatData("frame_id", frameId);
-  //     frameString += concatData("num_hands", frameHandsLength);
-  //     frameString += concatData("num_fingers", frameFingersLength);
-  //     frameString += "<br>";
-
-  //     // Showcase some new V2 features
-  //     for (var i = 0, len = frame.hands.length; i < len; i++) {
-  //       hand = frame.hands[i];
-  //       handString = concatData("hand_type", hand.type);
-  //       handString += concatData("confidence", hand.confidence);
-  //       handString += concatData("pinch_strength", hand.pinchStrength);
-  //       handString += concatData("grab_strength", hand.grabStrength);
-
-  //       handString += '<br>';
-
-  //       frameString += handString;
-  //       frameString += fingerString;
-  //     }
-
-  //     output_two.innerHTML = frameString;
-
-  //   });
-
-  // };
-
-  // handNumber();
-
-  // end of info for number of fingers and hands 
-
-
   // initializing the controller 
   var deviceLoopController = new Leap.Controller({
     frameEventName: 'deviceFrame'
@@ -433,12 +328,6 @@ discoattackLeap = function () {
         } else if (hand.type === "left") {
 
           var screenPositionLeft = hand.screenPosition(hand.palmPosition);
-          // var outputContentLeft = "xLeft: " + (screenPositionLeft[0].toPrecision(4)) + 'px' +
-          //   "        yLeft: " + (screenPositionLeft[1].toPrecision(4)) + 'px' +
-          //   "        zLeft: " + (screenPositionLeft[2].toPrecision(4)) + 'px';
-
-          // outputLeft.html(outputContentLeft);
-
 
         }
 
@@ -467,11 +356,6 @@ discoattackLeap = function () {
           var z = ((zFirstHand) + (zSecondHand) / 2);
 
           position(x, y, z);
-
-
-          // var previousFrame = controller.frame(150);
-          // var handScale = hand.scaleFactor(previousFrame);
-          // sphere.scale.x = handScale;
 
           // console.log("Hand Scale: " + handScale);
 
@@ -540,8 +424,3 @@ discoattackLeap = function () {
 
 
 } 
-
-
-
-
-// });

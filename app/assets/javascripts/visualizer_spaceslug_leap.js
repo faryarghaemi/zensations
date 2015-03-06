@@ -126,11 +126,6 @@ spaceslugLeap = function() {
 
           }
 
-          // var color = new THREE.Color();
-          // color.r = ( Math.random() * .5 ) +.5;
-          // color.g = ( Math.random() * .5 ) +.5;
-          // color.b = ( Math.random() * .5 ) +.5;
-
           var material = new THREE.ParticleSystemMaterial({
             size: 2, 
             color: 0x393E69
