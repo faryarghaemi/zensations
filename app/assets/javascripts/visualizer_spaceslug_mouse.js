@@ -2,9 +2,6 @@ var renderer;
 var render; 
 var camera; 
  spaceslugMouse = function() {
-      if (music_playing === false) {
-      frequencyAmplitudeArray = 0; 
-      }
 
       var currentXrot = 0; 
       var currentYrot = 0; 
@@ -38,6 +35,10 @@ var camera;
       var j = 0; //counter for freq channel
 
       render = function () {
+        if (music_playing === false) {
+          frequencyAmplitudeArray = [0]; 
+        }
+
         // Throttle frame rate
         setTimeout( function() {
           requestAnimationFrame( render );
