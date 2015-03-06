@@ -51,7 +51,7 @@
         </div>
       </div>
 
-      <div class="modal-login fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+      <div class="modal-login fade" id="basicModal modal-login-id" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -59,13 +59,14 @@
               <h4 class="modal-title" id="myModalLabel">Login</h4>
             </div>
             <div class="modal-body">
+              <p id="login-error-box"></p>
               <%= form_tag login_path do %>
                 <div class="form-group">
-                  <%= label_tag :email %>
+                  <%= label_tag :email, nil, :id => 'login-email-label' %>
                   <%= text_field_tag :email, nil, :type => 'email', :class => 'form-control', :placeholder => "Enter email", :autofocus => true, :id => 'login-email' %>
                 </div>
                 <div class="form-group">
-                  <%= label_tag :password %>
+                  <%= label_tag :password, nil, :id => 'login-password-label' %>
                   <%= password_field_tag :password, nil, :type => 'password', :class => 'form-control', :placeholder => "Enter password", :id => 'login-password' %>
                 </div>
             </div>

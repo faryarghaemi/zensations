@@ -1,8 +1,11 @@
 class UsersController < ApplicationController
-
+  layout 'login_signup'
+  
   def new
     @user = User.new
   end
+
+  # Depracated after AJAX Login working
 
   # def create 
   #   @user = User.new user_params
@@ -15,20 +18,12 @@ class UsersController < ApplicationController
   # end 
 
   def create
-    # binding.pry
     @user = User.new user_params
-    # binding.pry
     if @user.save
       session[:user_id] = @user.id
-      # format.html { redirect_to root_path }
       render json: { status: "OK" }
     else
-      # format.html { render action: "new" }
-      # binding.pry
-
-      # respond_with @user.errors
       render json: @user.errors.messages
-      # render :json => @user.errors
     end
   end
 
