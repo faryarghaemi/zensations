@@ -215,5 +215,4 @@ discoattackMouse = function() {
     }
 
   };
-
 };

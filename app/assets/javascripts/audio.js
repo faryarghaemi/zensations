@@ -4,11 +4,12 @@ var streamUrl;
 var audio_global;
 var javascriptNode;
 var createAudio;
+var stopMusic;
 // Music playing?
 
 var music_playing = false;
 
-var stopMusic = function () {
+stopMusic = function () {
   audio_global.pause();
   audio_global.currentTime = 0;
   javascriptNode.onaudioprocess = null;
@@ -19,9 +20,7 @@ var stopMusic = function () {
 // Browser support hacks
 
 window.AudioContext = (function() {
-  return window.webkitAudioContext ||
-    window.AudioContext ||
-    window.mozAudioContext;
+  return window.AudioContext
 })();
 
 $(document).ready(function() {
@@ -54,7 +53,7 @@ $(document).ready(function() {
   $(form).trigger('submit');
   // The AudioContext is the primary 'container' for all your audio node objects.
   try {
-    audioContext = new webkitAudioContext();
+    audioContext = new AudioContext();
   } catch (e) {
     alert('Web Audio API is not supported in this browser');
   };
@@ -94,6 +93,9 @@ $(document).ready(function() {
   };
 
   createAudio = function(stream_url) {
+
+    // Refresh "Choose track..." menu
+    tracksMenu.loadTracks();
 
     // Define sreamUrl
     streamUrl = stream_url;
@@ -148,29 +150,20 @@ $(document).ready(function() {
       return frequencyAmplitudeArray;
     };
 
-    // Play sound & visualise
+    // Play sound
     music_playing = true; 
-    // if ($("#input").is(":focus") === true) {
-      audio0.play();
-    // }
-    
+    audio0.play();
 
     // An event listener which is called periodically for audio processing.
     javascriptNode.onaudioprocess = function() {
-        // Get the Time Domain data for this sample
-        analyserNode.getByteFrequencyData(frequencyAmplitudeArray);
-      }
-      // Render in three.js
-      // render(); 
+      // Get the Time Domain data for this sample
+      analyserNode.getByteFrequencyData(frequencyAmplitudeArray);
+    }
 
-mouseOrbitControls = function() {
-  controls = new THREE.OrbitControls(camera);
-  controls.damping = 2;
-};
-
-
-
-
+    mouseOrbitControls = function() {
+      var controls = new THREE.OrbitControls(camera);
+      controls.damping = 2;
+    };
 
     // Stop sound & visualise
     $("#stop").on('click', function() {
