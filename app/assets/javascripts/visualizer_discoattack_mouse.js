@@ -215,6 +215,4 @@ discoattackMouse = function() {
     }
 
   };
-  var controls = new THREE.OrbitControls(camera);
-  controls.damping = 0.2;
 };

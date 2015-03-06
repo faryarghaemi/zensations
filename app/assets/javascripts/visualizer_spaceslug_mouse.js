@@ -113,6 +113,4 @@ var camera;
 
         renderer.render(scene, camera);
       };
-      var controls = new THREE.OrbitControls(camera);
-      controls.damping = 0.2;
     } 
