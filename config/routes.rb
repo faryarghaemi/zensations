@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :tracks, :only => [:index]
+  resources :tracks, :only => [:create, :index]
 
   post '/login' => 'session#create'
   delete '/login' => 'session#destroy'
