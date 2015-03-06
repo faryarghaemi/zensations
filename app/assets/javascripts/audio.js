@@ -96,6 +96,9 @@ $(document).ready(function() {
 
   createAudio = function(stream_url) {
 
+    // Refresh "Choose track..." menu
+    tracksMenu.loadTracks();
+
     // Define sreamUrl
     streamUrl = stream_url;
 

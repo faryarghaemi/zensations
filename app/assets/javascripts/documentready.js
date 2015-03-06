@@ -3,7 +3,7 @@
 $(document).ready(function() {
 
   // Visualisation selection
-
+  tracksMenu.loadTracks();
 
 
   $('#spaceslug_mouse').on('click', function() {
