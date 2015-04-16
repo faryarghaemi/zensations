@@ -18,10 +18,20 @@ Users select a song from [Soundcloud](https://soundcloud.com) and paste it into 
 * [Leap Motion Javascript SDK](https://developer.leapmotion.com/documentation/javascript/api/Leap_Classes.html)
 * [Ruby on Rails](http://rubyonrails.org/)
 
+## sore bits 
 
-## changelog
-* 6-Mar-2015 initial read me
+* ajax request to show error for login
+* ajax request to display name when you sign up (session id) 
+* all of the JS files (and the order) 
 
+
+## next steps 
+
+
+* making it easier/better to toggle back and forth between leap and mouse version 
+* allowing user to change songs after they have chosen a visualization (a bug at the moment) 
+* change everything to jQuery (a mix at the moment) 
+* instructions 
 
 ## thanks
 A big thank you to [Joel](https://github.com/wofockham/) and [Jack](https://github.com/anonymous-wolf) for all their assistance and answering our countless questions throughout the project.
