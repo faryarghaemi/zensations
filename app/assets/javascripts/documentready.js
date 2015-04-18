@@ -14,7 +14,7 @@ $(document).ready(function() {
     var controls = new THREE.OrbitControls(camera);
     controls.damping = 2;
   } else {
-    alert('Select a song idiot.'); 
+    alert('Please select a song first.'); 
   }
   });
 
@@ -35,7 +35,7 @@ $(document).ready(function() {
     controls.rotationSmoothing = 0.2;
     render();
   } else {
-    alert('Select a song idiot.'); 
+    alert('Please select a song first.'); 
   }
 
   });
@@ -46,7 +46,7 @@ $(document).ready(function() {
     discoattackLeap();
     render();
   } else {
-    alert('Select a song idiot.'); 
+    alert('Please select a song first.'); 
   }
   });
 
@@ -58,7 +58,7 @@ $(document).ready(function() {
     var controls = new THREE.OrbitControls(camera);
     controls.damping = 2;
   } else {
-    alert('Select a song idiot.'); 
+    alert('Please select a song first.'); 
   }
   });
 

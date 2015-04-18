@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $('a').on('click',function() {
+  $('.show').on('click',function() {
     if($('#slide-menu').css('left')==='0px'){
       $('#slide-menu').animate({left: '-500px'}, 500);
       $('.show').text('>>>').show(200); 

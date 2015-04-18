@@ -77,6 +77,49 @@
           </div>
         </div>
       </div>
+
+      <div class="modal-instructions fade" id="basicModal modal-instructions-id" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Instructions</h4>
+            </div>
+            <div class="modal-body">
+              <i>note: You can only use the Leap Motion visualizations with a <a target="_blank" href="https://www.leapmotion.com/">Leap Motion</a> device.</i>
+              <h5>Spaceslug/Discoattack - Mouse</h5>
+              <ul>
+                <li><strong>one finger on mousepad:</strong> move rings or disco ball around the window</li>
+                <li><strong>two fingers moving up and down mousepad (scrolling motion):</strong> zoom in and out</li>
+                <li><strong>one finger pressed down on mousepad and other moving around:</strong> changes the orientation of the spaceslug or changes the perspective of the disco floor(i.e. Orbit Controls)</li>
+              </ul>
+              <h7>Keyboard controls (discoattack only):</h7>
+              <ul>
+                <li><strong>a:</strong> pink disco ball</li>
+                <li><strong>s:</strong> purple disco ball</li>
+                <li><strong>d:</strong> green disco ball</li>
+                <li><strong>f:</strong> yellow disco ball</li>
+                <li><strong>g:</strong> disco balls</li>
+              </ul>
+              <h5>Spaceslug - Leap</h5>
+              <ul>
+                <li><strong>one hand:</strong> move rings around the window</li>
+                <li><strong>pinching motion:</strong> move around the spaceslug</li>
+              </ul>
+              <h5>Discoattack - Leap</h5>
+               <ul>
+                 <li><strong>one hand:</strong> move disco ball around the window</li>
+                 <li><strong>two hands:</strong> stretch/flatten the disco ball</li>
+                 <li><strong>move quickly up/down/left/right:</strong> change color of disco ball</li>
+                 <li><strong>clap or move hands quickly up/down:</strong> more disco balls</li>
+               </ul> 
+
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Static navbar -->
@@ -100,7 +143,7 @@
               <li><a class="login-save" href="#">Log In To Save Tracks</a></li>
             </ul>
           </li>
-          <li><a href="#">Choose Visualisation</a>
+          <li><a href="#">Choose Visualization</a>
             <ul class="dropdown-menu">
               <li id="spaceslug_mouse"><a href="#spaceslug">Spaceslug - Mouse</a></li>
               <li id="spaceslug_leap"><a href="#spaceslug">Spaceslug - Leap</a></li>
@@ -108,6 +151,8 @@
               <li id="discoattack_leap"><a href="#discoattack">Disco Attack - Leap</a></li>
               </li>
             </ul>
+          </li>
+          <li><a class="instructions" href="#">Instructions</a>
           </li>
 
         </ul>
