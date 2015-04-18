@@ -199,7 +199,7 @@ discoattackMouse = function() {
         var newColor = 0xFFFF25;
         sphereColor(newColor);
         break;
-      case 16:
+      case 71:
         var drawsphere = function() {
           sphere = createSphere();
           scene.add(sphere);

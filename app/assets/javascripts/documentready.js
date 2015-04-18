@@ -11,7 +11,8 @@ $(document).ready(function() {
     spaceslugMouse();
     mouseMovement();
     render(); 
-    mouseOrbitControls();
+    var controls = new THREE.OrbitControls(camera);
+    controls.damping = 2;
   } else {
     alert('Select a song idiot.'); 
   }
@@ -54,7 +55,8 @@ $(document).ready(function() {
     discoattackMouse();
     mouseMovement(); 
     render();
-    mouseOrbitControls(); 
+    var controls = new THREE.OrbitControls(camera);
+    controls.damping = 2;
   } else {
     alert('Select a song idiot.'); 
   }

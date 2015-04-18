@@ -160,11 +160,6 @@ $(document).ready(function() {
       analyserNode.getByteFrequencyData(frequencyAmplitudeArray);
     }
 
-    mouseOrbitControls = function() {
-      var controls = new THREE.OrbitControls(camera);
-      controls.damping = 2;
-    };
-
     // Stop sound & visualise
     $("#stop").on('click', function() {
       lastSoundCloud = "";
