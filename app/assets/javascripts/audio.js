@@ -108,6 +108,7 @@ $(document).ready(function() {
       url = streamUrl + '?client_id=c6407cab6ee52bfb52b2dc922c512b07';
 
     audio0.src = url;
+    audio0.crossOrigin="anonymous";
     audio0.controls = true;
     audio0.autoplay = false;
     audio0.loop = true;
